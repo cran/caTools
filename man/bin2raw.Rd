@@ -78,6 +78,10 @@
 }
 
 \examples{
+   print(x <- (1:5)*pi)      
+   print(y <- bin2raw(x))
+   print(z <- raw2bin(y,"double"))
+  
    x = (10*runif(10)>5) # logical
    for (i in c(NA, 1, 2, 4)) {
      y = bin2raw(x, size=i)

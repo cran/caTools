@@ -42,7 +42,19 @@
     Fast Robust Geometric Predicates},  
    \url{http://www-2.cs.cmu.edu/afs/cs/project/quake/public/papers/robust-arithmetic.ps}
    and its implementation found at:
-   \url{http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/393090}  
+   \url{http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/393090} 
+   
+   McCullough, D.B., (1998) \emph{Assessing the Reliability of Statistical 
+     Software, Part I}, The American Statistician, Vol. 52 No 4, 
+     \url{http://www.amstat.org/publications/tas/mccull-1.pdf}
+   
+   McCullough, D.B., (1999) \emph{Assessing the Reliability of Statistical 
+     Software, Part II}, The American Statistician, Vol. 53 No 2
+     \url{http://www.amstat.org/publications/tas/mccull.pdf}
+     
+   NIST Statistical Reference Datasets (StRD) website 
+   \url{http://www.nist.gov/itl/div898/strd}
+
 } 
 
 \author{Jarek Tuszynski (SAIC) \email{jaroslaw.w.tuszynski@saic.com} based on

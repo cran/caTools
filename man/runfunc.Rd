@@ -25,7 +25,7 @@
 
 \arguments{
   \item{x}{numeric vector of length n}
-  \item{k}{width of moving window; must be an odd integer between one and n }
+  \item{k}{width of moving window; must be an odd integer between three and n }
   \item{endrule}{character string indicating how the values at the beginning 
     and the end, of the data, should be treated. Only first and last \code{k2} 
     values at both ends are affected, where \code{k2} is the half-bandwidth 
@@ -49,7 +49,7 @@
      following options: \dQuote{\code{c("median", "keep", "constant")}} .
   }
   \item{alg}{an option allowing to choose different algorithms or 
-    implementations, if provided. Default is use of code written in C. 
+    implementations, if provided. Default is to use of code written in C. 
     Option \code{alg="R"} will use slower code written in R. Usefull for 
     debugging and allows extentions in the future.}
   \item{center}{moving window center used by \code{runmad} function defaults 
@@ -109,7 +109,7 @@
 
   All \code{run*} functions are written in C, but \code{runmin}, \code{runmax} 
   and \code{runmean} also have fast R code versions (see argument 
-  \code{native}). Those were included for debugging purposes, and as a fallback 
+  \code{alg="R"}). Those were included for debugging purposes, and as a fallback 
   in hard-to-port situations. See examples.
   
   Function \code{EndRule} applies one of the five methods (see \code{endrule} 
@@ -118,7 +118,7 @@
   In case of \code{runmean(..., alg="exact")} function a special algorithm is 
   used (see references section) to ensure that round-off errors do not 
   accumulate. As a result \code{runmean} is more accurate than 
-  \code{\link{filter}}(x, rep(1/k,k)) and \code{runmean(..., native=TRUE)} 
+  \code{\link{filter}}(x, rep(1/k,k)) and \code{runmean(..., alg="C")} 
   functions.
   
   All of the functions in this section do not work with infinite numbers

@@ -11,10 +11,15 @@ runmean = function(x, k, alg=c("C", "R", "exact"),
   n = length(x)
   k = as.integer(k)
   k2 = k%/%2
-  if (k2<1) k2 = 1
+  if (k==1) {
+    y = x
+    attr(y, "k") = k
+    return (x)
+  }
+  if (k2<1) stop("'k' must be positive")
   if (k >n) k2 = (n-1)%/%2
   if (k!=1+2*k2)  
-    warning("'k' must be odd number bigger than 3 and smaller than 'length(x)'.",
+    warning("'k' must be odd number between 3 and 'length(x)'.",
     "Changing 'k' to ", k <- as.integer(1 + 2*k2))
   y=double(n)
   if (n==k) y[k2+1]=sum.exact(x)/n 
@@ -44,10 +49,15 @@ runmin = function(x, k, alg=c("C", "R"),
   n = length(x)
   k = as.integer(k)
   k2 = k%/%2
-  if (k2<1) k2 = 1
+  if (k==1) {
+    y = x
+    attr(y, "k") = k
+    return (x)
+  }
+  if (k2<1) stop("'k' must be positive")
   if (k >n) k2 = (n-1)%/%2
   if (k!=1+2*k2)  
-    warning("'k' must be odd number bigger than 3 and smaller than 'length(x)'.",
+    warning("'k' must be odd number between 3 and 'length(x)'.",
     "Changing 'k' to ", k <- as.integer(1 + 2*k2))
   y=double(n)
   if (n==k) y[k2+1]=min(x) else
@@ -75,7 +85,12 @@ runmax = function(x, k, alg=c("C", "R"),
   n = length(x)
   k = as.integer(k)
   k2 = k%/%2
-  if (k2<1) k2 = 1
+  if (k==1) {
+    y = x
+    attr(y, "k") = k
+    return (x)
+  }
+  if (k2<1) stop("'k' must be positive")
   if (k >n) k2 = (n-1)%/%2
   if (k!=1+2*k2)  
     warning("'k' must be odd number bigger than 3 and smaller than 'length(x)'.",
@@ -109,10 +124,10 @@ runquantile = function(x, k, probs, type=7,
   k    = as.integer(k)
   type = as.integer(type)
   k2 = k%/%2
-  if (k2<1) k2 = 1
+  if (k2<1) stop("'k' must be larger than 1")
   if (k >n) k2 = (n-1)%/%2
   if (k!=1+2*k2)  
-    warning("'k' must be odd number bigger than 3 and smaller than 'length(x)'.",
+    warning("'k' must be odd number between 3 and 'length(x)'.",
     "Changing 'k' to ", k <- as.integer(1 + 2*k2))
   if (is.na(type) || (type < 1 | type > 9)) 
     warning("'type' outside allowed range [1,9]; changing 'type' to ", type<-7)
@@ -120,10 +135,10 @@ runquantile = function(x, k, probs, type=7,
   if (np==1 && 2*probs==1) { # special case - return runmed it is faster
     erule = endrule
     if (endrule=="func") erule="median"
-    if (endrule=="NA" || endrule=="trim") erule="keep"
-    y = runmed(x, k, endrule=erule)
-    if (endrule=="NA" || endrule=="trim") 
-      y = EndRule(x, y, k, endrule, quantile, probs=probs[i], type=type)
+    if (endrule=="NA" || endrule=="trim") {
+      y = runmed(x, k, endrule="keep")
+      y = EndRule(x, y, k, endrule, median)
+    } else y = runmed(x, k, endrule=erule)
     dim(y) =  c(n,1) 
     return(y)
   }
@@ -176,10 +191,10 @@ runmad = function(x, k, center = runmed(x,k,endrule="keep"), constant = 1.4826,
   k = as.integer(k)
   constant = as.double(constant)
   k2 = k%/%2
-  if (k2<1) k2 = 1
+  if (k2<1) stop("'k' must be larger than 1")
   if (k >n) k2 = (n-1)%/%2
   if (k!=1+2*k2)  
-    warning("'k' must be odd number bigger than 3 and smaller than 'length(x)'.",
+    warning("'k' must be odd number between 3 and 'length(x)'.",
     "Changing 'k' to ", k <- as.integer(1 + 2*k2))
   y = double(n)
   if (n==k) y[k2+1]=mad(x, constant=1) else
@@ -201,7 +216,7 @@ EndRule = function(x, y, k,
   if (k2<1) k2 = 1
   if (k >n) k2 = (n-1)%/%2
   if (k!=1+2*k2)  
-    warning("'k' must be odd number bigger than 3 and smaller than 'length(x)'.",
+    warning("'k' must be odd number between 3 and 'length(x)'.",
     "Changing 'k' to ", k <- as.integer(1 + 2*k2))
   idx1 = 1:k2
   idx2 = (n-k2+1):n

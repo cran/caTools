@@ -11,11 +11,11 @@
 
 #ifdef DEBBUG
   int R_finite(double x) {return 1;}
-  #define Calloc(b, c)  calloc(b,sizeof(c))
+  #define Calloc(b, t)  (t*) calloc(b,sizeof(t))
   #define Free free
 #else
-  #include "R.h"
-  #include "Rinternals.h"
+  #include <R.h>
+  #include <Rinternals.h>
 #endif
 
 /*========================================================================================*/
@@ -239,8 +239,8 @@ void runquantile(double *In, double *Out, const int *nIn, const int *nWin, const
       *(out++) = ext;                 /* and fill the space with window extreme and move window */
     }
   } else {                            /* non-trivial case */
-    idx = (int   *) Calloc(m,int   ); /* index will hold partially sorted index numbers of Save array */
-    Win = (double*) Calloc(m,double); /* stores all points of the current running window */
+    idx = Calloc(m,int   );           /* index will hold partially sorted index numbers of Save array */
+    Win = Calloc(m,double);           /* stores all points of the current running window */
     for(i=0; i<m; i++) {
       Win[i] = *(in++);               /* initialize running window */
       idx[i] = i;                     /* and its index */
@@ -281,9 +281,9 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
   int i, k, j, l, *idx2, n=*nIn, m=*nWin;
   double *Win1, *Win2, *in, *out, *ctr, med0, med;
 
-  idx2 = (int   *) Calloc(m,int   ); /* index will hold partially sorted index numbers of Save array */
-  Win1 = (double*) Calloc(m,double); /* stores all points of the current running window */
-  Win2 = (double*) Calloc(m,double); /* stores all points of the current running window */
+  idx2 = Calloc(m,int   );       /* index will hold partially sorted index numbers of Save array */
+  Win1 = Calloc(m,double);       /* stores all points of the current running window */
+  Win2 = Calloc(m,double);       /* stores all points of the current running window */
   k    =  m/2;                   /* half of moving window size */  
   in   = In;                     /* initialize pointer to input In vector */
   out  = Out+k;                  /* initialize pointer to output Mad vector */

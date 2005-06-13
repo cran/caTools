@@ -45,6 +45,7 @@ write.ENVI = function(X, filename, interleave=c("bsq", "bil", "bip") )
   ieee = if(.Platform$endian=="big") 1 else 0       # does this machine uses ieee (UNIX) format? or is it intel format?
   out  = paste(out, "byte order = ", ieee, "\n", sep="")
   cat(out, file=paste(filename, ".hdr", sep=""))
+  invisible(NULL)
 }
 
 # =======================================================================================
