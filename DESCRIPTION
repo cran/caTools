@@ -1,0 +1,15 @@
+Package: caTools
+Version: 1.0
+Date: 2005-06-13
+Title: Miscellaneous functions created while developing caMassClass package 
+Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
+Maintainer: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
+Depends: R (>= 2.0.0), bitops
+Description: Contains several basic utility functions including:
+  reading/writing ENVI binary files, fast moving (rolling, running) window 
+  statistic functions, fast calculation of AUC, LogitBoost classifier, base64
+  encoder/decoder, etc.
+License: The caMassClass Software License, Version 1.0 (See COPYING file or 
+  "http://ncicb.nci.nih.gov/download/camassclasslicense.jsp")
+URL: http://ncicb.nci.nih.gov/download/index.jsp
+Packaged: Fri Jun 17 20:58:42 2005; hornik
