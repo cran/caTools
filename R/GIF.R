@@ -5,7 +5,7 @@
 #===========================================================================#
 
 write.gif = function(image, filename, col=NULL, scale=c("smart", "never", "always"), 
-    transparent=NULL, comment=NULL, delay=0,  flip=FALSE,  interlace=FALSE)
+    transparent=NULL, comment=NULL, delay=0, flip=FALSE, interlace=FALSE)
 {
   if (!is.character(filename)) stop("write.gif: 'filename' has to be a string")
   if (length(filename)>1) filename = paste(filename, collapse = "")  # combine characters into a string

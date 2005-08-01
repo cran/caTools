@@ -1,0 +1,25 @@
+Changes:
+1) caMassClass-1.0 to caTools-1.0 - caTools created after splitting caMassClass
+   package:
+  - bin2raw and raw2bin files: endian variable was added
+  - raw2bin: additional error checking
+  - runmean, runmax, runmin, runquantile, runmad: additional error checking and
+    corrected error checking
+  - EndRule: added error checking
+  - runmean, runmax, runmin: additional parameter "alg" was added
+  - runmean - new C code can survive round-off errors
+2) caTools-1.0 to caTools-1.1 :
+  - read.GIF and write.GIF files were added.
+  - bin2raw and raw2bin files: much faster raw to numeric conversion
+  - sum.exact, cumsum.exact and runsum.exact  functions were added for 
+    under-flow safe addition.
+2) caTools-1.1 to caTools-1.2 :
+  - minor changes to .Rd files to fix problems found by new 'checkDocFiles'
+    function.
+
+====================================================\==========================                 
+ Jarek Tuszynski, PhD.                           o / \ 
+ Science Applications International Corporation  <\__,|  
+ (703) 676-4192                                   ">   \
+ Jaroslaw.W.Tuszynski@saic.com                     `    \
+

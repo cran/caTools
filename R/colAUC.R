@@ -22,10 +22,10 @@ colAUC = function (X, y, p.val=FALSE)
   Auc  = matrix(0.5,nP,nC)              # Initialize array to store results
   for (j in 1:nC) {                     # for each column representing a feature
     x = sort(X [, j], index=TRUE)       # sort all columns and store each one in x[[1]]. x[[2]] stores original positions
-    nunq = which(diff(x[[1]])==0)       # find non-unique A's in column j (if vector is [1 1] nunq=1
+    nunq = which(diff(x$x)==0)          # find non-unique A's in column j (if vector is [1 1] nunq=1
     n = length(nunq)                    # number of non-unique values
     if (n<nR-1) {                       # make sure all numbers in A column are not the same
-      idx = y[x[[2]]]                   # reorder label vector in the same order as b, or associate label with each number in b
+      idx = y[x$ix]                     # reorder label vector in the same order as b, or associate label with each number in b
       # assign column for each label (class) and for each point add 1 in the column corresponding to its class
       d = ( matrix(rep(idx,nL),nR,nL) == L ) 
       for (i in 1:nL) d[,i] = cumsum(d[,i])  # cumulative sum of d columns
