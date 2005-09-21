@@ -1,12 +1,10 @@
 \name{colAUC}
 \alias{colAUC}
 \title{Columnwise Area Under ROC Curve (AUC)}
-\description{Area Under ROC Curve (AUC) calculated for every column of the 
-  matrix.}
-\synopsis{colAUC(X, y, p.val=FALSE)}
+\description{Calculate Area Under the ROC Curve (AUC) for every column of a 
+  matrix. Also, can be used to plot the ROC curves.}
 \usage{
-  auc = colAUC(X, y)
-  p   = colAUC(X, y, p.val=TRUE)
+  auc = colAUC(X, y, plotROC=FALSE, alg=c("Wilcoxon","ROC"))
 }
 
 \arguments{
@@ -15,9 +13,11 @@
   \item{y}{Class labels for the \code{X} data samples. 
     A response vector with one label for each row/component of \code{X}.
     Can be either a factor, string or a numeric vector.}
-  \item{p.val}{a boolean flag: if set to TRUE than "Wilcoxon rank sum test" 
-    p-values (see \code{\link{wilcox.test}}) will be returned instead of AUC 
-    values}
+  \item{plotROC}{Plot ROC curves. Use only for small number of features. 
+    If \code{TRUE}, will set \code{alg} to "ROC".}
+  \item{alg}{algorithm to use: "ROC" integrates ROC curves, while "Wilcoxon"
+    uses Wilcoxon Rank Sum Test to get the same results. Default "Wilcoxon" is
+    faster. This argument is mostly provided for verification.}
 }
 
 \details{
@@ -30,19 +30,30 @@
   (two classes are statistically identical) and 1.0 (there is a threshold value
    that can achieve a perfect separation between the classes).
   
-  This measure is very similar to Wilcoxon rank sum test (see 
-  \code{\link{wilcox.test}}), which is also called 
-  Mann-Whitney test. Wilcoxon-test's p-value can be calculated by 
-  \code{p=pnorm( n1*n2*(1-auc), mean=n1*n2/2, sd=sqrt(n1*n2*(n1+n2+1)/12) )} 
-  where \code{n1} and \code{n2} are numbers of elements in two classes being 
-  compared.
+  Area under ROC Curve (AUC) measure is very similar to Wilcoxon Rank Sum Test 
+  (see \code{\link{wilcox.test}}) and Mann-Whitney U Test. 
   
-  The main purpose of this function was to calculate AUC's of large number of 
-  features, fast. It is being used to help with classification of protein mass 
-  spectra data 
-  that often have up to 50K features, as a fast and dirty way of lowering 
-  dimensionality of the data before applying standard classification algorithms 
-  like \code{nnet} or \code{svd}.
+  There are numerous other functions for calculating AUC in other packages. 
+  Unfortunatelly none of them had all the properties I needed for use as 
+  classification preprocessing, to lower the dimentionality of the data (from 
+  tens of thousands to hundreds) before applying standard classification 
+  algorithms. 
+  
+  The main properties of this code are: 
+  \itemize{
+    \item Ability to work with multi-dimentional data (\code{X} can have many 
+          columns).
+    \item Ability to work with multi-class datasets (\code{y} can have more 
+          than 2 different values).
+    \item Speed - this code was written to calculate AUC's of large number of 
+          features, fast.
+    \item Returned AUC is always bigger than 0.5, which is equivalent of 
+    testing for each feature \code{colAUC(x,y)} and \code{colAUC(-x,y)} and
+    returning the value of the bigger one.
+  }
+  If those properties do not fit your problem, see "See Also" and "Examples" 
+  sections for AUC 
+  functions in other packages that might be a better fit for your needs. 
 }
 
 \value{
@@ -74,6 +85,8 @@
        \item McNeil and Hanley (1984), \emph{Statistical Approaches to the  
          Analysis of ROC curves}, Medical Decision Making 4(2): 136-149.
      }
+     \item See \url{http://rocr.bioinf.mpi-sb.mpg.de/evaluation_literature.html}
+     for bibliography of \pkg{ROCR} package. 
   }
 } 
 
@@ -81,37 +94,63 @@
 
 \seealso{
   \code{\link[ROC]{AUC}} from \pkg{ROC} package, 
+  \code{\link[ROCR]{performance}} from \pkg{ROCR} package, 
+  \code{\link[limma]{auROC}} from \pkg{limma} package, 
+  \code{\link[Epi]{ROC}} from \pkg{Epi} package, 
   \code{\link[verification]{roc.area}} from \pkg{verification} package, 
-  \code{\link{wilcox.test}}
+  \code{\link{wilcox.test}} and \code{\link{pwilcox}}
 }
 
 \examples{
-  # load MASS library with "cats" data set that have following columns: sex, 
-  # body weight, hart weight
-  library(MASS)
-  data(cats)
-  colAUC(cats[,2:3], cats[,1]) 
-  
-  # compare with examples from roc.area function: using Data from Mason and Graham (2002).
-  a<- (1981:1995)
-  b<- c(0,0,0,1,1,1,0,1,1,0,0,0,0,1,1)
-  c<- c(.8, .8, 0, 1,1,.6, .4, .8, 0, 0, .2, 0, 0, 1,1)
-  d<- c(.928,.576, .008, .944, .832, .816, .136, .584, .032, .016, .28, .024, 0, .984, .952)
-  A<- data.frame(a,b,c,d)
-  names(A)<- c("year", "event", "p1", "p2")
-  if (library(verification, logical.return=TRUE)) {
-    roc.area(A$event, A$p1)           # for model with ties
-    roc.area(A$event, A$p2)           # for model without ties
-  }
-  wilcox.test(p2~event, data=A)
-  # colAUC output is the same as roc.area's A.tilda values
-  colAUC(A[,3:4], A$event) 
-  # colAUC output is the same as roc.area's  and wilcox.test's p values
-  colAUC(A[,3:4], A$event, p.val=TRUE) 
-  
-  # example of 3-class data
-  data(iris)
-  colAUC(iris[,-5], iris[,5])
+# Load MASS library with "cats" data set that have following columns: sex, body
+# weight, hart weight. Calculate how good weights are in predicting sex of cats. 
+library(MASS); data(cats);
+colAUC(cats[,2:3], cats[,1], plotROC=TRUE) 
+
+# Load rpart library with "kyphosis" data set that records if kyphosis
+# deformation was present after corrective surgery. Calculate how good age, 
+# number and position of vertebrae are in predicting succesful operation. 
+library(rpart); data(kyphosis);
+colAUC(kyphosis[,2:4], kyphosis[,1], plotROC=TRUE)
+
+# Example of 3-class iris data
+data(iris)
+colAUC(iris[,-5], iris[,5], plotROC=TRUE)
+
+# Compare calAUC with other functions designed for similar purpose
+auc = matrix(NA,9,3)
+rownames(auc) = c("colAUC(alg='ROC')", "colAUC(alg='Wilcox')", "wilcox.test",
+                       "rank", "roc.area", "AUC", "performance", "ROC", "auROC")
+colnames(auc) = c("AUC(x)", "AUC(-x)", "AUC(x+noise)")
+X = cbind(cats[,2], -cats[,2], cats[,2]+rnorm(ncol(cats)) )
+y = ifelse(cats[,1]=='F',0,1)
+for (i in 1:3) {
+  x = X[,i]
+  x1 = x[y==1]; n1 = length(x1);                 # prepare input data ...
+  x2 = x[y==0]; n2 = length(x2);                 # ... into required format
+  auc[1,i] = colAUC(x, y, alg="ROC")             # get AUC by 'colAUC'
+  auc[2,i] = colAUC(x, y, alg="Wilcox")          # get AUC by 'colAUC'
+  auc[3,i] = wilcox.test(x1, x2, exact=0)$statistic / (n1*n2) # get AUC by 'wilcox.test'
+  r = rank(c(x1,x2))
+  auc[4,i] = (sum(r[1:n1]) - n1*(n1+1)/2) / (n1*n2) # get AUC by 'rank'
+  if (require("verification"))
+    auc[5,i] = roc.area(y, x)$A.tilda            # get AUC by 'roc.area'
+  if (require("ROC"))                            # get AUC by 'AUC'
+    auc[6,i] = AUC(rocdemo.sca(y, x, dxrule.sca))    
+  if (require("ROCR"))                           # get AUC by 'performance'
+    auc[7,i] = performance(prediction( x, y),"auc")@y.values[[1]]
+  if (require("Epi"))   auc[8,i] = ROC(x,y,grid=0)$AUC # get AUC by 'ROC'
+  if (require("limma")) auc[9,i] = auROC(y, x)   # get AUC by 'auROC'
+}
+print(auc)
+stopifnot(auc[1, ]==auc[2, ])   # results of 2 alg's in colAUC must be the same
+stopifnot(auc[1,1]==auc[3,1])   # compare with wilcox.test results
+
+# time trials
+x = matrix(runif(100*1000),100,1000)
+y = (runif(100)>0.5)
+system.time(colAUC(x,y,alg="ROC"   ), gcFirst=TRUE)
+system.time(colAUC(x,y,alg="Wilcox"), gcFirst=TRUE)
 }
 
 \keyword{univar}

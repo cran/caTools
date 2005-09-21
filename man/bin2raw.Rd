@@ -1,4 +1,4 @@
-\name{bin2raw}
+\name{bin2raw & raw2bin}
 \alias{bin2raw}
 \alias{raw2bin}
 \title{Convert R vectors to/from the raw binary format}

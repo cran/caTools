@@ -1,4 +1,4 @@
-\name{GIF}
+\name{read.gif & write.gif}
 \alias{read.gif}
 \alias{write.gif}
 \title{Read and Write Images in GIF format}

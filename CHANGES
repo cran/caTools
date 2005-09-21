@@ -8,14 +8,19 @@ Changes:
   - EndRule: added error checking
   - runmean, runmax, runmin: additional parameter "alg" was added
   - runmean - new C code can survive round-off errors
-2) caTools-1.0 to caTools-1.1 :
+2) caTools-1.1  (7/15/2005)
   - read.GIF and write.GIF files were added.
   - bin2raw and raw2bin files: much faster raw to numeric conversion
   - sum.exact, cumsum.exact and runsum.exact  functions were added for 
     under-flow safe addition.
-2) caTools-1.1 to caTools-1.2 :
+3) caTools-1.2 (8/8/2005)
   - minor changes to .Rd files to fix problems found by new 'checkDocFiles'
     function.
+4) caTools-1.3 (9/23/2005)
+  - changes to colAUC function. Parameters: plotROC and alg were added. 
+    Parameter 'p.val' was removed, since it gave wrong results in case of data 
+    with ties. And it was too complicated to fix.
+  - added much better testing of "colAUC" in Example section.
 
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
