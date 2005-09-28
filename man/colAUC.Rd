@@ -93,54 +93,60 @@
 \author{Jarek Tuszynski (SAIC) \email{jaroslaw.w.tuszynski@saic.com}} 
 
 \seealso{
-  \code{\link[ROC]{AUC}} from \pkg{ROC} package, 
-  \code{\link[ROCR]{performance}} from \pkg{ROCR} package, 
-  \code{\link[limma]{auROC}} from \pkg{limma} package, 
-  \code{\link[Epi]{ROC}} from \pkg{Epi} package, 
-  \code{\link[verification]{roc.area}} from \pkg{verification} package, 
-  \code{\link{wilcox.test}} and \code{\link{pwilcox}}
+  \itemize{
+  \item \code{\link{wilcox.test}} and \code{\link{pwilcox}}
+  \item \code{\link[ROC]{AUC}} from \pkg{ROC} package
+  \item \code{\link[ROCR]{performance}} from \pkg{ROCR} package
+  \item \code{\link[limma]{auROC}} from \pkg{limma} package 
+  \item \code{\link[Epi]{ROC}} from \pkg{Epi} package
+  \item \code{\link[verification]{roc.area}} from \pkg{verification} package
+  \item \code{\link[Hmisc]{rcorr.cens}} from \pkg{Hmisc} package
+  }
 }
 
 \examples{
 # Load MASS library with "cats" data set that have following columns: sex, body
-# weight, hart weight. Calculate how good weights are in predicting sex of cats. 
+# weight, hart weight. Calculate how good weights are in predicting sex of cats.
+# 2 classes; 2 features; 144 samples
 library(MASS); data(cats);
 colAUC(cats[,2:3], cats[,1], plotROC=TRUE) 
 
 # Load rpart library with "kyphosis" data set that records if kyphosis
 # deformation was present after corrective surgery. Calculate how good age, 
 # number and position of vertebrae are in predicting succesful operation. 
+# 2 classes; 3 features; 81 samples
 library(rpart); data(kyphosis);
 colAUC(kyphosis[,2:4], kyphosis[,1], plotROC=TRUE)
 
-# Example of 3-class iris data
+# Example of 3-class 4-feature 150-sample iris data
 data(iris)
 colAUC(iris[,-5], iris[,5], plotROC=TRUE)
 
 # Compare calAUC with other functions designed for similar purpose
-auc = matrix(NA,9,3)
+auc = matrix(NA,10,3)
 rownames(auc) = c("colAUC(alg='ROC')", "colAUC(alg='Wilcox')", "wilcox.test",
-                       "rank", "roc.area", "AUC", "performance", "ROC", "auROC")
+    "sum(rank)", "roc.area", "AUC", "performance", "ROC", "auROC", "rcorr.cens")
 colnames(auc) = c("AUC(x)", "AUC(-x)", "AUC(x+noise)")
-X = cbind(cats[,2], -cats[,2], cats[,2]+rnorm(ncol(cats)) )
+X = cbind(cats[,2], -cats[,2], cats[,2]+rnorm(nrow(cats)) )
 y = ifelse(cats[,1]=='F',0,1)
 for (i in 1:3) {
   x = X[,i]
   x1 = x[y==1]; n1 = length(x1);                 # prepare input data ...
   x2 = x[y==0]; n2 = length(x2);                 # ... into required format
-  auc[1,i] = colAUC(x, y, alg="ROC")             # get AUC by 'colAUC'
-  auc[2,i] = colAUC(x, y, alg="Wilcox")          # get AUC by 'colAUC'
-  auc[3,i] = wilcox.test(x1, x2, exact=0)$statistic / (n1*n2) # get AUC by 'wilcox.test'
+  auc[1,i] = colAUC(x, y, alg="ROC") 
+  auc[2,i] = colAUC(x, y, alg="Wilcox")
+  auc[3,i] = wilcox.test(x1, x2, exact=0)$statistic / (n1*n2) 
   r = rank(c(x1,x2))
-  auc[4,i] = (sum(r[1:n1]) - n1*(n1+1)/2) / (n1*n2) # get AUC by 'rank'
+  auc[4,i] = (sum(r[1:n1]) - n1*(n1+1)/2) / (n1*n2)
   if (require("verification"))
-    auc[5,i] = roc.area(y, x)$A.tilda            # get AUC by 'roc.area'
-  if (require("ROC"))                            # get AUC by 'AUC'
+    auc[5,i] = roc.area(y, x)$A.tilda 
+  if (require("ROC")) 
     auc[6,i] = AUC(rocdemo.sca(y, x, dxrule.sca))    
-  if (require("ROCR"))                           # get AUC by 'performance'
+  if (require("ROCR")) 
     auc[7,i] = performance(prediction( x, y),"auc")@y.values[[1]]
-  if (require("Epi"))   auc[8,i] = ROC(x,y,grid=0)$AUC # get AUC by 'ROC'
-  if (require("limma")) auc[9,i] = auROC(y, x)   # get AUC by 'auROC'
+  if (require("Epi"))   auc[8,i] = ROC(x,y,grid=0)$AUC
+  if (require("limma")) auc[9,i] = auROC(y, x)
+  if (require("Hmisc")) auc[10,i] = rcorr.cens(x, y)[1]  
 }
 print(auc)
 stopifnot(auc[1, ]==auc[2, ])   # results of 2 alg's in colAUC must be the same

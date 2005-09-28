@@ -109,6 +109,6 @@ colAUC = function (X, y, plotROC=FALSE, alg=c("Wilcoxon","ROC"))
       }
     } # end of 'for j' loop
   }
-  Auc = max(Auc, 1-Auc) # if any auc<0.5 than mirror it to the other side of 0.5
+  Auc = pmax(Auc, 1-Auc) # if any auc<0.5 than mirror it to the other side of 0.5
   return (Auc)
 }

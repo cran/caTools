@@ -197,8 +197,9 @@ com = "Hello World"    # imbed comment in the file
 write.gif( volcano, "volcano.gif", col=col, transparent=trn, comment=com)
 y = read.gif("volcano.gif")
 stopifnot(volcano==y$image, col==y$col, trn==y$transparent, com==y$comment)
+# browseURL("file://volcano.gif") # inspect GIF file on your hard disk
 
-# create animated GIF (using image function im a loop is very rough,
+# create animated GIF (using image function in a loop is very rough,
 # but only way I know of displaying 'animation" in R)
 x <- y <- seq(-4*pi, 4*pi, len=200)
 r <- sqrt(outer(x^2, y^2, "+"))
@@ -208,6 +209,7 @@ write.gif(image, "wave.gif", col=rainbow(256))
 y = read.gif("wave.gif")
 for(i in 1:10) image(y$image[,,i], col=y$col, breaks=(0:256)-0.5, asp=1)
 # browseURL("file://wave.gif") # inspect GIF file on your hard disk
+file.remove("wave.gif", "volcano.gif")
 
 # Display interesting images from the web
 \dontrun{
@@ -226,10 +228,6 @@ for(i in 2:dim(y$image)[3])
   image(y$image[,,i], col=y$col, breaks=(0:length(y$col))-0.5,
             asp=1, main="Erosion in Drainage Basins")
 }
-
-## End(Not run)
-file.remove("volcano.gif")
-file.remove("wave.gif")
 }
 
 \keyword{file}

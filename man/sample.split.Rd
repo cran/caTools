@@ -8,8 +8,7 @@
 }
 
 \usage{
-    sample.split( Y, SplitRatio = 2/3, group = NULL )
-msc.sample.split( Y, SplitRatio = 2/3, group = NULL )
+ sample.split( Y, SplitRatio = 2/3, group = NULL )
 }
 
 \arguments{

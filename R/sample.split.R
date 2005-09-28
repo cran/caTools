@@ -48,8 +48,3 @@ sample.split = function( Y, SplitRatio = 2/3, group = NULL )
   return( BinOne )
 }
 
-msc.sample.split = function( Y, SplitRatio = 2/3, group = NULL ) 
-{ 
-  warning("Function 'msc.sample.split' was moved to 'caTools' package under new name 'split.samples'. Sorry for inconvinience.")
-  return( sample.split( Y, SplitRatio, group ) )
-}
