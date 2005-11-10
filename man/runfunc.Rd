@@ -266,13 +266,13 @@
   
   # speed comparison
   x=runif(100000); k=991;
-  system.time(runmean(x,k), gcFirst=TRUE)
-  system.time(runmean(x,k, alg="R"), gcFirst=TRUE)
-  system.time(runmean(x,k, alg="exact"), gcFirst=TRUE)
-  system.time(filter(x, rep(1/k,k), sides=2), gcFirst=TRUE) #the fastest alternative I know
+  system.time(runmean(x,k))
+  system.time(runmean(x,k, alg="R"))
+  system.time(runmean(x,k, alg="exact"))
+  system.time(filter(x, rep(1/k,k), sides=2)) #the fastest alternative I know
   k=91;
-  system.time(runmad(x,k), gcFirst=TRUE)
-  system.time(apply(embed(x,k), 1, mad), gcFirst=TRUE) #the fastest alternative I know
+  system.time(runmad(x,k))
+  system.time(apply(embed(x,k), 1, mad)) #the fastest alternative I know
   
   # numerical comparison of round-off error handling
   test.runmean = function (x, k) {

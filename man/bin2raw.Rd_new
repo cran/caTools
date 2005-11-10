@@ -40,8 +40,8 @@
   modified, making \code{bin2raw} and \code{raw2bin} functions mostly obsolete.
   As a result both function will be removed in the next version. Function
   \code{writeBin(x, raw(), ...)} does exactly the same as \code{bin2raw(x, ...)}.  
-  Function \code{raw2bin(r, what, size=size, ...)} is 
-  implemented as \code{readBin(r, what, n=length(r)\%/\%size, size=size, ...)}, 
+  Function \code{raw2bin(r, what, size=size, ...} is 
+  implemented as \code{readBin(r, what, n=length(r)%/%size, size=size, ...}, 
   assuming size is not \code{NA}. 
 }
 

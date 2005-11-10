@@ -12,8 +12,9 @@ combs = function(v,k) {
 # and K columns containing all possible combinations of N elements taken K at a time.
 # example: combs(1:3,2) returns matrix with following rows (1 2), (1 3), (2 3)
   n = length(v)
-  if      (n==k) P = matrix(v,1,n)
-  else if (k==1) P = matrix(v,n,1)
+  if      (n==k  ) P = matrix(v,1,n)
+  else if (k==1  ) P = matrix(v,n,1)
+  else if (k==n-1) P = matrix( rep(v, each=n-1), n, n-1)
   else if (k< n) {
     P = matrix(0,0,k)
     if (k < n & k > 1) {

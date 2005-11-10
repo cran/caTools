@@ -24,6 +24,15 @@ Changes:
 4) caTools-1.4 (9/28/2005)
   - a small change in 1.3 that used call to 'max' instead of 'pmax' made 
     'colAUC' return wrong numbers in case of multi-feature data.
+5) caTools-1.5 (11/10/2005)
+  - several new examples
+  - functions raw2bin and bin2raw still work but return warnings. They will be 
+    retired in the next version, since they parallel new capabilities of 
+    readBin and writeBin.
+  - Argument 'col' of function 'write.gif' was changed to allow several other 
+    ways to define a color palette.
+  - base64encode and base64decode now use readBin and writeBin instead
+    raw2bin and bin2raw.
     
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 

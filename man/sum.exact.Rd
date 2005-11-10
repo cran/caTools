@@ -73,10 +73,12 @@
 
 \examples{
   x = c(1, 1e20, 1e40, -1e40, -1e20, -1)
-  sum(x)
-  sum.exact(x)
-  cumsum(x)
-  cumsum.exact(x)
+  a = sum(x);          print(a)
+  b = sum.exact(x);    print(b)
+  stopifnot(b==0)
+  a = cumsum(x);       print(a)
+  b = cumsum.exact(x); print(b)
+  stopifnot(b[6]==0)
 }
 \keyword{ts}
 \keyword{smooth}

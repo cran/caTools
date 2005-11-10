@@ -30,8 +30,12 @@
 }
 
 \examples{
-  #example: combs(1:3,2) returns matrix with following rows (1 2), (1 3), (2 3)
-  combs(1:3,2)
+  combs(2:5, 3) # display examples
+  combs(c("cats", "dogs", "mice"), 2)
+  
+  a = combs(1:4, 2)
+  b = matrix( c(1,1,1,2,2,3,2,3,4,3,4,4), 6, 2)
+  stopifnot(a==b)
 }
 
 \keyword{models}

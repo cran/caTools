@@ -1,10 +1,10 @@
 Package: caTools
-Version: 1.4
-Date: 2005-09-28
+Version: 1.5
+Date: Nov 10 2005
 Title: Miscellaneous tools: I/O, moving window statistics, etc. 
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Maintainer: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
-Depends: R (>= 2.0.0), bitops
+Depends: R (>= 2.2.0), bitops
 Suggests: MASS, rpart, verification, ROC, ROCR, Epi, limma
 Description: Contains several basic utility functions including:
   moving (rolling, running) window statistic functions, read/write for GIF 
@@ -13,4 +13,4 @@ Description: Contains several basic utility functions including:
 License: The caMassClass Software License, Version 1.0 (See COPYING file or 
   "http://ncicb.nci.nih.gov/download/camassclasslicense.jsp")
 URL: http://ncicb.nci.nih.gov/download/index.jsp
-Packaged: Wed Sep 28 09:25:35 2005; tuszynskij
+Packaged: Tue Nov 15 09:11:21 2005; tuszynskij

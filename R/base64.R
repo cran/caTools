@@ -14,10 +14,10 @@
 # enabling 6 bits to be represented per printable character
 #===============================================================================
 
-base64encode = function(x, ...)
+base64encode = function(x, size=NA, endian=.Platform$endian)
 {
    if(!require(bitops)) warning("Could not load package bitops")
-   if (typeof(x)!="raw") x = bin2raw(x, ...)
+   if (typeof(x)!="raw") x = writeBin(x, raw(), size=size, endian=endian)
    x = as.integer(x)
    ndByte = length(x)            # number of decoded bytes
    nBlock = ceiling(ndByte / 3)  # number of blocks/groups
@@ -66,8 +66,8 @@ base64encode = function(x, ...)
 
 #====================================================================
 
-base64decode = function(z, what, ...)
-{
+base64decode = function(z, what, size=NA, signed = TRUE, endian=.Platform$endian)
+{  
   library(bitops)                 # needed for bitOr and bitAnd
   if (!is.character(z)) 
     stop("base64decode: Input argument 'z' is suppose to be a string")
@@ -115,6 +115,19 @@ base64decode = function(z, what, ...)
   # remove padding
   if (neByte %% 4 == 2) x = x[1:(ndByte-2)]
   if (neByte %% 4 == 3) x = x[1:(ndByte-1)]
-  return ( raw2bin(as.raw(x), what, ...) )
+  
+  # perform final conversion from 'raw' to type given by 'what'
+  r = as.raw(x)
+  TypeList = c("logical", "integer", "double", "complex", "character", "raw", 
+               "numeric", "int")
+  if (!is.character(what) || length(what) != 1 || !(what %in% TypeList)) 
+    what <- typeof(what)
+  if (what=="raw") return(r)
+  if (is.na(size)) size = switch(match(what, TypeList), 4, 4, 8, 16, 2, 1, 8, 4) 
+  n = length(r)
+  if (n%%size) stop("raw2bin: number of elements in 'r' is not multiple of 'size'")
+  x = readBin(r, what, n = n%/%size, size=size, signed=signed, endian=endian)
+  if (what=="character")  x = paste(x, collapse = "") # convert arrays of characters to strings
+  return (x)
 }
 

@@ -4,15 +4,16 @@
 # "caBIO Software License", like the rest of the caTools package.           #
 #===========================================================================#
 
-write.gif = function(image, filename, col=NULL, scale=c("smart", "never", "always"), 
-    transparent=NULL, comment=NULL, delay=0, flip=FALSE, interlace=FALSE)
+write.gif = function(image, filename, col="gray", 
+            scale=c("smart", "never", "always"), transparent=NULL, 
+            comment=NULL, delay=0, flip=FALSE, interlace=FALSE)
 {
   if (!is.character(filename)) stop("write.gif: 'filename' has to be a string")
   if (length(filename)>1) filename = paste(filename, collapse = "")  # combine characters into a string
 
-  #=================================
-  # cast x into a proper dimentions
-  #=================================
+  #======================================
+  # cast 'image' into a proper dimentions
+  #======================================
   dm = dim(image)
   if (is.null(dm)) stop("write.gif: input 'x' has to be an matrix or 3D array")
   if (length(dm)<=2) { # this is a 2D matrix or smaller
@@ -80,10 +81,18 @@ write.gif = function(image, filename, col=NULL, scale=c("smart", "never", "alway
   #=================================
   # format color palette
   #=================================
-  if (is.null(col)) { # no color palette we will use gray scale
-    a =  as.integer(seq(0,255,length.out=maxx+1))
-    crgb = rbind(a,a,a)
-  } else crgb  = col2rgb(col)
+  n = maxx+1
+  if (is.character(col) && length(col)==1) {
+    if (col %in% c("grey", "gray")) col = gray(0:n/n)
+    if (col=="jet") 
+      col = colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", 
+            "yellow", "#FF7F00", "red", "#7F0000")) # define "jet" palette
+  }
+  if (length(col)==1) { # if not a vector than maybe it is a palette function
+    FUN = match.fun(col) # make sure it is a function not a string with function name
+    col = FUN(n)
+  }
+  crgb  = col2rgb(col)
   Palette = as.integer(c(256^(2:0) %*% crgb)) # convert to internal int format
   nColor = length(Palette)
   if (nColor<maxx) 

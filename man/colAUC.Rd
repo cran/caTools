@@ -155,8 +155,8 @@ stopifnot(auc[1,1]==auc[3,1])   # compare with wilcox.test results
 # time trials
 x = matrix(runif(100*1000),100,1000)
 y = (runif(100)>0.5)
-system.time(colAUC(x,y,alg="ROC"   ), gcFirst=TRUE)
-system.time(colAUC(x,y,alg="Wilcox"), gcFirst=TRUE)
+system.time(colAUC(x,y,alg="ROC"   ))
+system.time(colAUC(x,y,alg="Wilcox"))
 }
 
 \keyword{univar}
