@@ -1,7 +1,7 @@
-\name{ENVI}
+\name{read.ENVI & write.ENVI}
 \alias{read.ENVI}
 \alias{write.ENVI}
-\title{Read and write binary data in ENVI format}
+\title{Read and Write Binary Data in ENVI Format}
 \description{Read and write binary data in ENVI format, which is supported by 
   most GIS software.}
 \usage{
@@ -112,3 +112,4 @@
 }
 
 \keyword{file}
+\concept{GIS data I/O}

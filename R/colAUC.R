@@ -49,6 +49,7 @@ colAUC = function (X, y, plotROC=FALSE, alg=c("Wilcoxon","ROC"))
     abline(h=0:10/10, v=0:10/10, col = "lightgray") # grid on
     if (nC*nP<20) { # if too many curves than skip the labels
       S = colnames(Auc)
+      if (is.null(S)) S=paste('col',1:nC);
       if (nP>1) S = paste(rep(S,each=nP), "[", rownames(Auc), "]")
       legend("bottomright", S,  col=1:(nC*nP),  lty=1, lwd=1, pch=20, 
            merge=TRUE, inset=0.01, bg="white")

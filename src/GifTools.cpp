@@ -4,6 +4,23 @@
 /* "caBIO Software License" like the rest of the caTools package             */
 /*===========================================================================*/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>   // memset, memcpy
+#include "GifTools.h"   
+typedef unsigned char uchar;
+
+#ifndef USING_R // if not using R language than define following calls:
+  #define print         printf
+  #define Calloc(n, T)  new T[n];
+  inline void Free(void* p) { delete []p; }
+#endif
+
+//#define STANDALONE_TEST
+#ifdef STANDALONE_TEST
+  inline void Error(char *message) { fprintf(stderr, "\nError: %s.\n", message); exit(1); }
+#endif //STANDALONE_TEST
+
 //=======================================================================
 //  Encoding Algorithm adapted from code by Christoph Hohmann
 //  found at http://members.aol.com/rf21exe/gif.htm.
@@ -19,52 +36,8 @@
 //  documentation. This software is provided "as is" without express or 
 //  implied warranty."
 //=======================================================================
-extern "C" {
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>   // va_list
-#include <string.h>   // memset, memcpy
-typedef unsigned char uchar;
-
-//#define TEST_ALG
-#ifdef  TEST_ALG
-  #define Calloc(b, t)  (t*) calloc(b,sizeof(t))
-  #define Free free
-  #define print printf
-
-  inline void error(char *format, ...) 
-  {
-    va_list ap;
-    fprintf(stderr, "\nError: ");
-    va_start(ap, format);
-    vfprintf(stderr, format, ap);
-    va_end(ap);
-    fprintf(stderr,".\n");
-    exit(1);
-  }
-
-#else
-  #include <R.h>
-  #include <Rinternals.h>
-  #define print Rprintf
-#endif
-
-
-
-inline int BitGet (int  num, int bit) { return ((num &  (1<<bit)) !=0 ); } 
-
-#ifndef MAX
-#define MAX(a,b)  ((a) < (b) ? (b) : (a))
-#endif
-#ifndef MIN
-#define MIN(a,b)  ((a) > (b) ? (b) : (a))
-#endif
-
-
-
-
-
+inline int bitGet (int  num, int bit) { return ((num &  (1<<bit)) !=0 ); } 
 
 //==============================================================
 // bit-packer class
@@ -117,11 +90,11 @@ public:
     // 'need' [1..8] tells how many bits will still fit in there. 
     // Since the bytes are filled bottom up (least significant bits first),
     // the 'need' vacant bits are the most significant ones.
-    if (nBits<0 || nBits>12) error("BitPacker::SubmitCode");
+    if (nBits<0 || nBits>12) Error("BitPacker::SubmitCode");
     short mask;
     while (nBits >= need) {
       mask = (1<<need)-1; // 'mask'= all zeroes followed by 'need' ones
-      *pos += (uchar)((mask&code) << (8-need)); // the 'need' lowest bits of 'code' fill the current byte at its upper end
+      *pos += static_cast<uchar>((mask&code) << (8-need)); // the 'need' lowest bits of 'code' fill the current byte at its upper end
       nBits -= need;  // update the length of 'code'
       code >>= need;  // remove the written bits from code
       *(++pos)=0;     // byte is now full, goto next byte & init it
@@ -132,7 +105,7 @@ public:
     // we have 'need'>0. The bits will be filled upon future calls.
     if(nBits>0) {
       mask  = (1<<nBits)-1;        // 'mask'= all zeroes followed by 'need' ones
-      *pos += (uchar)((mask&code)<<(8-need));
+      *pos += static_cast<uchar>((mask&code)<<(8-need));
       need -= nBits;                         
     }    
     // As soon as 255 bytes are full, they are written to 'binfile' as a 
@@ -155,7 +128,7 @@ public:
   {
     // if the current byte is partially filled, leave it alone 
     if(need<8) pos++;  // close any partially filled terminal byte
-    int BlockSize = (int) (pos-buffer);   // # remaining bytes
+    int BlockSize = static_cast<int>(pos-buffer);   // # remaining bytes
     if(BlockSize>0) { // buffer is empty
       fputc(BlockSize, binfile);
       fwrite(buffer, BlockSize, 1, binfile);
@@ -184,7 +157,7 @@ public:
     code = 0;
     i = curbit;
     for (j=0; j<nBits; j++, i++) 
-      code |= BitGet(buffer[i>>3] , i&7) << j;
+      code |= bitGet(buffer[i>>3] , i&7) << j;
     curbit += nBits; // we read nBits of data from buffer 
     return code;
   }
@@ -229,7 +202,7 @@ private:
 //            the number of root codes. Max(data) HAS to be < 2^nBits
 // returns:   The total number of bytes that have been written.
 //------------------------------------------------------------------------- 
-int EncodeLZW(FILE *bf, uchar *data, int nPixel, short nBits)
+int EncodeLZW(FILE *bf, const uchar *data, int nPixel, short nBits)
 {
   BitPacker bp;          // object that does the packing and writing of the compression codes
   int    iPixel;         // pixel counter
@@ -239,11 +212,11 @@ int EncodeLZW(FILE *bf, uchar *data, int nPixel, short nBits)
   short  freecode;       // next code to be added to the string-table
   short  i, depth, cc, eoi, up, down, outlet;
 
-  if (nPixel<0) error("EncodeLZW: nPixel can not be negative");
-  if (nBits<1 || nBits>8) error(" EncodeLZW: nBit has to be between 1 and 8");
+  if (nPixel<0) Error("EncodeLZW: nPixel can not be negative");
+  if (nBits<1 || nBits>8) Error(" EncodeLZW: nBit has to be between 1 and 8");
 
   // The following parameters will remain unchanged through the run
-  depth  = MAX(2,nBits); // number of bits per data item (=pixel). Remains unchanged.
+  depth  = (nBits<2 ? 2 : nBits); // number of bits per data item (=pixel). Remains unchanged.
   cc     = 1<<depth;     // 'cc' or 'clear-code' Signals the clearing of the string-table.
   eoi    = cc+1;         // 'end-of-information'-code must be the last item of the code stream
   // initialize pixel reader
@@ -252,7 +225,7 @@ int EncodeLZW(FILE *bf, uchar *data, int nPixel, short nBits)
   pixel  = data[iPixel]; // get pixel #1 
   // alocate and initialize memory
   bp.GetFile(bf);  // object packs the code and renders it to the binary file 'bf'
-  for(i=0; i<cc; i++) pix[i] = (uchar)i; // Initialize the string-table's root nodes  
+  for(i=0; i<cc; i++) pix[i] = static_cast<uchar>(i); // Initialize the string-table's root nodes  
 
   // Write what the GIF specification calls the "code size". Allowed are [2..8].
   // This is the number of bits required to represent the pixel values. 
@@ -350,20 +323,20 @@ int DecodeLZW(FILE *fp, uchar *data, int nPixel)
       freecode = cc+2;
       do { firstcode = bp.GetCode(nBits); } while (firstcode==cc); // keep on flushing until a non cc entry
       oldcode = firstcode;
-      data[iPixel++] = (uchar) firstcode;
+      data[iPixel++] = static_cast<uchar>(firstcode);
     } else {                     // the regular case
       nStack = 0;                // (re)initialize the stack    
       incode = code;             // store a copy of the code - it will be needed 
       if (code >= freecode) {
-        stack[nStack++] = (uchar) firstcode;
+        stack[nStack++] = static_cast<uchar>(firstcode);
         code            = oldcode;
       }
       while (code >= cc) {       // read string for code from string-table
-        stack[nStack++] = (uchar) pix [code];
+        stack[nStack++] = static_cast<uchar>(pix[code]);
         code            = next[code];
       }
       firstcode      = pix[code];
-      data[iPixel++] = (uchar) pix[code];
+      data[iPixel++] = static_cast<uchar>(pix[code]);
       while (nStack && iPixel<nPixel) 
         data[iPixel++] = stack[--nStack]; // if there is data on the stack return it
       if (freecode<4096) {       // free code is smaller than 2^12 the largest allowed
@@ -386,28 +359,8 @@ int DecodeLZW(FILE *fp, uchar *data, int nPixel)
 // Gif Writer
 //==============================================================
 
-void InterlaceShuffle(uchar* im, int width, int height, bool reverse=false)
-{ // recreate Gif interlacing row order
-  int i, row=0;
-  uchar* from = Calloc(width*height, uchar);
-  memcpy(from, im, width*height);
-  if (reverse) {
-    for (i=0; i<height; i+=8) memcpy(im+width*i, from+width*(row++), width);
-    for (i=4; i<height; i+=8) memcpy(im+width*i, from+width*(row++), width);
-    for (i=2; i<height; i+=4) memcpy(im+width*i, from+width*(row++), width);
-    for (i=1; i<height; i+=2) memcpy(im+width*i, from+width*(row++), width);
-  } else {
-    for (i=0; i<height; i+=8) memcpy(im+width*(row++), from+width*i, width);
-    for (i=4; i<height; i+=8) memcpy(im+width*(row++), from+width*i, width);
-    for (i=2; i<height; i+=4) memcpy(im+width*(row++), from+width*i, width);
-    for (i=1; i<height; i+=2) memcpy(im+width*(row++), from+width*i, width);
-  }
-  Free(from);
-}
-
-//------------------------------------------
 inline int getint(uchar *buffer) { return (buffer[1]<<8) | buffer[0]; }
-void fputw(int w, FILE *fp)
+inline void fputw(int w, FILE *fp)
 { //  Write out a word to the GIF file
   fputc(  w     & 0xff, fp );
   fputc( (w>>8) & 0xff, fp );
@@ -416,16 +369,16 @@ void fputw(int w, FILE *fp)
 //------------------------------------------
 
 
-int imwriteGif(char* filename, uchar* data, int nRow, int nCol, int nBand, int nColor, 
-               int *ColorMap,  bool interlace, int transparent, int DalayTime, char* comment)
+int imwriteGif(char* filename, const uchar* data, int nRow, int nCol, int nBand, int nColor, 
+               const int *ColorMap,  bool interlace, int transparent, int DalayTime, char* comment)
 {
   int B, i, rgb, imMax, filesize=0, Bands, band, n, m;
   int BitsPerPixel=0, ColorMapSize, Width, Height, nPixel;
   char fname[256], sig[16], *q;
-  uchar *p=data;
+  const uchar *p=data;
 
   strcpy(fname,filename);
-  i = (int) strlen(fname);
+  i = static_cast<int>(strlen(fname));
   if (fname[i-4]=='.') strcpy(strrchr(fname,'.'),".gif");
   Width  = nCol;
   Height = nRow;
@@ -434,10 +387,10 @@ int imwriteGif(char* filename, uchar* data, int nRow, int nCol, int nBand, int n
   imMax  = data[0];
   n = nPixel*nBand;
   for(i=0; i<n; i++, p++) if(imMax<*p) imMax=*p;
-  nColor=MIN(256,nColor);     // is a power of two between 2 and 256 compute its exponent BitsPerPixel (between 1 and 8)
+  nColor=(nColor>256 ? 256 : nColor);     // is a power of two between 2 and 256 compute its exponent BitsPerPixel (between 1 and 8)
   if (!nColor) nColor = imMax+1;
   if (imMax>nColor)
-    error("ImWriteGif: Higher pixel values than size of color table");
+    Error("ImWriteGif: Higher pixel values than size of color table");
   for(i=1; i<nColor; i*=2) BitsPerPixel++;  
   if (BitsPerPixel==0) BitsPerPixel=1;
 
@@ -480,7 +433,7 @@ int imwriteGif(char* filename, uchar* data, int nRow, int nCol, int nBand, int n
   //====================================
   // Extentions (optional)
   //====================================
-  n = (comment ? (int)strlen(comment) : 0);
+  n = (comment ? static_cast<int>(strlen(comment)) : 0);
   if (n>0) {
 	  fputc( 0x21, fp ); // GIF Extention Block introducer
 	  fputc( 0xfe, fp ); // "Comment Extension" 
@@ -518,7 +471,7 @@ int imwriteGif(char* filename, uchar* data, int nRow, int nCol, int nBand, int n
       B |= (transparent >= 0 ? 1 : 0);  // Transparency flag
       fputc( B, fp );                   // "transparency color follows" flag
       fputw( DalayTime, fp );           // delay time in # of hundredths (1/100) of a second delay between frames
-      fputc( (uchar) transparent, fp );
+      fputc( static_cast<uchar>(transparent), fp );
       fputc( 0, fp );                   // extention Block Terminator
       filesize += 8;
     }
@@ -538,8 +491,16 @@ int imwriteGif(char* filename, uchar* data, int nRow, int nCol, int nBand, int n
     // Raster Data (LZW encrypted)
     //====================================
     p = data+band*nPixel;
-    if(interlace) InterlaceShuffle(p, Width, Height); // rearrange rows to do interlace 
-    filesize += EncodeLZW(fp, p, nPixel, BitsPerPixel);
+    if(interlace) { // rearrange rows to do interlace 
+      int i, row=0;
+      uchar* tmp = new uchar[Width*Height];
+      for (i=0; i<Height; i+=8) memcpy(tmp+Width*(row++), p+Width*i, Width);
+      for (i=4; i<Height; i+=8) memcpy(tmp+Width*(row++), p+Width*i, Width);
+      for (i=2; i<Height; i+=4) memcpy(tmp+Width*(row++), p+Width*i, Width);
+      for (i=1; i<Height; i+=2) memcpy(tmp+Width*(row++), p+Width*i, Width);
+      filesize += EncodeLZW(fp, tmp, nPixel, BitsPerPixel);
+      delete []tmp;
+    } else filesize += EncodeLZW(fp, p, nPixel, BitsPerPixel);
   }
 
   fputc(0x3b, fp );                     // Write the GIF file terminator ";"
@@ -605,7 +566,7 @@ int imreadGif(char* filename, int nImage, bool verbose,
   ret=Transparent=-1;
   str=fname;
   strcpy(fname,filename);
-  i = (int) strlen(fname);
+  i = static_cast<int>( strlen(fname));
   if (fname[i-4]=='.') strcpy(strrchr(fname,'.'),".gif");
   FILE *fp = fopen(fname,"rb");
   if (fp==0) return -1;     
@@ -656,7 +617,7 @@ int imreadGif(char* filename, int nImage, bool verbose,
             while (GetDataBlock(fp, buffer) != 0);      // look for block terminator
             break;
           case 0xfe:                                    // "Comment Extension" 
-            m = (comment ? strlen(comment) : 0);
+            m = (comment ? static_cast<int>(strlen(comment)) : 0);
             while ((n=GetDataBlock(fp, buffer)) != 0) { // look for block terminator
                p = Calloc(m+n+1,char);
                if(m>0) {                                // if there was a previous comment than whey will be concatinated
@@ -705,7 +666,17 @@ int imreadGif(char* filename, int nImage, bool verbose,
         if(image) Free(image);
         image = Calloc(Height*Width, uchar);
         ret   = DecodeLZW(fp, image, Height*Width);
-        if(interlace) InterlaceShuffle(image, Width, Height, true); // rearrange rows to undo interlace 
+        if(interlace) {
+          int i, row=0;
+          uchar* to   = image;
+          uchar* from = new uchar[Width*Height];
+          memcpy(from, to, Width*Height);
+          for (i=0; i<Height; i+=8) memcpy(to+Width*i, from+Width*(row++), Width);
+          for (i=4; i<Height; i+=8) memcpy(to+Width*i, from+Width*(row++), Width);
+          for (i=2; i<Height; i+=4) memcpy(to+Width*i, from+Width*(row++), Width);
+          for (i=1; i<Height; i+=2) memcpy(to+Width*i, from+Width*(row++), Width);
+          delete []from;
+        }
         if (!nImage) {              // save all bands
           if (!nBand) cube = image; // first image
           else cube = append(cube, image, Height*Width, nBand);
@@ -730,7 +701,6 @@ int imreadGif(char* filename, int nImage, bool verbose,
         stats=4; 
         break;
     }
-
   } // end while
   if(verbose) print("\n");
   *Comment = comment;
@@ -742,59 +712,69 @@ int imreadGif(char* filename, int nImage, bool verbose,
   return filesize;
 }
 
+
 //==============================================================
-  
-void imwritegif(char** filename, 
-              int* Data, int *ColorMap, int *param, char** comment)
-{
-  int i, nPixel = param[0]*param[1]*param[2];
-  bool Interlace = (param[6]!=0);
+// Section below is used in interface with Matrix Library
+//==============================================================
+#ifdef MATRIX_INTERFACE
 
-  uchar* data = Calloc(nPixel, uchar);
-  for(i=0; i<nPixel; i++) data[i] = Data[i]&0xff;
-  param[7] = imwriteGif(*filename, data, param[0], param[1], param[2], param[3],
-    ColorMap, Interlace, param[4], param[5], *comment);
-  Free(data);
-}
+  template <> int imwriteGif<uchar>(const bMatrix &im, char* filename, const iMatrix ColorMap, 
+                                    bool interlace, int transparent, int delayTime, char* comment)
+  {
+    int ret = imwriteGif(filename, im->d(), im->rows(), im->cols(), im->bands(), 
+      ColorMap->len(), ColorMap->d(), interlace, transparent, delayTime, comment);
+    if (ret<0) Error("write.gif: cannot open the output GIF file");
+    return ret;
+  }
 
-#ifndef  TEST_ALG
-
-  SEXP imreadgif(SEXP filename, SEXP NImage, SEXP Verbose)
-  { // The only R specific function
-    int i, j, nPixel, nRow, nCol, nBand, ColorMap[256]; 
-    int transparent, success, *ret, nImage, verbose;
-    char *fname, *comment;
+  int imreadGif(bMatrix &im, char* filename, iMatrix &ColorMap, int imageNumber)
+  {
+    int nRow, nCol, nBand, transparent, stats, success, nPixel;
+    char *comment=0;
     uchar* data=0;
-    SEXP Ret;
 
+    ColorMap->init(256);
     // initialize data 
     nRow=nCol=nBand=transparent=0;
     comment = NULL;
-    nImage  = asInteger(NImage);    
-    verbose = asInteger(Verbose);    
-    fname   = CHAR(STRING_ELT(filename, 0));
-    success = imreadGif(fname, nImage, (bool) verbose, &data, nRow, nCol, 
-              nBand, ColorMap, transparent, &comment); 
-    nPixel  = nRow*nCol*nBand;
-    PROTECT(Ret = allocVector(INTSXP, 9+256+nPixel));
-    ret     = (int*) INTEGER(Ret);  /* get pointer to R's Ret */
-    ret[0]  = nRow;       // pack output into array of integers
-    ret[1]  = nCol;
-    ret[2]  = nBand;
-    ret[3]  = transparent;
-    ret[4]  = success;
-    j=9;
-    for(i=0; i<256   ; i++) ret[j++] = ColorMap[i];
-    for(i=0; i<nPixel; i++) ret[j++] = data[i];
-    Free(data);
-    if(comment && strlen(comment)) // if comment was found than pack it too
-      setAttrib(Ret, install("comm"), mkString(comment));
+    success = imreadGif(filename, imageNumber, false, &data, nRow, nCol, 
+              nBand, ColorMap->d(), transparent, &comment); 
+    nPixel = nRow*nCol*nBand;
     if(comment) Free(comment);
-    UNPROTECT(1);
-    return Ret;
+    stats = -success;
+
+    if (stats>=6)  {
+      print("write.gif: file '", filename, 
+        "' contains multiple color-maps. Use 'frame' > 0.");
+      stats = stats-6;
+    }
+    if (nPixel==0) {
+      switch (stats) {
+        case 1: Error("write.gif: cannot open the input GIF file");
+        case 2: Error("write.gif: input file is not a GIF file");
+        case 3: Error("write.gif: unexpected end of input GIF file");
+        case 4: Error("write.gif: syntax error in input GIF file");
+      }
+    } else {
+      switch (stats) { // warnings
+        case 3: print("write.gif: unexpected end of input GIF file: ", filename);
+        case 4: print("write.gif: syntax error in input GIF file: ", filename);
+        case 5: print("write.gif: file '", filename,
+          "' contains multiple images (frames) of uneven length. Use 'imageNumber' > 0." );
+      }
+    }   
+    im->moveto(data, nRow*nCol*nBand);
+    im->resize(nBand, nRow, nCol);
+    return success;
   }
 
-#else
+#endif
+
+
+//==============================================================
+// Section below is used in standalone test application
+//==============================================================
+#ifdef STANDALONE_TEST
 
 int main()
 {
@@ -821,7 +801,5 @@ int main()
 
 #endif
 
-
-} //end of extern
 
 

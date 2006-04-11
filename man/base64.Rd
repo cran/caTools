@@ -1,4 +1,4 @@
-\name{base64}
+\name{base64encode & base64decode}
 \alias{base64encode}
 \alias{base64decode}
 \title{Convert R vectors to/from the Base64 format }
@@ -115,4 +115,4 @@ Default \code{size}s for different types of \code{what}: \code{logical} - 4,
    print("Checked base64 for encode/decode character type")
 }
 \keyword{file}
-
+\concept{XML}

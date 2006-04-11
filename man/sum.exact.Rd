@@ -1,4 +1,4 @@
-\name{sum.exact}
+\name{sum.exact, cumsum.exact & runsum.exact}
 \alias{sum.exact}
 \alias{cumsum.exact}
 \alias{runsum.exact}
@@ -64,10 +64,11 @@
 
 \seealso{
  \itemize{       
-   \item \code{sum.exact} - is equivalent to \code{\link{sum}}
-   \item \code{cumsum.exact} - is equivalent to \code{\link{cumsum}}
-   \item \code{runsum.exact} - is similar to \code{\link{runmean}
-      (x,k,endrule="trim")}
+   \item \code{\link[base]{sum}} is faster but not error-save version of 
+         \code{sum.exact}
+   \item \code{\link[base]{cumsum}} is equivalent to \code{cumsum.exact}
+   \item \code{\link{runmean}(x,k,endrule="trim")} is similar to 
+         \code{runsum.exact}.
  }
 }
 
@@ -84,3 +85,9 @@
 \keyword{smooth}
 \keyword{array}
 \keyword{utilities}
+\concept{sum with no round-off errors}
+\concept{cumulative sum with no round-off errors}
+\concept{moving sum with no round-off errors}
+\concept{rolling sum with no round-off errors}
+\concept{running sum with no round-off errors}
+

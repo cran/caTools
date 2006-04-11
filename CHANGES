@@ -33,7 +33,16 @@ Changes:
     ways to define a color palette.
   - base64encode and base64decode now use readBin and writeBin instead
     raw2bin and bin2raw.
-    
+ 6) caTools-1.6 (04/11/2006)
+  - functions raw2bin and bin2raw were retired, since they parallel new 
+    (as of R-2.2.0) capabilities of readBin and writeBin.
+  - Bug in plotting in colAUC function was fixed, after it was reported by Tom 
+    Wright.
+  - Documentation of colAUC was updated and some examples modified in order to 
+    reduce dependency on external libraries.
+  - GifTools.cc was split into GifTools.cpp and GifTools.cc. The first file
+    contains GIF encoding/decoding algorithm and second is a shell that 
+    comunicates with R.
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  

@@ -1,4 +1,4 @@
-\name{runfunc}
+\name{runmean, runmin, runmax & runquantile}
 \alias{runmean}
 \alias{runmin}
 \alias{runmax}
@@ -50,12 +50,12 @@
   }
   \item{alg}{an option allowing to choose different algorithms or 
     implementations, if provided. Default is to use of code written in C. 
-    Option \code{alg="R"} will use slower code written in R. Usefull for 
-    debugging and allows extentions in the future.}
+    Option \code{alg="R"} will use slower code written in R. Useful for 
+    debugging and allows extensions in the future.}
   \item{center}{moving window center used by \code{runmad} function defaults 
     to running median (\code{\link{runmed}} function). Similar to \code{center}  
     in \code{\link{mad}} function. }
-  \item{constant}{scale factor used by \code{runmad}, such that for gaussian 
+  \item{constant}{scale factor used by \code{runmad}, such that for Gaussian 
     distribution X, \code{\link{mad}}(X) is the same as \code{\link{sd}}(X). 
     Same as \code{constant} in \code{\link{mad}} function.}
   \item{probs}{numeric vector of probabilities with values in [0,1] range 
@@ -93,7 +93,7 @@
        O(\eqn{n^2}) for some small data vectors, but average case is still 
          close to O(n).
        \item \code{runquantile} and \code{runmad} run at O(n*k)
-       \item \code{\link{runmed}} - related R function run at O(n*log(k)) 
+       \item \code{\link{runmed}} - related R function runs at O(n*log(k)) 
       }
   
   Functions \code{runquantile} and \code{runmad} are using insertion sort to 

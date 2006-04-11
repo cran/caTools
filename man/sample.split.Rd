@@ -1,6 +1,5 @@
 \name{sample.split}
 \alias{sample.split}
-\alias{msc.sample.split}
 \title{Split Data into Test and Train Set}
 \description{Split data from vector Y into two sets in predefined ratio while 
   preserving relative ratios of different labels in Y. Used to split the data

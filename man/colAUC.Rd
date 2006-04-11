@@ -1,6 +1,6 @@
 \name{colAUC}
 \alias{colAUC}
-\title{Columnwise Area Under ROC Curve (AUC)}
+\title{Column-wise Area Under ROC Curve (AUC)}
 \description{Calculate Area Under the ROC Curve (AUC) for every column of a 
   matrix. Also, can be used to plot the ROC curves.}
 \usage{
@@ -15,7 +15,7 @@
     Can be either a factor, string or a numeric vector.}
   \item{plotROC}{Plot ROC curves. Use only for small number of features. 
     If \code{TRUE}, will set \code{alg} to "ROC".}
-  \item{alg}{algorithm to use: "ROC" integrates ROC curves, while "Wilcoxon"
+  \item{alg}{Algorithm to use: "ROC" integrates ROC curves, while "Wilcoxon"
     uses Wilcoxon Rank Sum Test to get the same results. Default "Wilcoxon" is
     faster. This argument is mostly provided for verification.}
 }
@@ -34,14 +34,14 @@
   (see \code{\link{wilcox.test}}) and Mann-Whitney U Test. 
   
   There are numerous other functions for calculating AUC in other packages. 
-  Unfortunatelly none of them had all the properties I needed for use as 
-  classification preprocessing, to lower the dimentionality of the data (from 
+  Unfortunately none of them had all the properties that were needed for 
+  classification preprocessing, to lower the dimensionality of the data (from 
   tens of thousands to hundreds) before applying standard classification 
   algorithms. 
   
   The main properties of this code are: 
   \itemize{
-    \item Ability to work with multi-dimentional data (\code{X} can have many 
+    \item Ability to work with multi-dimensional data (\code{X} can have many 
           columns).
     \item Ability to work with multi-class datasets (\code{y} can have more 
           than 2 different values).
@@ -58,13 +58,17 @@
 
 \value{
   An output is a single matrix with the same number of columns as \code{X} and 
-  "n choose 2" ( \eqn{\frac{n!}{(n-2)! 2!}}{n!/((n-2)! 2!)} ) number of rows, 
+  "n choose 2" ( \eqn{\frac{n!}{(n-2)! 2!} = n(n-1)/2}
+  {n!/((n-2)! 2!) = n(n-1)/2} ) number of rows, 
   where n is number of unique labels in \code{y} list. For example, if \code{y} 
   contains only two unique class labels ( \code{length(unique(lab))==2} ) than
   output 
   matrix will  have a single row containing AUC of each column. If more than 
   two unique labels are present than AUC is calculated for every possible 
   pairing of classes ("n choose 2" of them).
+  
+  For multi-class AUC "Total AUC" as defined by Hand & Till (2001) can be 
+  calculated by \code{\link{colMeans}(auc)}.  
 } 
 
 \references{
@@ -73,7 +77,14 @@
      operating characteristics (ROC) and relative operating levels (ROL) 
      curves: Statistical significance and interpretation},  Q. J. R. 
      Meteorol. Soc. textbf{30} 291-303. 
-     \item See 
+    \item Fawcett, Tom (2004) \emph{ROC Graphs: Notes and Practical 
+       Considerations for Researchers}, 
+       \url{http://home.comcast.net/~tom.fawcett/public_html/papers/ROC101.pdf}
+        and \url{http://home.comcast.net/~tom.fawcett/public_html/ROCCH/}
+    \item  Hand, David and Till, Robert (2001) \emph{A Simple 
+          Generalization of the Area Under the ROC Curve for Multiple Class 
+          Classification Problems};  Machine Learning 45(2): 171-186
+    \item See 
        \url{http://www.medicine.mcgill.ca/epidemiology/hanley/software/} 
        to find articles below: 
      \itemize{
@@ -95,6 +106,8 @@
 \seealso{
   \itemize{
   \item \code{\link{wilcox.test}} and \code{\link{pwilcox}}
+  \item \code{\link[exactRankTests]{wilcox.exact}} from \pkg{exactRankTests} package
+  \item \code{\link[coin]{wilcox_test}} from \pkg{coin} package
   \item \code{\link[ROC]{AUC}} from \pkg{ROC} package
   \item \code{\link[ROCR]{performance}} from \pkg{ROCR} package
   \item \code{\link[limma]{auROC}} from \pkg{limma} package 
@@ -113,7 +126,7 @@ colAUC(cats[,2:3], cats[,1], plotROC=TRUE)
 
 # Load rpart library with "kyphosis" data set that records if kyphosis
 # deformation was present after corrective surgery. Calculate how good age, 
-# number and position of vertebrae are in predicting succesful operation. 
+# number and position of vertebrae are in predicting successful operation. 
 # 2 classes; 3 features; 81 samples
 library(rpart); data(kyphosis);
 colAUC(kyphosis[,2:4], kyphosis[,1], plotROC=TRUE)
@@ -121,11 +134,20 @@ colAUC(kyphosis[,2:4], kyphosis[,1], plotROC=TRUE)
 # Example of 3-class 4-feature 150-sample iris data
 data(iris)
 colAUC(iris[,-5], iris[,5], plotROC=TRUE)
+cat("Total AUC: \n"); 
+colMeans(colAUC(iris[,-5], iris[,5]))
+
+# Test plots in case of data without column names
+Iris = as.matrix(iris[,-5])
+dim(Iris) = c(600,1)
+dim(Iris) = c(150,4)
+colAUC(Iris, iris[,5], plotROC=TRUE)
 
 # Compare calAUC with other functions designed for similar purpose
-auc = matrix(NA,10,3)
-rownames(auc) = c("colAUC(alg='ROC')", "colAUC(alg='Wilcox')", "wilcox.test",
-    "sum(rank)", "roc.area", "AUC", "performance", "ROC", "auROC", "rcorr.cens")
+auc = matrix(NA,12,3)
+rownames(auc) = c("colAUC(alg='ROC')", "colAUC(alg='Wilcox')", "sum(rank)",
+    "wilcox.test", "wilcox_test", "wilcox.exact", "roc.area", "AUC", 
+    "performance", "ROC", "auROC", "rcorr.cens")
 colnames(auc) = c("AUC(x)", "AUC(-x)", "AUC(x+noise)")
 X = cbind(cats[,2], -cats[,2], cats[,2]+rnorm(nrow(cats)) )
 y = ifelse(cats[,1]=='F',0,1)
@@ -133,20 +155,27 @@ for (i in 1:3) {
   x = X[,i]
   x1 = x[y==1]; n1 = length(x1);                 # prepare input data ...
   x2 = x[y==0]; n2 = length(x2);                 # ... into required format
+  data = data.frame(x=x,y=factor(y))
   auc[1,i] = colAUC(x, y, alg="ROC") 
   auc[2,i] = colAUC(x, y, alg="Wilcox")
-  auc[3,i] = wilcox.test(x1, x2, exact=0)$statistic / (n1*n2) 
   r = rank(c(x1,x2))
-  auc[4,i] = (sum(r[1:n1]) - n1*(n1+1)/2) / (n1*n2)
+  auc[3,i] = (sum(r[1:n1]) - n1*(n1+1)/2) / (n1*n2)
+  auc[4,i] = wilcox.test(x1, x2, exact=0)$statistic / (n1*n2) 
+  \dontrun{
+  if (require("coin"))
+    auc[5,i] = statistic(wilcox_test(x~y, data=data)) / (n1*n2) 
+  if (require("exactRankTests"))  
+    auc[6,i] = wilcox.exact(x, y, exact=0)$statistic / (n1*n2) 
   if (require("verification"))
-    auc[5,i] = roc.area(y, x)$A.tilda 
+    auc[7,i] = roc.area(y, x)$A.tilda 
   if (require("ROC")) 
-    auc[6,i] = AUC(rocdemo.sca(y, x, dxrule.sca))    
+    auc[8,i] = AUC(rocdemo.sca(y, x, dxrule.sca))    
   if (require("ROCR")) 
-    auc[7,i] = performance(prediction( x, y),"auc")@y.values[[1]]
-  if (require("Epi"))   auc[8,i] = ROC(x,y,grid=0)$AUC
-  if (require("limma")) auc[9,i] = auROC(y, x)
-  if (require("Hmisc")) auc[10,i] = rcorr.cens(x, y)[1]  
+    auc[9,i] = performance(prediction( x, y),"auc")@y.values[[1]]
+  if (require("Epi"))   auc[10,i] = ROC(x,y,grid=0)$AUC
+  if (require("limma")) auc[11,i] = auROC(y, x)
+  if (require("Hmisc")) auc[12,i] = rcorr.cens(x, y)[1]
+  }
 }
 print(auc)
 stopifnot(auc[1, ]==auc[2, ])   # results of 2 alg's in colAUC must be the same
