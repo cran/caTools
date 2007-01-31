@@ -1,6 +1,6 @@
 Package: caTools
-Version: 1.6
-Date: Apr 11 2006
+Version: 1.7
+Date: Jan 31 2007
 Title: Miscellaneous tools: I/O, moving window statistics, etc. 
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Maintainer: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
@@ -10,7 +10,5 @@ Description: Contains several basic utility functions including:
   moving (rolling, running) window statistic functions, read/write for GIF 
   and ENVI binary files, fast calculation of AUC, LogitBoost classifier, base64
   encoder/decoder, round-off error free sum and cumsum, etc.
-License: The caMassClass Software License, Version 1.0 (See COPYING file or 
-  "http://ncicb.nci.nih.gov/download/camassclasslicense.jsp")
-URL: http://ncicb.nci.nih.gov/download/index.jsp
-Packaged: Tue Apr 25 09:02:31 2006; tuszynskij
+License: GPL version 2 or later
+Packaged: Thu Feb  1 08:03:39 2007; tuszynskij

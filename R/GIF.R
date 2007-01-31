@@ -171,7 +171,7 @@ read.gif = function(filename, frame=0, flip=FALSE, verbose=FALSE)
   red     = bitAnd(bitShiftR(Palette,16), 255)
   green   = bitAnd(bitShiftR(Palette, 8), 255)
   blue    = bitAnd(          Palette    , 255)
-  Palette = rgb (red, green, blue, maxColorValue = 255)
+  Palette = rgb (red, green, blue, 255, maxColorValue = 255)
   if (tran==-1) tran = NULL
   return (list(image=x, col=Palette, transparent=tran, comment=comt))
 }

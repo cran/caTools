@@ -43,6 +43,9 @@ Changes:
   - GifTools.cc was split into GifTools.cpp and GifTools.cc. The first file
     contains GIF encoding/decoding algorithm and second is a shell that 
     comunicates with R.
+ 7) caTools-1.7 (Jan 31 2007)
+  - Added 4th variable in 'rgb' function (line 174).
+   
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  
