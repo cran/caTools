@@ -3,7 +3,7 @@
 \alias{caTools}
 \docType{package}
 \title{
-Miscellaneous tools: I/O, moving window statistics, etc.
+Tools: moving window statistics, GIF, Base64, ROC AUC, etc. 
 }
 \description{
 Contains several basic utility functions including: moving
@@ -34,7 +34,11 @@ colAUC                  Column-wise Area Under ROC Curve (AUC)
 combs                   All Combinations of k Elements from Vector v
 read.ENVI               Read and Write Binary Data in ENVI Format
 read.gif                Read and Write Images in GIF format
-runmean                 Moving Window Analysis of a Vector
+runmean                 Mean of a Moving Window
+runmin                  Minimum and Maximum of Moving Windows
+runquantile             Quantile of Moving Window
+runmad                  Median Absolute Deviation of Moving Windows
+runsd                   Standard Deviation of Moving Windows
 sample.split            Split Data into Test and Train Set
 sum.exact               Basic Sum Operations without Round-off Errors
 trapz                   Trapezoid Rule Numerical Integration

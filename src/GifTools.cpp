@@ -1,7 +1,7 @@
 /*===========================================================================*/
-/* Written by Jarek Tuszynski (2005).                                        */
-/* Software was developed in my private time, but it is distributed under    */
-/* "caBIO Software License" like the rest of the caTools package             */
+/* GifTools - GIF encoder / decoder                                          */
+/* Copyright (C) 2005 Jarek Tuszynski                                        */
+/* Distributed under GNU General Public License version 3                    */
 /*===========================================================================*/
 
 #include <stdio.h>
@@ -369,7 +369,7 @@ inline void fputw(int w, FILE *fp)
 //------------------------------------------
 
 
-int imwriteGif(char* filename, const uchar* data, int nRow, int nCol, int nBand, int nColor, 
+int imwriteGif(const char* filename, const uchar* data, int nRow, int nCol, int nBand, int nColor, 
                const int *ColorMap,  bool interlace, int transparent, int DalayTime, char* comment)
 {
   int B, i, rgb, imMax, filesize=0, Bands, band, n, m;
@@ -551,7 +551,7 @@ uchar* append(uchar *trg, uchar *src, int nPixel, int nBand )
 
 //------------------------------------------
 
-int imreadGif(char* filename, int nImage, bool verbose,
+int imreadGif(const char* filename, int nImage, bool verbose,
               uchar** data, int &nRow, int &nCol, int &nBand,
               int ColorMap[255], int &Transparent, char** Comment)
 {
@@ -718,7 +718,7 @@ int imreadGif(char* filename, int nImage, bool verbose,
 //==============================================================
 #ifdef MATRIX_INTERFACE
 
-  template <> int imwriteGif<uchar>(const bMatrix &im, char* filename, const iMatrix ColorMap, 
+  template <> int imwriteGif<uchar>(const bMatrix &im, const char* filename, const iMatrix ColorMap, 
                                     bool interlace, int transparent, int delayTime, char* comment)
   {
     int ret = imwriteGif(filename, im->d(), im->rows(), im->cols(), im->bands(), 
@@ -727,7 +727,7 @@ int imreadGif(char* filename, int nImage, bool verbose,
     return ret;
   }
 
-  int imreadGif(bMatrix &im, char* filename, iMatrix &ColorMap, int imageNumber)
+  int imreadGif(bMatrix &im, const char* filename, iMatrix &ColorMap, int imageNumber)
   {
     int nRow, nCol, nBand, transparent, stats, success, nPixel;
     char *comment=0;

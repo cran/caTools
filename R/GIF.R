@@ -1,7 +1,7 @@
 #===========================================================================#
-# Written by Jarek Tuszynski. (2005)                                        #
-# Software was developed in my private time, but it is distributed under    #
-# "caBIO Software License", like the rest of the caTools package.           #
+# caTools - R library                                                       #
+# Copyright (C) 2005 Jarek Tuszynski                                        #
+# Distributed under GNU General Public License version 3                    #
 #===========================================================================#
 
 write.gif = function(image, filename, col="gray", 

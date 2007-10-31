@@ -1,7 +1,7 @@
 Package: caTools
-Version: 1.7
-Date: Jan 31 2007
-Title: Miscellaneous tools: I/O, moving window statistics, etc. 
+Version: 1.8
+Date: Oct 31 2007
+Title: Tools: moving window statistics, GIF, Base64, ROC AUC, etc. 
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Maintainer: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Depends: R (>= 2.2.0), bitops
@@ -11,4 +11,4 @@ Description: Contains several basic utility functions including:
   and ENVI binary files, fast calculation of AUC, LogitBoost classifier, base64
   encoder/decoder, round-off error free sum and cumsum, etc.
 License: GPL version 2 or later
-Packaged: Thu Feb  1 08:03:39 2007; tuszynskij
+Packaged: Tue Oct  9 10:43:05 2007; tuszynskij

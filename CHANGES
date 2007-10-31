@@ -45,7 +45,16 @@ Changes:
     comunicates with R.
  7) caTools-1.7 (Jan 31 2007)
   - Added 4th variable in 'rgb' function (line 174).
-   
+ 8) caTools-1.8 (Oct. 9 2007)
+  - Major changes to moving window statistics functions:
+    * use fast C code to process array edges
+    * added suport for NaN's
+    * added suport for even size windows
+    * split help file into 5 new help files
+    * added much more examples and self-tests
+  - Followed Prof. Brian Ripley request to move R header files out of extern "C" 
+    blocks in C++ files.
+  - Changed licence to GPL
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  

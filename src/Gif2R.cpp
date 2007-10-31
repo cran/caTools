@@ -1,13 +1,14 @@
 /*===========================================================================*/
-/* Written by Jarek Tuszynski (2005).                                        */
-/* Software was developed in my private time, but it is distributed under    */
-/* "caBIO Software License" like the rest of the caTools package             */
+/* GifTools - GIF encoder / decoder                                          */
+/* Copyright (C) 2005 Jarek Tuszynski                                        */
+/* Distributed under GNU General Public License version 3                    */
+/*===========================================================================*/
 /*                                                                           */
 /* This file contains interface between GifTools.cpp and caTools R Package   */
 /*===========================================================================*/
 
+#include "GifTools.h"
 extern "C" {
-  #include "GifTools.h"
       
   void imwritegif(char** filename, 
                 int* Data, int *ColorMap, int *param, char** comment)
@@ -26,7 +27,8 @@ extern "C" {
   { // The only R specific function
     int i, j, nPixel, nRow, nCol, nBand, ColorMap[256]; 
     int transparent, success, *ret, nImage, verbose;
-    char *fname, *comment;
+    char *comment;
+    const char *fname;
     uchar* data=0;
     SEXP Ret;
   

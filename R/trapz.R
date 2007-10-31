@@ -1,7 +1,7 @@
 #===========================================================================#
-# Written by Jarek Tuszynski. Copyright 2001-2003 SAIC.                     #
-# Software developed in conjunction with the National Cancer Institute, and #
-# distributed under "caBIO Software License" included in "COPYING" file.    #
+# caTools - R library                                                       #
+# Copyright (C) 2005 Jarek Tuszynski                                        #
+# Distributed under GNU General Public License version 3                    #
 #===========================================================================#
 
 trapz = function(x, y) 
