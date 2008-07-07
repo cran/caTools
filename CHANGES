@@ -55,9 +55,12 @@ Changes:
   - Followed Prof. Brian Ripley request to move R header files out of extern "C" 
     blocks in C++ files.
   - Changed licence to GPL
+  9) caTools-1.9 (July 7 2008)
+  - No code changes
+  - Corrected inconsistent licence information
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  
- (703) 676-4192                                   ">   \
- Jaroslaw.W.Tuszynski@saic.com                     `    \
+ Jaroslaw.W.Tuszynski@saic.com                    ">   \
+                                                   `    \
 
