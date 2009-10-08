@@ -423,7 +423,7 @@ void runmin(double *In, double *Out, const int *nIn, const int *nWin)
 void runmax(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation */
   int i, j, k2, k1, n=*nIn, m=*nWin;
-  double ptOut, Max, *in, *out, CST = DBL_MIN;
+  double ptOut, Max, *in, *out, CST = -DBL_MAX;
   unsigned long nan[2]={0xffffffff, 0x7fffffff};
   double NaN = *( double* )nan;
 
@@ -590,8 +590,8 @@ void runquantile(double *In, double *Out, const int *nIn, const int *nWin, const
   unsigned long nan[2]={0xffffffff, 0x7fffffff};
   double NaN = *( double* )nan;
 
-  k2  = m>>1;                /* right half of window size */
-  k1  = m-k2-1;             /* left half of window size */
+  k2  = m>>1;                      /* right half of window size */
+  k1  = m-k2-1;                    /* left half of window size */
   in  = In;
   out = Out;
 
@@ -764,8 +764,8 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     *(out++) = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
-    /*med0 = med;                   /* save previous median */
-    /*printf("1-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); */
+//  med0 = med;                   /* save previous median */
+//  printf("1-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
   }
   /* --- step 2: inner section ----------------------------------------------------------------*/
   for(j=0, i=m; i<n; i++) {
@@ -785,9 +785,9 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     *(out++) = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
-    /*med0 = med;                   /* save previous median */
+//  med0 = med;                   /* save previous median */
     j = (j+1)%m;                  /* index goes from 0 to m-1, and back to 0 again  */
-    /*printf("2-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); */
+//  printf("2-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
   }
   /* --- step 3 : right edge ----------------------------------------------------------*/
   for(i=0; i<m; i++) {
@@ -811,8 +811,8 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     Out[n-i] = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
-    /*med0 = med;                   /* save previous median */
-    /*printf("3-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); */
+//  med0 = med;                   /* save previous median */
+//  printf("3-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
   }
   Free(Win2);
   Free(Win1);

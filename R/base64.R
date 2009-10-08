@@ -16,7 +16,7 @@
 
 base64encode = function(x, size=NA, endian=.Platform$endian)
 {
-   if(!require(bitops)) warning("Could not load package bitops")
+   library(bitops)                # needed for bitOr and bitAnd
    if (typeof(x)!="raw") x = writeBin(x, raw(), size=size, endian=endian)
    x = as.integer(x)
    ndByte = length(x)            # number of decoded bytes

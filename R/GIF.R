@@ -145,16 +145,16 @@ read.gif = function(filename, frame=0, flip=FALSE, verbose=FALSE)
   }
   if (nPixel==0) {
     switch (stats,
-    stop("write.gif: cannot open the input file: ", filename),
-    stop("write.gif: input file '", filename, "' is not a GIF file"),
-    stop("write.gif: unexpected end of file: ", filename),
-    stop("write.gif: syntax error in file: ", filename) )
+    stop("write.gif: cannot open the input file: ", filename, call.=FALSE),
+    stop("write.gif: input file '", filename, "' is not a GIF file", call.=FALSE),
+    stop("write.gif: unexpected end of file: ", filename, call.=FALSE),
+    stop("write.gif: syntax error in file: ", filename, call.=FALSE) )
   } else {
     switch (stats, , , 
-    warning("write.gif: unexpected end of file: ", filename),
-    warning("write.gif: syntax error in file: ", filename),
+    warning("write.gif: unexpected end of file: ", filename, call.=FALSE),
+    warning("write.gif: syntax error in file: ", filename, call.=FALSE),
     warning("write.gif: file '", filename,
-      "' contains multiple images (frames) of uneven length. Use 'frame' > 0." ))
+      "' contains multiple images (frames) of uneven length. Use 'frame' > 0." , call.=FALSE))
   }   
   Palette = x[ 10:265 ]
   x       = x[-(1:265)] # delete non image data

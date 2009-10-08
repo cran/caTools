@@ -5,11 +5,13 @@
 Deviation) calculated over a vector}
 \usage{
    runmad(x, k, center = runmed(x,k), constant = 1.4826,
-         endrule=c("mad", "NA", "trim", "keep", "constant", "func"))
+         endrule=c("mad", "NA", "trim", "keep", "constant", "func"),
+         align = c("center", "left", "right"))
 }
 
 \arguments{
-  \item{x}{numeric vector of length n}
+  \item{x}{numeric vector of length n or matrix with n rows. If \code{x} is a 
+    matrix than each column will be processed separately.}
   \item{k}{width of moving window; must be an integer between one and n. In case
   of even k's one will have to provide different \code{center} function, since
   \code{\link{runmed}} does not take even k's.}
@@ -41,17 +43,28 @@ Deviation) calculated over a vector}
     to running median (\code{\link{runmed}} function). Similar to \code{center}  
     in \code{\link{mad}} function. For best acuracy at the edges use 
     \code{\link{runquantile}(x,k,0.5,type=2)}, which is slower than default
-    \code{\link{runmed}(x,k,endrule="med")}
+    \code{\link{runmed}(x,k,endrule="med")}. If \code{x} is a 2D array (and 
+    \code{endrule="mad"}) or if \code{endrule="func"} than array edges are 
+    filled by repeated calls to 
+    \dQuote{\code{\link{mad}(x, center=\link{median}(x), na.rm=TRUE)}} function. 
+    Runmad's \code{center} parameter will be ignored for the beggining and the 
+    end of output \code{y}.  Please use  
+    \code{center=\link{runquantile}(x,k,0.5,type=2)} for those cases.  
   }
   \item{constant}{scale factor such that for Gaussian 
     distribution X, \code{\link{mad}}(X) is the same as \code{\link{sd}}(X). 
     Same as \code{constant} in \code{\link{mad}} function.}
+  \item{align}{specifies whether result should be centered (default), 
+  left-aligned or right-aligned.  If \code{endrule}="mad" then setting
+  \code{align} to "left" or "right" will fall back on slower implementation 
+  equivalent to \code{endrule}="func". }
 }
 
 \details{
   Apart from the end values, the result of y = runmad(x, k) is the same as 
-  \dQuote{\code{for(j=(1+k2):(n-k2)) y[j]=mad(x[(j-k2):(j+k2)], na.rm = TRUE)}}. It can handle 
-  non-finite numbers like NaN's and Inf's (like \code{\link{mad}(x, na.rm = TRUE)}).
+  \dQuote{\code{for(j=(1+k2):(n-k2)) y[j]=mad(x[(j-k2):(j+k2)], na.rm = TRUE)}}. 
+  It can handle non-finite numbers like NaN's and Inf's 
+  (like \dQuote{\code{\link{mad}(x, na.rm = TRUE)}}).
 
   The main incentive to write this set of functions was relative slowness of 
   majority of moving window functions available in R and its packages.  With the 
@@ -67,8 +80,9 @@ Deviation) calculated over a vector}
 }
 
 \value{
-  Returns a numeric vector of the same length as \code{x}. Only in case of 
-   \code{endrule="trim"}.the output will be shorter. 
+  Returns a numeric vector or matrix of the same size as \code{x}. Only in case of 
+  \code{endrule="trim"} the output vectors will be shorter and output matrices 
+  will have fewer rows. 
 } 
 
 \references{
@@ -158,6 +172,15 @@ Deviation) calculated over a vector}
   b = runmad(x[n:1], k)
   stopifnot(all(a[n:1]==b, na.rm=TRUE));
 
+  # test vector vs. matrix inputs, especially for the edge handling
+  nRow=200; k=25; nCol=10
+  x = rnorm(nRow,sd=30) + abs(seq(nRow)-n/4)
+  X = matrix(rep(x, nCol ), nRow, nCol) # replicate x in columns of X
+  a = runmad(x, k, center = runquantile(x,k,0.5,type=2))
+  b = runmad(X, k, center = runquantile(X,k,0.5,type=2))
+  stopifnot(all(abs(a-b[,1])<eps));        # vector vs. 2D array
+  stopifnot(all(abs(b[,1]-b[,nCol])<eps)); # compare rows within 2D array
+  
   # speed comparison
   \dontrun{
   x=runif(1e5); k=51;                       # reduce vector and window sizes

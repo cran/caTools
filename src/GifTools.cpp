@@ -332,6 +332,7 @@ int DecodeLZW(FILE *fp, uchar *data, int nPixel)
         code            = oldcode;
       }
       while (code >= cc) {       // read string for code from string-table
+        if (nStack>=4096) return 0;   // error
         stack[nStack++] = static_cast<uchar>(pix[code]);
         code            = next[code];
       }
@@ -666,6 +667,7 @@ int imreadGif(const char* filename, int nImage, bool verbose,
         if(image) Free(image);
         image = Calloc(Height*Width, uchar);
         ret   = DecodeLZW(fp, image, Height*Width);
+//        if (ret==0) {stats=4; break;} // syntax error
         if(interlace) {
           int i, row=0;
           uchar* to   = image;
@@ -708,7 +710,7 @@ int imreadGif(const char* filename, int nImage, bool verbose,
   nRow  = Height;
   nCol  = Width;
   if (nImage==0 && nColMap>1) stats += 6;
-  if (stats) ret = -stats; // if no image than save error #
+  if (stats) filesize = -stats; // if no image than save error #
   return filesize;
 }
 
@@ -791,7 +793,7 @@ int main()
   if (1) {
     n = nRow*nCol;
     strcpy(str, "hello world");
-    succes = imwriteGif("tmp.gif", data, nRow, nCol, nBand, ColorMap, interlace, transparent, DelayTime, str);
+    succes = imwriteGif("tmp.gif", data, nRow, nCol, nBand, 256, ColorMap, interlace, transparent, DelayTime, str);
     printf("Image written = [%i x %i x %i]: %i\n",nRow, nCol, nBand, succes);
   }
   printf("Press any key\n");

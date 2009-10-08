@@ -2,11 +2,14 @@
 \alias{EndRule}
 \title{internal function}
 \description{internal function}
-\usage{EndRule(x, y, k, 
-             endrule=c("NA", "trim", "keep", "constant", "func"), Func, \dots)}
+\usage{EndRule(x, y, k, dimx,
+             endrule=c("NA", "trim", "keep", "constant", "func"), 
+             align = c("center", "left", "right"), Func, \dots)}
 \arguments{
   \item{x}{numeric vector of length n}
   \item{k}{width of moving window; must be an integer between one and n.}
+  \item{dimx}{original dimension of x (usually \code{dim(x)}) used to choose 
+    dimentions of the output. }
   \item{endrule}{character string indicating how the values at the beginning 
     and the end, of the data, should be treated. Only first and last \code{k2} 
     values at both ends are affected, where \code{k2} is the half-bandwidth 
@@ -33,6 +36,8 @@
     one of the \code{run} functions. Function \code{EndRule} will fill the 
     remaining beginning and end sections using method chosen by \code{endrule} 
     argument.}
+  \item{align}{specifies whether result should be centered (default), 
+  left-aligned or right-aligned. }
   \item{Func}{Function name that \code{EndRule} will use in case of 
     \code{endrule="func"}.}
   \item{\dots}{Additional parameters to \code{Func} that \code{EndRule} will 

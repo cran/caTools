@@ -5,11 +5,13 @@
    calculated over a vector}
 \usage{
   runsd(x, k, center = runmean(x,k), 
-                 endrule=c("sd", "NA", "trim", "keep", "constant", "func"))
+        endrule=c("sd", "NA", "trim", "keep", "constant", "func"),
+        align = c("center", "left", "right"))
 }
 
 \arguments{
-  \item{x}{numeric vector of length n}
+  \item{x}{numeric vector of length n or matrix with n rows. If \code{x} is a 
+    matrix than each column will be processed separately.}
   \item{k}{width of moving window; must be an integer between one and n. In case
   of even k's one will have to provide different \code{center} function, since
   \code{\link{runmed}} does not take even k's.}
@@ -18,7 +20,7 @@
     values at both ends are affected, where \code{k2} is the half-bandwidth 
     \code{k2 = k \%/\% 2}.
      \itemize{
-       \item \code{"mad"} - applies the mad function to
+       \item \code{"sd"} - applies the \code{sd} function to
        smaller and smaller sections of the array. Equivalent to: 
        \code{for(i in 1:k2) out[i]=mad(x[1:(i+k2)])}. 
        \item \code{"trim"} - trim the ends; output array length is equal to 
@@ -40,6 +42,10 @@
   \item{center}{moving window center. Defaults 
     to running mean (\code{\link{runmean}} function). Similar to \code{center}  
     in \code{\link{mad}} function. }
+  \item{align}{specifies whether result should be centered (default), 
+  left-aligned or right-aligned.  If \code{endrule}="sd" then setting
+  \code{align} to "left" or "right" will fall back on slower implementation 
+  equivalent to \code{endrule}="func". }
 }
 
 \details{
@@ -55,8 +61,9 @@
 }  
 
 \value{
-  Returns a numeric vector of the same length as \code{x}. Only in case of 
-   \code{endrule="trim"}.the output will be shorter. 
+  Returns a numeric vector or matrix of the same size as \code{x}. Only in case of 
+  \code{endrule="trim"} the output vectors will be shorter and output matrices 
+  will have fewer rows. 
 }
 
 \author{Jarek Tuszynski (SAIC) \email{jaroslaw.w.tuszynski@saic.com}}
@@ -132,6 +139,16 @@
   a = runsd(x     , k)
   b = runsd(x[n:1], k)
   stopifnot(all(abs(a[n:1]-b)<eps));
+  
+  # test vector vs. matrix inputs, especially for the edge handling
+  nRow=200; k=25; nCol=10
+  x = rnorm(nRow,sd=30) + abs(seq(nRow)-n/4)
+  x[seq(1,nRow,10)] = NaN;              # add NANs
+  X = matrix(rep(x, nCol ), nRow, nCol) # replicate x in columns of X
+  a = runsd(x, k)
+  b = runsd(X, k)
+  stopifnot(all(abs(a-b[,1])<eps));        # vector vs. 2D array
+  stopifnot(all(abs(b[,1]-b[,nCol])<eps)); # compare rows within 2D array
 
   # speed comparison
   \dontrun{

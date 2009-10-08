@@ -4,11 +4,13 @@
 \description{Moving (aka running, rolling) Window Quantile calculated over a vector}
 \usage{
   runquantile(x, k, probs, type=7, 
-         endrule=c("quantile", "NA", "trim", "keep", "constant", "func"))
+         endrule=c("quantile", "NA", "trim", "keep", "constant", "func"),
+         align = c("center", "left", "right"))
 }
 
 \arguments{
-  \item{x}{numeric vector of length n}
+  \item{x}{numeric vector of length n or matrix with n rows. If \code{x} is a 
+    matrix than each column will be processed separately.}
   \item{k}{width of moving window; must be an integer between one and n }
   \item{endrule}{character string indicating how the values at the beginning 
     and the end, of the array, should be treated. Only first and last \code{k2} 
@@ -41,6 +43,10 @@
     algorithms, same as \code{type} in \code{\link{quantile}} function. 
     Another even more readable description of nine ways to calculate quantiles 
     can be found at \url{http://mathworld.wolfram.com/Quantile.html}. }
+  \item{align}{specifies whether result should be centered (default), 
+  left-aligned or right-aligned.  If \code{endrule}="quantile" then setting
+  \code{align} to "left" or "right" will fall back on slower implementation 
+  equivalent to \code{endrule}="func". }
 }
 
 \details{
@@ -63,10 +69,12 @@ non-finite numbers like NaN's and Inf's (like \code{\link{quantile}(x, na.rm = T
 }
 
 \value{
-  Function \code{runquantile} returns a matrix of size [n \eqn{\times}{x} 
-  length(probs)]. Only in case of \code{endrule="trim"} the output will have 
-  less rows. 
-} 
+  If \code{x} is a matrix than function \code{runquantile} returns a matrix of 
+  size [n \eqn{\times}{x} \code{\link{length}}(probs)]. If \code{x} is vactor 
+  a than function \code{runquantile} returns a matrix of size 
+  [\code{\link{dim}}(x) \eqn{\times}{x} \code{\link{length}}(probs)]. 
+  If \code{endrule="trim"} the output will have fewer rows. 
+}
 
 \references{
   \itemize{       
@@ -183,6 +191,16 @@ non-finite numbers like NaN's and Inf's (like \code{\link{quantile}(x, na.rm = T
   a = runquantile(x     , k, probs=0.4)
   b = runquantile(x[n:1], k, probs=0.4)
   stopifnot(all(a[n:1]==b, na.rm=TRUE));
+
+  # test vector vs. matrix inputs, especially for the edge handling
+  nRow=200; k=25; nCol=10
+  x = rnorm(nRow,sd=30) + abs(seq(nRow)-n/4)
+  x[seq(1,nRow,10)] = NaN;              # add NANs
+  X = matrix(rep(x, nCol ), nRow, nCol) # replicate x in columns of X
+  a = runquantile(x, k, probs=0.6)
+  b = runquantile(X, k, probs=0.6)
+  stopifnot(all(abs(a-b[,1])<eps));        # vector vs. 2D array
+  stopifnot(all(abs(b[,1]-b[,nCol])<eps)); # compare rows within 2D array
 
   # Exhaustive testing of runquantile to standard R approach
   numeric.test = function (x, k) {

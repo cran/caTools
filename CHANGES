@@ -58,6 +58,21 @@ Changes:
   9) caTools-1.9 (July 7 2008)
   - No code changes
   - Corrected inconsistent licence information
+  10) caTools-1.10 (Oct 08 2009)
+  - Fixed runmax to handle correctly negative numbers
+  - Added align argument to moving window statistics functions: runmean, runmax, 
+    runmin, runsd, runmad and runquintile functions. It allows left and right 
+    alligned window in addition to centered window. 
+  - Added support for 2D arrays to be passed to moving window statistics 
+    functions: runmean, runmax, runmin, runsd, runmad and runquintile functions.
+    If input array is a 2D matrix than the operations are performed for each 
+    column separately. This change was mostly handled by EndRule function. Speed
+    for 2D array input is expected to be slower than for vectors since 
+    calculations for beggining and end of arrays if handled in R instead of C.
+    is expected to be 
+  - Changed "if(!require(LIB)) warning(..." to ""library(LIB)" to get rid or 
+    warnings by RCMD CHECK
+    
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  

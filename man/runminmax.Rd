@@ -6,13 +6,16 @@
   calculated over a vector  }
 \usage{
   runmin(x, k, alg=c("C", "R"),
-         endrule=c("min", "NA", "trim", "keep", "constant", "func"))
+         endrule=c("min", "NA", "trim", "keep", "constant", "func"),
+         align = c("center", "left", "right"))
   runmax(x, k, alg=c("C", "R"),
-         endrule=c("max", "NA", "trim", "keep", "constant", "func"))
+         endrule=c("max", "NA", "trim", "keep", "constant", "func"),
+         align = c("center", "left", "right"))
 }
 
 \arguments{
-  \item{x}{numeric vector of length n}
+  \item{x}{numeric vector of length n or matrix with n rows. If \code{x} is a 
+    matrix than each column will be processed separately.}
   \item{k}{width of moving window; must be an integer between one and n }
   \item{endrule}{character string indicating how the values at the beginning 
     and the end, of the array, should be treated. Only first and last \code{k2} 
@@ -41,6 +44,10 @@
     implementations. Default is to use of code written in C (option \code{alg="C"}).
     Option \code{alg="R"} will use slower code written in R. Useful for 
     debugging and studying the algorithm.}
+  \item{align}{specifies whether result should be centered (default), 
+  left-aligned or right-aligned.  If \code{endrule}="min" or "max" then setting
+  \code{align} to "left" or "right" will fall back on slower implementation 
+  equivalent to \code{endrule}="func". }
 }
 
 \details{
@@ -63,8 +70,9 @@
 }
 
 \value{
-  Returns a numeric vector of the same length as \code{x}. Only in case of 
-   \code{endrule="trim"} the output will be shorter. 
+  Returns a numeric vector or matrix of the same size as \code{x}. Only in case of 
+  \code{endrule="trim"} the output vectors will be shorter and output matrices 
+  will have fewer rows. 
 }
 
 \author{Jarek Tuszynski (SAIC) \email{jaroslaw.w.tuszynski@saic.com}}
@@ -108,7 +116,6 @@
   stopifnot(all(a==b));
   
   # test against loop approach
-  # this test works fine at the R prompt but fails during package check - need to investigate
   k=25; 
   data(iris)
   x = iris[,1]
@@ -126,8 +133,11 @@
     b1[j] = min(x[lo:hi], na.rm = TRUE)
     b2[j] = max(x[lo:hi], na.rm = TRUE)
   }
-  #stopifnot(all(a1==b1), na.rm=TRUE);
-  #stopifnot(all(a2==b2), na.rm=TRUE);
+  # this test works fine at the R prompt but fails during package check - need to investigate
+  \dontrun{ 
+  stopifnot(all(a1==b1, na.rm=TRUE));
+  stopifnot(all(a2==b2, na.rm=TRUE));
+  }
   
   # Test if moving windows forward and backward gives the same results
   # Two data sets also corespond to best and worst-case scenatio data-sets
@@ -138,6 +148,20 @@
   a = runmax(n:1, k)
   b = runmax(1:n, k)
   stopifnot(all(a[n:1]==b, na.rm=TRUE));
+
+  # test vector vs. matrix inputs, especially for the edge handling
+  nRow=200; k=25; nCol=10
+  x = rnorm(nRow,sd=30) + abs(seq(nRow)-n/4)
+  x[seq(1,nRow,10)] = NaN;              # add NANs
+  X = matrix(rep(x, nCol ), nRow, nCol) # replicate x in columns of X
+  a = runmax(x, k)
+  b = runmax(X, k)
+  stopifnot(all(a==b[,1], na.rm=TRUE));        # vector vs. 2D array
+  stopifnot(all(b[,1]==b[,nCol], na.rm=TRUE)); # compare rows within 2D array
+  a = runmin(x, k)
+  b = runmin(X, k)
+  stopifnot(all(a==b[,1], na.rm=TRUE));        # vector vs. 2D array
+  stopifnot(all(b[,1]==b[,nCol], na.rm=TRUE)); # compare rows within 2D array
 
   # Compare C and R algorithms to each other for extreme window sizes
   numeric.test = function (x, k) {

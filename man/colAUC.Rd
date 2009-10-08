@@ -58,8 +58,8 @@
 
 \value{
   An output is a single matrix with the same number of columns as \code{X} and 
-  "n choose 2" ( \eqn{\frac{n!}{(n-2)! 2!} = n(n-1)/2}
-  {n!/((n-2)! 2!) = n(n-1)/2} ) number of rows, 
+  "n choose 2" ( \eqn{\frac{n!}{(n-2)! 2!} = n(n-1)/2}{n!/((n-2)! 2!) = n(n-1)/2} )
+  number of rows, 
   where n is number of unique labels in \code{y} list. For example, if \code{y} 
   contains only two unique class labels ( \code{length(unique(lab))==2} ) than
   output 

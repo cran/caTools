@@ -23,7 +23,7 @@ write.ENVI = function(X, filename, interleave=c("bsq", "bil", "bip") )
   if (is.integer(X)) data.type = 3 # 32-bit int
   if (is.complex(X)) data.type = 9 # 2x64-bit complex<double>
   if (data.type == 0) {            # do not know what is it -> make it a double
-	  X = as.double(X) 
+    X = as.double(X) 
     data.type = 5 
   } 
   
