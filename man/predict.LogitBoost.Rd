@@ -2,7 +2,7 @@
 \alias{predict.LogitBoost}
 \title{Prediction Based on LogitBoost Classification Algorithm}
 \description{Prediction or Testing using logitboost classification algorithm}
-\usage{predict.LogitBoost(object, xtest, type = c("class", "raw"), nIter=NA, \dots)}
+\usage{\method{predict}{LogitBoost}(object, xtest, type = c("class", "raw"), nIter=NA, \dots)}
 
 \arguments{
   \item{object}{An object of class "LogitBoost" see "Value" section of 

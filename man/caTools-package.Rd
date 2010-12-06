@@ -40,7 +40,7 @@ runquantile             Quantile of Moving Window
 runmad                  Median Absolute Deviation of Moving Windows
 runsd                   Standard Deviation of Moving Windows
 sample.split            Split Data into Test and Train Set
-sum.exact               Basic Sum Operations without Round-off Errors
+sumexact                Basic Sum Operations without Round-off Errors
 trapz                   Trapezoid Rule Numerical Integration
 }
 
@@ -65,9 +65,9 @@ trapz                   Trapezoid Rule Numerical Integration
   lines(runmax (x,k), col=col[5])
   legend(0,.9*n, c("data", "runmin", "runmed", "runmean", "runmax"), col=col, lty=1 )
 
-  # sum vs. sum.exact
+  # sum vs. sumexact
   x = c(1, 1e20, 1e40, -1e40, -1e20, -1)
-  a = sum(x);          print(a)
-  b = sum.exact(x);    print(b)
+  a = sum(x);         print(a)
+  b = sumexact(x);    print(b)
 
 }

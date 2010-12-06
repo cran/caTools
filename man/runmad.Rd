@@ -95,16 +95,13 @@ Deviation) calculated over a vector}
 \seealso{
   Links related to:
   \itemize{       
-   \item \code{runmad} - \code{\link{mad}}, \code{\link[fSeries]{rollVar}} from 
-     \pkg{fSeries} library
+   \item \code{runmad} - \code{\link{mad}}
    \item Other moving window functions  from this package: \code{\link{runmin}}, 
      \code{\link{runmax}}, \code{\link{runquantile}}, \code{\link{runmean}} and
      \code{\link{runsd}}
    \item generic running window functions: \code{\link{apply}}\code{
-     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[fSeries]{rollFun}} 
-     from \pkg{fSeries} (slow), \code{\link[gtools]{running}} from \pkg{gtools} 
-     package (extremely slow for this purpose), \code{\link[zoo]{rapply}} from 
-     \pkg{zoo} library, \code{\link[magic]{subsums}} from 
+     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[gtools]{running}} from \pkg{gtools} 
+     package (extremely slow for this purpose), \code{\link[magic]{subsums}} from 
      \pkg{magic} library can perform running window operations on data with any 
      dimensions. 
   }

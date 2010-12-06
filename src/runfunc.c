@@ -272,8 +272,7 @@ void runmean(double *In, double *Out, const int *nIn, const int *nWin)
 { /* medium size version with NaN's and edge calculation, but only one level of round-off correction*/
   int i, k1, k2, Num, n=*nIn, m=*nWin;
   double *in, y, *out, Err, Sum;
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
   k2  = m>>1;         /* right half of window size */
   k1  = m-k2-1;      /* left half of window size */
   in=In; out=Out; 
@@ -320,8 +319,7 @@ void runmean_exact(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation, full round-off correction*/
   int i, j, k1,k2, n=*nIn, m=*nWin, npartial=0, Num=0;
   double *in, *out, partial[mpartial], Sum;
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
 
   k2 = m>>1;         /* right half of window size */
   k1 = m-k2-1;      /* left half of window size */
@@ -369,8 +367,7 @@ void runmin(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation */
   int i, j, k2, k1, n=*nIn, m=*nWin;
   double ptOut, Min, *in, *out, CST = DBL_MAX;
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
 
   k2  = m>>1;               /* right half of window size */
   k1  = m-k2-1;             /* left half of window size */
@@ -424,8 +421,7 @@ void runmax(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation */
   int i, j, k2, k1, n=*nIn, m=*nWin;
   double ptOut, Max, *in, *out, CST = -DBL_MAX;
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
 
   k2  = m>>1;               /* right half of window size */
   k1  = m-k2-1;             /* left half of window size */
@@ -587,8 +583,7 @@ void runquantile(double *In, double *Out, const int *nIn, const int *nWin, const
 { /* full-blown version with NaN's and edge calculation */
   int i, j, k1, k2, *idx, d, n=*nIn, m=*nWin, nPrb=*nProb, mm, k, type=*Type, count=0;
   double *Win, *in, *out, r, ip, Max, p, *prob, BIG=DBL_MAX;
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
 
   k2  = m>>1;                      /* right half of window size */
   k1  = m-k2-1;                    /* left half of window size */
@@ -941,8 +936,7 @@ void runsd(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin
 { 
   int i, k1, k2, j, l, mWin, n=*nIn, m=*nWin, Num;
   double *Win1, *Win2, *in, *out, *ctr, med0, med, Sum, Err, y, BIG=DBL_MAX;
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
 
   Sum=Err=Num=0;
   Win1 = Calloc(m,double);        /* stores all points of the current running window */
@@ -1027,8 +1021,7 @@ void runsd(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin
 #ifdef DEBBUG
 
 int main( void ) {
-  unsigned long nan[2]={0xffffffff, 0x7fffffff};
-  double NaN = *( double* )nan;
+  double NaN = (0.0/0.0);
   char s[] = "%02i "; //"%02i ";
 
   //double x[] ={1,1.123456e10,1.987654e20,-1.987654e20,-1.123456e10, -1};

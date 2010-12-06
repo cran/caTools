@@ -99,15 +99,11 @@ non-finite numbers like NaN's and Inf's (like \code{\link{quantile}(x, na.rm = T
    \item Other moving window functions  from this package: \code{\link{runmin}}, 
      \code{\link{runmax}}, \code{\link{runmean}}, \code{\link{runmad}} and
      \code{\link{runsd}}
-   \item Running Minimum - \code{\link{min}}, \code{\link[fSeries]{rollMin}} from 
-     \pkg{fSeries} library
-   \item Running Maximum - \code{\link{max}}, \code{\link[fSeries]{rollMax}} from 
-     \pkg{fSeries} library, \code{\link[zoo]{rollmax}} from \pkg{zoo} library
+   \item Running Minimum - \code{\link{min}}
+   \item Running Maximum - \code{\link{max}}, \code{\link[zoo]{rollmax}} from \pkg{zoo} library
    \item generic running window functions: \code{\link{apply}}\code{
-     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[fSeries]{rollFun}} 
-     from \pkg{fSeries} (slow), \code{\link[gtools]{running}} from \pkg{gtools} 
-     package (extremely slow for this purpose), \code{\link[zoo]{rapply}} from 
-     \pkg{zoo} library, \code{\link[magic]{subsums}} from 
+     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[gtools]{running}} from \pkg{gtools} 
+     package (extremely slow for this purpose), \code{\link[magic]{subsums}} from 
      \pkg{magic} library can perform running window operations on data with any 
      dimensions. 
   }

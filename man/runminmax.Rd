@@ -83,14 +83,10 @@
    \item Other moving window functions  from this package: \code{\link{runmean}}, 
     \code{\link{runquantile}}, \code{\link{runmad}} and \code{\link{runsd}}  
    \item R functions: \code{\link{runmed}}, \code{\link{min}}, \code{\link{max}}
-   \item Similar functions in other packages: \code{\link[fSeries]{rollMin}} 
-     and \code{\link[fSeries]{rollMax}} from \pkg{fSeries} library
-     \code{\link[zoo]{rollmax}} from \pkg{zoo} library
-   \item Generic running window functions: \code{\link{apply}}\code{
-     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[fSeries]{rollFun}} 
-     from \pkg{fSeries} (slow), \code{\link[gtools]{running}} from \pkg{gtools} 
-     package (extremely slow for this purpose), \code{\link[zoo]{rapply}} from 
-     \pkg{zoo} library, \code{\link[magic]{subsums}} from 
+   \item Similar functions in other packages: \code{\link[zoo]{rollmax}} from \pkg{zoo} library
+   \item generic running window functions: \code{\link{apply}}\code{
+     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[gtools]{running}} from \pkg{gtools} 
+     package (extremely slow for this purpose), \code{\link[magic]{subsums}} from 
      \pkg{magic} library can perform running window operations on data with any 
      dimensions. 
   }

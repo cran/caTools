@@ -1,22 +1,19 @@
-\name{sum.exact, cumsum.exact & runsum.exact}
-\alias{sum.exact}
-\alias{cumsum.exact}
-\alias{runsum.exact}
+\name{sumexact, cumsumexact}
+\alias{sumexact}
+\alias{cumsumexact}
 \title{Basic Sum Operations without Round-off Errors}
 \description{
   Functions for performing basic sum operations without round-off errors
 }
 \usage{
-  sum.exact(..., na.rm = FALSE)
-  cumsum.exact(x)
-  runsum.exact(x,k)
+  sumexact(..., na.rm = FALSE)
+  cumsumexact(x)
 }
 
 \arguments{
   \item{x}{numeric vector}
   \item{...}{numeric vector(s), numbers or other objects to be summed}
   \item{na.rm}{logical. Should missing values be removed?}
-  \item{k}{width of moving window; must be an odd integer between one and n }
 }
 
 \details{
@@ -30,10 +27,8 @@
 }
 
 \value{
-  Function \code{sum.exact} returns single number. Function \code{cumsum.exact} 
-  returns vector of the same length as \code{x}. Function \code{runsum.exact} 
-  returns vector of length \code{length(x)-k} and attribute "count" containing
-  number of finite (as in \code{\link{is.finite}}) elements in each window. 
+  Function \code{sumexact} returns single number. Function \code{cumsumexact} 
+  returns vector of the same length as \code{x}. 
 }
 
 \references{
@@ -65,20 +60,18 @@
 \seealso{
  \itemize{       
    \item \code{\link[base]{sum}} is faster but not error-save version of 
-         \code{sum.exact}
-   \item \code{\link[base]{cumsum}} is equivalent to \code{cumsum.exact}
-   \item \code{\link{runmean}(x,k,endrule="trim")} is similar to 
-         \code{runsum.exact}.
+         \code{sumexact}
+   \item \code{\link[base]{cumsum}} is equivalent to \code{cumsumexact}
  }
 }
 
 \examples{
   x = c(1, 1e20, 1e40, -1e40, -1e20, -1)
-  a = sum(x);          print(a)
-  b = sum.exact(x);    print(b)
+  a = sum(x);         print(a)
+  b = sumexact(x);    print(b)
   stopifnot(b==0)
-  a = cumsum(x);       print(a)
-  b = cumsum.exact(x); print(b)
+  a = cumsum(x);      print(a)
+  b = cumsumexact(x); print(b)
   stopifnot(b[6]==0)
 }
 \keyword{ts}
@@ -87,7 +80,6 @@
 \keyword{utilities}
 \concept{sum with no round-off errors}
 \concept{cumulative sum with no round-off errors}
-\concept{moving sum with no round-off errors}
-\concept{rolling sum with no round-off errors}
-\concept{running sum with no round-off errors}
+
+
 

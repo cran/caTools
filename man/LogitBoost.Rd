@@ -57,7 +57,6 @@
 \seealso{
  \itemize{
    \item \code{\link{predict.LogitBoost}} has prediction half of LogitBoost code
-   \item \code{\link[boost]{logitboost}} function from \pkg{boost} library
    \item \code{logitboost} function from \pkg{logitboost} library (not in CRAN
    or BioConductor but can be found at 
    \url{http://stat.ethz.ch/~dettling/boosting.html}) is very similar but much

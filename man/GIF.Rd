@@ -37,9 +37,7 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
   \item{col}{Color palette definition. Several formats are allowed: 
     \itemize{
       \item array (list) of colors in the same format as output of palette 
-        functions like \code{\link[grDevices]{rainbow}} or 
-        \code{\link[grDevices]{heat.colors}} (ex. '\code{col=rainbow(256)}').
-        Preferred format for precise color control.
+        functions.  Preferred format for precise color control.
       \item palette function itself (ex. '\code{col=rainbow}'). Preferred 
         format if not sure how many colors are needed.
       \item character string with name of internally defined palette. At the 
@@ -132,9 +130,7 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
   and possibly many other functions.
   
   Displayed image can be saved in GIF, JPEG or PNG format using several 
-  different functions: \code{\link[GDD]{GDD}} from package \pkg{GDD}, 
-  \code{\link[R2HTML]{HTMLplot}} from package \pkg{R2HTML} and
-  functions \code{\link[gdDevices]{jpeg}} and \code{\link[gdDevices]{png}}.
+  different functions, like \code{\link[R2HTML]{HTMLplot}} from package \pkg{R2HTML}.
   
   Functions for directly reading and writing image files: 
   \itemize{
@@ -151,10 +147,6 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
   
   There are many functions for creating and managing color palettes:
   \itemize{
-  \item R provides functions for creating palettes of continuous colors: 
-   \code{\link[grDevices]{rainbow}}, \code{\link[grDevices]{topo.colors}},
-   \code{\link[grDevices]{heat.colors}}, 
-   \code{\link[grDevices]{terrain.colors.colors}}, \code{\link[grDevices]{gray}}
   \item \code{\link[fields]{tim.colors}} in package \pkg{fields} contains 
    palette similar to Matlab's jet palette (see examples for simpler implementation) 
   \item \code{\link[gplots]{rich.colors}} in package \pkg{gplots} contains 

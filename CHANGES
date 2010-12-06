@@ -72,7 +72,16 @@ Changes:
     is expected to be 
   - Changed "if(!require(LIB)) warning(..." to ""library(LIB)" to get rid or 
     warnings by RCMD CHECK
-    
+  11) caTools-1.11 (Dec 2010)  
+  - Changed EndRule function used by all run... functions to fix handling of 
+    different endrules when for non-central aligments and for k=2.
+  - Fully retired runsum.exact, which was not working for a while, use runmean
+    with "exact" option instead.
+  - Removed references to several no-longer-existing packages and functions from 
+    Rd files.  
+  - changed documentation of predict.LogitBoost to follow S3 mathod syntax.
+  - renamed sum.exact and cumsum.exact to sumexact and cumsumexact to avoid 
+    package build errors. those functions were confused with S3 mathods.
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  

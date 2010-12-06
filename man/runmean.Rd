@@ -109,9 +109,8 @@
   Links related to:
   \itemize{       
    \item moving mean - \code{\link{mean}}, \code{\link{kernapply}}, 
-     \code{\link{filter}}, \code{\link{runsum.exact}}, \code{\link{decompose}},
+     \code{\link{filter}}, \code{\link{decompose}},
      \code{\link{stl}},
-     \code{\link[fSeries]{rollMean}} from \pkg{fSeries} library, 
      \code{\link[zoo]{rollmean}} from \pkg{zoo} library,
      \code{\link[magic]{subsums}} from \pkg{magic} library,
      \item Other moving window functions  from this package: \code{\link{runmin}}, 
@@ -119,10 +118,8 @@
      \code{\link{runsd}} 
    \item \code{\link{runmed}}
    \item generic running window functions: \code{\link{apply}}\code{
-     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[fSeries]{rollFun}} 
-     from \pkg{fSeries} (slow), \code{\link[gtools]{running}} from \pkg{gtools} 
-     package (extremely slow for this purpose), \code{\link[zoo]{rapply}} from 
-     \pkg{zoo} library, \code{\link[magic]{subsums}} from 
+     (\link{embed}(x,k), 1, FUN)} (fastest), \code{\link[gtools]{running}} from \pkg{gtools} 
+     package (extremely slow for this purpose), \code{\link[magic]{subsums}} from 
      \pkg{magic} library can perform running window operations on data with any 
      dimensions. 
   }

@@ -24,7 +24,6 @@
   I discovered recently that R packages already have two functions with 
   similar capabilities:
   \code{\link[gtools]{combinations}} from \pkg{gTools} package and
-  \code{\link[vsn]{nchoosek}} from \pkg{vsn} package.
   Also similar to Matlab's \code{nchoosek} function (\url{
     http://www.mathworks.com/access/helpdesk/help/techdoc/ref/nchoosek.html}) 
 }
