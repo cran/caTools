@@ -34,7 +34,7 @@
      \itemize{
        \item \code{"mean"} - applies the underlying function to smaller and 
        smaller sections of the array. Equivalent to: 
-       \code{for(i in 1:k2) out[i]=mean(x[1:i])}. This option is implemented in 
+       \code{for(i in 1:k2) out[i] = mean(x[1:(i+k2)])}. This option is implemented in 
        C if \code{alg="C"}, otherwise is done in R.
        \item \code{"trim"} - trim the ends; output array length is equal to 
          \code{length(x)-2*k2 (out = out[(k2+1):(n-k2)])}. This option mimics 

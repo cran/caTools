@@ -7,8 +7,8 @@
   any binary data as string using alphanumeric subset of ASCII character set.
 }
 \usage{
-  z = base64encode(x, size=NA, endian=.Platform$endian)
-  x = base64decode(z, what, size=NA, signed = TRUE, endian=.Platform$endian)
+  base64encode(x, size=NA, endian=.Platform$endian)
+  base64decode(z, what, size=NA, signed = TRUE, endian=.Platform$endian)
 }
 
 \arguments{

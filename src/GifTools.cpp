@@ -557,15 +557,14 @@ int imreadGif(const char* filename, int nImage, bool verbose,
               int ColorMap[255], int &Transparent, char** Comment)
 {
   bool interlace;
-  uchar buffer[256], c, *cube=0, *image=0;
-  int Width, Height, i, iImage, ret, DelayTime, stats, done, n, m, nColMap=0, filesize=0;
-  char version[7], fname[256], *str, *p, *comment=0;
+  uchar buffer[256], *cube=0, *image=0;
+  int Width, Height, i, c, iImage, ret, DelayTime, stats, done, n, m, nColMap=0, filesize=0;
+  char version[7], fname[256], *p, *comment=0;
   
   *data=NULL;
   *Comment=NULL;
   Width=Height=nRow=nCol=nBand=0; 
   ret=Transparent=-1;
-  str=fname;
   strcpy(fname,filename);
   i = static_cast<int>( strlen(fname));
   if (fname[i-4]=='.') strcpy(strrchr(fname,'.'),".gif");
@@ -583,9 +582,10 @@ int imreadGif(const char* filename, int nImage, bool verbose,
   i = ReadColorMap(fp, buffer[4], ColorMap);   // Read Global Colormap
   if (i==0) return -3;
   if (i==2) nColMap++;
-  if(verbose) 
+  if(verbose) {
     if(i==2) print("Global colormap with %i colors \n", 2<<(buffer[4]&0x07));
     else     print("No global colormap provided\n");
+  }
   filesize += 6 + 7 + 3*256;
 
   //====================================================

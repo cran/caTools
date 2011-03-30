@@ -60,7 +60,7 @@ LogitBoost = function(xlearn, ylearn, nIter=ncol(xlearn))
     x = sort(xlearn[,iFeat], index=TRUE)
     Thresh[,iFeat] = x[[1]]
     Index [,iFeat] = x[[2]]
-    Mask  [,iFeat] = c((diff(Thresh[,iFeat])!=0), FALSE) 
+    Mask  [,iFeat] = c((diff(Thresh[,iFeat])!=0), TRUE) 
     repts [ iFeat] = !all(Mask[,iFeat])
   }
 

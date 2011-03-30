@@ -4,7 +4,7 @@
 \description{Calculate Area Under the ROC Curve (AUC) for every column of a 
   matrix. Also, can be used to plot the ROC curves.}
 \usage{
-  auc = colAUC(X, y, plotROC=FALSE, alg=c("Wilcoxon","ROC"))
+  colAUC(X, y, plotROC=FALSE, alg=c("Wilcoxon","ROC"))
 }
 
 \arguments{

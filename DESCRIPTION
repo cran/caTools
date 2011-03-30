@@ -1,6 +1,6 @@
 Package: caTools
-Version: 1.11
-Date: December 6, 2010
+Version: 1.12
+Date: April, 2011
 Title: Tools: moving window statistics, GIF, Base64, ROC AUC, etc.
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Maintainer: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
@@ -13,5 +13,5 @@ Description: Contains several basic utility functions including: moving
         and cumsum, etc.
 License: GPL-3
 Repository: CRAN
-Date/Publication: 2010-12-17 07:35:29
-Packaged: 2010-12-16 17:17:05 UTC; tuszynskij
+Date/Publication: 2011-05-18 04:54:00
+Packaged: 2011-05-17 20:12:27 UTC; tuszynskij

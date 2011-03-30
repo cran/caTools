@@ -229,10 +229,9 @@ void cumsum_exact(double *In, double *Out, const int *nIn)
 /*==================================================================================*/
 void runmean_lite(double *In, double *Out, const int *nIn, const int *nWin)
 {
-  int i, k1, k2, n=*nIn, m=*nWin;
+  int i, k2, n=*nIn, m=*nWin;
   double *in, *out, Sum, d;
   k2 = m>>1;           /* right half of window size */
-  k1 = m-k2-1;        /* left half of window size */
   d  = 1.0/m;
   in=In; out=Out; 
   Sum = 0;             /* we need to calculate initial 'Sum' */
@@ -244,7 +243,7 @@ void runmean_lite(double *In, double *Out, const int *nIn, const int *nWin)
     *out = Sum/(i+1);
   }
   /* step 3: runsum of the rest of the vector. Inside loop is same as:   */
-  /* *out = *(out-1) - *in + *(in+m); but with round of error correction */
+  /* *out = *(out-1) - *in + *(in+m);  */
   for(i=m; i<n; i++, out++, in++) {
     Sum += in[m] - *in;
     *out = Sum*d;
@@ -270,11 +269,10 @@ void runmean_lite(double *In, double *Out, const int *nIn, const int *nWin)
 /*==================================================================================*/
 void runmean(double *In, double *Out, const int *nIn, const int *nWin)
 { /* medium size version with NaN's and edge calculation, but only one level of round-off correction*/
-  int i, k1, k2, Num, n=*nIn, m=*nWin;
+  int i, k2, Num, n=*nIn, m=*nWin;
   double *in, y, *out, Err, Sum;
   double NaN = (0.0/0.0);
   k2  = m>>1;         /* right half of window size */
-  k1  = m-k2-1;      /* left half of window size */
   in=In; out=Out; 
   Sum = 0;           /* we need to calculate initial 'Sum' */
   Err = 0;
@@ -317,12 +315,11 @@ void runmean(double *In, double *Out, const int *nIn, const int *nWin)
 /*==================================================================================*/
 void runmean_exact(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation, full round-off correction*/
-  int i, j, k1,k2, n=*nIn, m=*nWin, npartial=0, Num=0;
+  int i, j, k2, n=*nIn, m=*nWin, npartial=0, Num=0;
   double *in, *out, partial[mpartial], Sum;
   double NaN = (0.0/0.0);
 
   k2 = m>>1;         /* right half of window size */
-  k1 = m-k2-1;      /* left half of window size */
   in=In; out=Out; 
   /* step 1 - find mean of elements 0:(k2-1) */      
   for(i=0; i<k2; i++) {
@@ -365,12 +362,11 @@ void runmean_exact(double *In, double *Out, const int *nIn, const int *nWin)
 /*==================================================================*/
 void runmin(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation */
-  int i, j, k2, k1, n=*nIn, m=*nWin;
+  int i, j, k2, n=*nIn, m=*nWin;
   double ptOut, Min, *in, *out, CST = DBL_MAX;
   double NaN = (0.0/0.0);
 
-  k2  = m>>1;               /* right half of window size */
-  k1  = m-k2-1;             /* left half of window size */
+  k2  = m>>1;               /* right half of window size */  
   in  = In;
   out = Out;
   /* --- step 1 - find min of elements 0:(k2-1) */      
@@ -419,12 +415,11 @@ void runmin(double *In, double *Out, const int *nIn, const int *nWin)
 /*==================================================================*/
 void runmax(double *In, double *Out, const int *nIn, const int *nWin)
 { /* full-blown version with NaN's and edge calculation */
-  int i, j, k2, k1, n=*nIn, m=*nWin;
+  int i, j, k2, n=*nIn, m=*nWin;
   double ptOut, Max, *in, *out, CST = -DBL_MAX;
   double NaN = (0.0/0.0);
 
   k2  = m>>1;               /* right half of window size */
-  k1  = m-k2-1;             /* left half of window size */
   in  = In;
   out = Out;
   /* step 1 - find max of elements 0:(k2-1) */      
@@ -552,13 +547,13 @@ void runquantile_lite(double *In, double *Out, const int *nIn, const int *nWin, 
   } else {                            /* non-trivial case */
     idx = Calloc(m,int   );           /* index will hold partially sorted index numbers of Save array */
     Win = Calloc(m,double);           /* stores all points of the current running window */
-    prob = Calloc(nPrb,double);    /* stores all points of the current running window */
+    prob = Calloc(nPrb,double);       /* stores all points of the current running window */
     for(i=0; i<m; i++) {
       Win[i] = *(in++);               /* initialize running window */
       idx[i] = i;                     /* and its index */
     }
     in--;                             /* last point of the window will be placed again */
-    for(d=0; d<nPrb; d++)          /* for each probability */
+    for(d=0; d<nPrb; d++)             /* for each probability */
       prob[d] = QuantilePosition(Prob[d], m, *Type); /* store common size for speed */
     for(j=i=m-1; i<n; i++) {
       Win[j] = *(in++);               /* Move Win to the right: replace a[i-m] with a[m] point  */
@@ -676,9 +671,10 @@ void runquantile(double *In, double *Out, const int *nIn, const int *nWin, const
 
 /*==================================================================================*/
 /* MAD function applied to moving (running) window                                  */ 
+/* No edge calculations and no NAN support                                          */ 
 /* Input :                                                                          */
 /*   In   - array to run moving window over will remain umchanged                   */
-/*   Ctr  - array storing results of runmed                                         */
+/*   Ctr  - array storing results of runmed or other running average function       */
 /*   Out  - empty space for array to store the results                              */
 /*   nIn  - size of arrays In and Out                                               */
 /*   nWin - size of the moving window                                               */
@@ -698,7 +694,7 @@ void runmad_lite(double *In, double *Ctr, double *Out, const int *nIn, const int
   k1   = m-k2-1;                 /* left  half of window size */
   in   = In;                     /* initialize pointer to input In vector */
   out  = Out+k1;                 /* initialize pointer to output Mad vector */
-  ctr  = Ctr+k1;                 /* initialize pointer to output Mad vector */
+  ctr  = Ctr+k1;                 /* initialize pointer to input  Ctr vector */
   med0 = 0;                      /* med0 - will save previous center (median) so we know it changed */
   for(i=0; i<m; i++) {
     Win1[i] = Win2[i] = *(in++); /* initialize running windows */
@@ -722,15 +718,26 @@ void runmad_lite(double *In, double *Ctr, double *Out, const int *nIn, const int
   Free(idx);
 }
 
-
+/*==================================================================================*/
+/* MAD function applied to moving (running) window                                  */ 
+/* with edge calculations and NAN support                                           */ 
+/* Input :                                                                          */
+/*   In   - array to run moving window over will remain umchanged                   */
+/*   Ctr  - array storing results of runmed or other running average function       */
+/*   Out  - empty space for array to store the results                              */
+/*   nIn  - size of arrays In and Out                                               */
+/*   nWin - size of the moving window                                               */
+/* Output :                                                                         */
+/*   Out  - results of runing moving window over array In and colecting window mean */
+/*==================================================================================*/
 void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin)
 { 
   int i, k1, k2, kk1, kk2, j, l, mWin, *idx, n=*nIn, m=*nWin, Num=0;
   double *Win1, *Win2, *in, *out, *ctr, med0, med, BIG=DBL_MAX-1;
 
   idx  = Calloc(m,int   );        /* index will hold partially sorted index numbers of Save array */
-  Win1 = Calloc(m,double);        /* stores all points of the current running window */
-  Win2 = Calloc(m,double);        /* stores all points of the current running window */
+  Win1 = Calloc(m,double);        /* stores all points of the current running window: Values*/
+  Win2 = Calloc(m,double);        /* stores all points of the current running window: Values - median*/
   k2   = m>>1;                    /* right half of window size */
   k1   = m-k2-1;                  /* left half of window size */
   in   = In;                      /* initialize pointer to input In vector */
@@ -766,21 +773,21 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
   for(j=0, i=m; i<n; i++) {
     Win1[j] = *(in++);            /* Move Win to the right: replace a[i-m] with a[m] point  */    
     med     = *(ctr++);           /* find median of current Win1 */
-//    if (med==med0) {              /* median did not changed */
-//      if (Win2[j]<BIG) Num--;
-//      Win2[j]=fabs(Win1[j]-med);  /* recalculate one point */
-//      if (R_finite(Win2[j])) Num++; else Win2[j]=BIG;
-//    } else {                      /* recalculate whole window Win2 */
+    if (med==med0) {              /* median did not changed */
+      if (Win2[j]<BIG) Num--;
+      Win2[j]=fabs(Win1[j]-med);  /* recalculate one point */
+      if (R_finite(Win2[j])) Num++; else Win2[j]=BIG;
+    } else {                      /* recalculate whole window Win2 */
       for(Num=l=0; l<m; l++) {    /* median did changed */
         Win2[l]=fabs(Win1[l]-med);
         if (R_finite(Win2[l])) Num++; else Win2[l]=BIG;
       }
-//    }
+    }
     insertion_sort(Win2,idx,Num); /* sort Win2 - if medians did not change than  data should be sorted*/
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     *(out++) = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
-//  med0 = med;                   /* save previous median */
+    med0 = med;                   /* save previous median */
     j = (j+1)%m;                  /* index goes from 0 to m-1, and back to 0 again  */
 //  printf("2-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
   }
@@ -812,95 +819,27 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
   Free(Win2);
   Free(Win1);
   Free(idx);
-}
+} 
 
-
-//void runmad1(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin)
-//{ 
-//  int i, k1, k2, kk1, kk2, j, l, mWin, *idx, n=*nIn, m=*nWin, count=0;
-//  double *Win1, *Win2, *in, *out, *ctr, med0, med, BIG=DBL_MAX;
-//
-//  idx  = Calloc(m,int   );       /* index will hold partially sorted index numbers of Save array */
-//  Win1 = Calloc(m,double);       /* stores all points of the current running window */
-//  Win2 = Calloc(m,double);       /* stores all points of the current running window */
-//  k2   = m>>1;                   /* right half of window size */
-//  k1   = m-k2-1;                 /* left half of window size */
-//  in   = In;                     /* initialize pointer to input In vector */
-//  out  = Out;                    /* initialize pointer to output Mad vector */
-//  ctr  = Ctr;                    /* initialize pointer to output Mad vector */
-//  med0 = 0;                      /* med0 - will save previous center (median) so we know it changed */
-//
-//  for(i=0; i<m; i++) idx[i] = i; /* and its index */
-//  for(i=0; i<k2; i++) {
-//    Win1[i] = Win2[i] = *(in++); /* initialize running window */
-//  }
-//  /* --- step 1 : left edge -----------------------------------------------------------------*/
-//  for(j=k2, i=0; i<=k1; i++){
-//    mWin = j+1;
-//    kk2  = mWin>>1;              /* right half of window size */
-//    kk1  = mWin-kk2-1;           /* left half of window size */
-//    Win1[j] = *(in++);           /* Move Win to the right: replace a[i-m] with a[m] point  */    
-//    med     = *(ctr++);          /* find median of current Win1 */
-//    if (med==med0)               /* median did not changed */
-//      Win2[j]=fabs(Win1[j]-med); /* recalculate one point */
-//    else for(l=0; l<m; l++)      /* median did not changed */
-//      Win2[l]=fabs(Win1[l]-med); /* recalculate whole window Win2 */
-//    insertion_sort(Win2,idx,mWin); /* sort Win2 - if medians did not change than  data should be sorted*/
-//    *(out++) = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
-//    med0 = med;                  /* save previous median */
-//    j = (j+1)%m;                 /* index goes from 0 to m-1, and back to 0 again  */
-//    printf("1-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
-//  }
-//  /* --- step 2: inner section ----------------------------------------------------------------*/
-//  for(i=m; i<n; i++) {
-//    if (Win2[j]<BIG) Num--;
-//    Win1[j] = *(in++);           /* Move Win to the right: replace a[i-m] with a[m] point  */    
-//    med     = *(ctr++);          /* find median of current Win1 */
-//    if (med==med0)               /* median did not changed */
-//      Win2[j]=fabs(Win1[j]-med); /* recalculate one point */
-//    else for(l=0; l<m; l++)      /* median did not changed */
-//      Win2[l]=fabs(Win1[l]-med); /* recalculate whole window Win2 */
-//    insertion_sort(Win2,idx,m);  /* sort Win2 - if medians did not change than  data should be sorted*/
-//    *(out++) = (Win2[idx[k1]]+Win2[idx[k2]])*0.5;    /* find mad of current Win1 and store it */
-//    med0 = med;                  /* save previous median */
-//    j = (j+1)%m;                 /* index goes from 0 to m-1, and back to 0 again  */
-//    printf("2-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
-//  }
-//  /* --- step 3 : right edge ----------------------------------------------------------*/
-//  for(i=0; i<m; i++) {
-//    idx[i]=i;
-//    Win2[m-i-1]=Win1[j]; 
-//    j = (j+1)%m;                 /* index goes from 0 to m-1, and back to 0 again  */
-//  }
-//  med0=BIG;
-//  for(i=0; i<m; i++) Win1[i]=Win2[i];
-//  for(i=k2-1; i>=0; i--) {
-//    mWin = m-i-1;                /* window width */
-//    kk2  = mWin>>1;              /* right half of window size */
-//    kk1  = mWin-kk2-1;           /* left half of window size. if nWin is odd than kk1==kk2 */
-//    med = ctr[i];                /* find median of current Win1 */
-//    if (med==med0)               /* median did not changed */
-//      Win2[mWin-1]=fabs(Win1[mWin-1]-med); /* recalculate one point */
-//    else for(l=0; l<mWin; l++)   /* median did not changed */
-//      Win2[l]=fabs(Win1[l]-med); 
-//    insertion_sort(Win2,idx,mWin); /* sort Win2 - if medians did not change than data should be sorted*/
-//    out[i] = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
-//    med0 = med;                  /* save previous median */
-//    printf("3-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
-//  }
-//  Free(Win2);
-//  Free(Win1);
-//  Free(idx);
-//} 
-
-
+/*==================================================================================*/
+/* Standard Deviation function applied to moving (running) window                   */ 
+/* No edge calculations and no NAN support                                          */ 
+/* Input :                                                                          */
+/*   In   - array to run moving window over will remain umchanged                   */
+/*   Ctr  - array storing results of runmed or other running average function       */
+/*   Out  - empty space for array to store the results                              */
+/*   nIn  - size of arrays In and Out                                               */
+/*   nWin - size of the moving window                                               */
+/* Output :                                                                         */
+/*   Out  - results of runing moving window over array In and colecting window mean */
+/*==================================================================================*/
 void runsd_lite(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin)
 { 
   int i, k2, k1, j, l, n=*nIn, m=*nWin;
   double *Win1, *Win2, *in, *out, *ctr, med0, med, Sum=0;
 
-  Win1 = Calloc(m,double);       /* stores all points of the current running window */
-  Win2 = Calloc(m,double);       /* stores all points of the current running window */
+  Win1 = Calloc(m,double);       /* stores all points of the current running window: Values */
+  Win2 = Calloc(m,double);       /* stores all points of the current running window: Values - avr */
   k2   = m>>1;                   /* right half of window size */
   k1   = m-k2-1;                 /* left half of window size */
   in   = In;                     /* initialize pointer to input In vector */
@@ -924,7 +863,7 @@ void runsd_lite(double *In, double *Ctr, double *Out, const int *nIn, const int 
         Sum += Win2[l];
       }
     }
-    *(out++) = sqrt(Sum/(m-1));      /* save mean and move window */
+    *(out++) = sqrt(Sum/(m-1));  /* save mean and move window */
     med0 = med;                  /* save previous median */
     j = (j+1)%m;                 /* index goes from 0 to m-1, and back to 0 again  */
   }
@@ -932,6 +871,18 @@ void runsd_lite(double *In, double *Ctr, double *Out, const int *nIn, const int 
   Free(Win1);
 }
 
+/*==================================================================================*/
+/* Standard Deviation function applied to moving (running) window                   */ 
+/* With edge calculations and NAN support                                           */ 
+/* Input :                                                                          */
+/*   In   - array to run moving window over will remain umchanged                   */
+/*   Ctr  - array storing results of runmed or other running average function       */
+/*   Out  - empty space for array to store the results                              */
+/*   nIn  - size of arrays In and Out                                               */
+/*   nWin - size of the moving window                                               */
+/* Output :                                                                         */
+/*   Out  - results of runing moving window over array In and colecting window mean */
+/*==================================================================================*/
 void runsd(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin)
 { 
   int i, k1, k2, j, l, mWin, n=*nIn, m=*nWin, Num;
@@ -939,8 +890,8 @@ void runsd(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin
   double NaN = (0.0/0.0);
 
   Sum=Err=Num=0;
-  Win1 = Calloc(m,double);        /* stores all points of the current running window */
-  Win2 = Calloc(m,double);        /* stores all points of the current running window */
+  Win1 = Calloc(m,double);        /* stores all points of the current running window: Values */
+  Win2 = Calloc(m,double);        /* stores all points of the current running window: Values - avr */
   k2   = m>>1;                    /* right half of window size */
   k1   = m-k2-1;                  /* left half of window size */
   in   = In;                      /* initialize pointer to input In vector */

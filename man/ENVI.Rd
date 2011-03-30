@@ -5,7 +5,7 @@
 \description{Read and write binary data in ENVI format, which is supported by 
   most GIS software.}
 \usage{
-  X=read.ENVI(filename, headerfile=paste(filename, ".hdr", sep="")) 
+  read.ENVI(filename, headerfile=paste(filename, ".hdr", sep="")) 
   write.ENVI (X, filename, interleave = c("bsq", "bil", "bip")) 
 }
 

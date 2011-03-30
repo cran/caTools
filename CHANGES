@@ -82,6 +82,14 @@ Changes:
   - changed documentation of predict.LogitBoost to follow S3 mathod syntax.
   - renamed sum.exact and cumsum.exact to sumexact and cumsumexact to avoid 
     package build errors. those functions were confused with S3 mathods.
+  12) caTools-1.12 (April 2011)  
+  - small correction to GifTools.cpp sent by Murray Stokely to allow compilation 
+    with clang rather than gcc compiler.
+  - corrections to runmean documentation sent by Jon Wade
+  - fixed bug in LogitBoost.R which was causing crashes when all values of a 
+    column were identical
+  - added comments to runfunc.c
+
 ====================================================\==========================                 
  Jarek Tuszynski, PhD.                           o / \ 
  Science Applications International Corporation  <\__,|  
