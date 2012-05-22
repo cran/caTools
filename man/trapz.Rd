@@ -31,8 +31,6 @@
 
 \seealso{
   \itemize{
-   \item \code{\link[PROcess]{intg}} from \pkg{PROcess} package
-   \item \code{\link[ROC]{trapezint}} from \pkg{ROC} package
    \item \code{\link{integrate}}
    \item Matlab's \code{trapz} function (\url{
      http://www.mathworks.com/access/helpdesk/help/techdoc/ref/trapz.html}) 

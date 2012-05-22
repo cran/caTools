@@ -108,9 +108,7 @@
   \item \code{\link{wilcox.test}} and \code{\link{pwilcox}}
   \item \code{\link[exactRankTests]{wilcox.exact}} from \pkg{exactRankTests} package
   \item \code{\link[coin]{wilcox_test}} from \pkg{coin} package
-  \item \code{\link[ROC]{AUC}} from \pkg{ROC} package
   \item \code{\link[ROCR]{performance}} from \pkg{ROCR} package
-  \item \code{\link[limma]{auROC}} from \pkg{limma} package 
   \item \code{\link[Epi]{ROC}} from \pkg{Epi} package
   \item \code{\link[verification]{roc.area}} from \pkg{verification} package
   \item \code{\link[Hmisc]{rcorr.cens}} from \pkg{Hmisc} package

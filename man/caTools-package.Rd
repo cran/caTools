@@ -15,14 +15,11 @@ and cumsum, etc.
 \details{
 \tabular{ll}{
 Package: \tab caTools\cr
-Version: \tab 1.6\cr
-Date: \tab Apr 11 2006\cr
+Version: \tab 1.13\cr
+Date: \tab May 22, 2012\cr
 Depends: \tab R (>= 2.2.0), bitops\cr
 Suggests: \tab MASS, rpart\cr
-License: \tab The caMassClass Software License, Version 1.0 (See COPYING
-file or \url{http://ncicb.nci.nih.gov/download/camassclasslicense.jsp})\cr
-URL: \tab http://ncicb.nci.nih.gov/download/index.jsp\cr
-Built: \tab R 2.2.1; i386-pc-mingw32; 2006-04-14 10:45:20; windows\cr
+License: \tab GPL=3\cr
 }
 
 Index:

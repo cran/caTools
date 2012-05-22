@@ -1,9 +1,10 @@
 Package: caTools
-Version: 1.12
-Date: April, 2011
+Type: Package
 Title: Tools: moving window statistics, GIF, Base64, ROC AUC, etc.
+Version: 1.13
+Date: 2012-05-22
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
-Maintainer: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
+Maintainer: Timothy P. Jurka <tpjurka@ucdavis.edu>
 Depends: R (>= 2.2.0), bitops
 Suggests: MASS, rpart
 Description: Contains several basic utility functions including: moving
@@ -12,6 +13,7 @@ Description: Contains several basic utility functions including: moving
         classifier, base64 encoder/decoder, round-off error free sum
         and cumsum, etc.
 License: GPL-3
+LazyLoad: yes
+Packaged: 2012-05-22 17:21:12 UTC; timjurka
 Repository: CRAN
-Date/Publication: 2011-05-18 04:54:00
-Packaged: 2011-05-17 20:12:27 UTC; tuszynskij
+Date/Publication: 2012-05-23 07:37:21

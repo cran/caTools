@@ -89,10 +89,7 @@ Changes:
   - fixed bug in LogitBoost.R which was causing crashes when all values of a 
     column were identical
   - added comments to runfunc.c
-
-====================================================\==========================                 
- Jarek Tuszynski, PhD.                           o / \ 
- Science Applications International Corporation  <\__,|  
- Jaroslaw.W.Tuszynski@saic.com                    ">   \
-                                                   `    \
-
+  13) caTools-1.13 (May 2012)
+  - removed Rd cross-references that are no longer available on CRAN
+  - updated caTools-package.rD with correct licensing information
+  - updated DESCRIPTION file to reflect new maintainer

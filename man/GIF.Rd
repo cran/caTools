@@ -141,8 +141,6 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
    can process files in ENVI format. ENVI files can store 2D images and 3D data 
    (multi-frame images), and are supported by most GIS (Geographic Information 
    System) software including free "freelook".
-   \item \code{\link[rimage]{read.jpeg}} from 
-    \pkg{rimage} package can read JPEG files 
   }
   
   There are many functions for creating and managing color palettes:
