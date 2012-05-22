@@ -16,7 +16,6 @@
 
 base64encode = function(x, size=NA, endian=.Platform$endian)
 {
-   library(bitops)                # needed for bitOr and bitAnd
    if (typeof(x)!="raw") x = writeBin(x, raw(), size=size, endian=endian)
    x = as.integer(x)
    ndByte = length(x)            # number of decoded bytes
@@ -68,7 +67,6 @@ base64encode = function(x, size=NA, endian=.Platform$endian)
 
 base64decode = function(z, what, size=NA, signed = TRUE, endian=.Platform$endian)
 {  
-  library(bitops)                 # needed for bitOr and bitAnd
   if (!is.character(z)) 
     stop("base64decode: Input argument 'z' is suppose to be a string")
   if (length(z)==1) z = strsplit(z, NULL)[[1]] # convert string to array of characters
