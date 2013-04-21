@@ -67,8 +67,8 @@ colAUC = function (X, y, plotROC=FALSE, alg=c("Wilcoxon","ROC"))
       for (i in 1:nP) {                 # go through all permutations of columns in d
         c1 = per[i,1]                   # and identify 2 classes to be compared
         c2 = per[i,2]
-        n1 = nY[c1]        
-        n2 = nY[c2]
+        n1 = as.numeric(nY[c1])        
+        n2 = as.numeric(nY[c2])
         if (n1>0 & n2>0) {
           r = rank(c(X[idxL[[c1]],j], X[idxL[[c2]],j]))
           Auc[i,j] = (sum(r[1:n1]) - n1*(n1+1)/2) / (n1*n2)
