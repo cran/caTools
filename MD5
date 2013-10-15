@@ -1,10 +1,10 @@
 65b515a4a199efcdabe15885509654c2 *CHANGES
-3b6e1a6018c76e3f71534310c21015da *DESCRIPTION
+0c2734db0b6562ad6dd25d9b55cf265b *DESCRIPTION
 1059827c58c5e99ae6fb17253aa83f46 *NAMESPACE
 25ab51c53deac92f3418ee4dbc4b53f9 *R/ENVI.R
 d7405289169b72bc40abb8cb30c1c544 *R/GIF.R
 b421780331c21cad3c597f0083aa35b5 *R/LogitBoost.R
-85be802a53d6253ad0426cdc7dd1afd6 *R/base64.R
+270c5669456a380a7b1b747d5da88ee4 *R/base64.R
 25ec2c6881f2346cf1259d46d71556b4 *R/colAUC.R
 d50a683b98ecf388ba04286b2726e19c *R/combs.R
 34a3e2382eebf9ad3d537370a7757112 *R/runfunc.R
@@ -16,7 +16,7 @@ daca10395e4d0b5f3552e0cd5a7c8ccd *R/trapz.R
 7c4eb89b423d4f4b95bc10173d334254 *man/LogitBoost.Rd
 fa909fafbcac3de4a64e6a335e7ab152 *man/base64.Rd
 3b88b66e21161b3930902ded9d1756ce *man/caTools-internal.Rd
-aa56f94b8da97723ed5e10ad14f4b56d *man/caTools-package.Rd
+acdce10385100f1eb153537f84c2476c *man/caTools-package.Rd
 a26264a3475717dc7b4c78ff5ed2a656 *man/colAUC.Rd
 c38d433dce051860d1f82c0af2a2aeb6 *man/combs.Rd
 bcc9159d41ef60898ea71d53d82ae5c6 *man/predict.LogitBoost.Rd

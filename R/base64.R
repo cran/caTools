@@ -16,7 +16,8 @@
 
 base64encode = function(x, size=NA, endian=.Platform$endian)
 {
-   if (typeof(x)!="raw") x = writeBin(x, raw(), size=size, endian=endian)
+   if ((typeof(x)!="character")&(typeof(x)!="raw")) x = writeBin(x, raw(), size=size, endian=endian)
+   if ((typeof(x)=="character")&(typeof(x)!="raw")) {nlen<- nchar(x);x = writeBin(x, raw(), size=size, endian=endian);length(x)<- nlen}
    x = as.integer(x)
    ndByte = length(x)            # number of decoded bytes
    nBlock = ceiling(ndByte / 3)  # number of blocks/groups
@@ -121,7 +122,8 @@ base64decode = function(z, what, size=NA, signed = TRUE, endian=.Platform$endian
   if (!is.character(what) || length(what) != 1 || !(what %in% TypeList)) 
     what <- typeof(what)
   if (what=="raw") return(r)
-  if (is.na(size)) size = switch(match(what, TypeList), 4, 4, 8, 16, 2, 1, 8, 4) 
+  if (is.na(size)) size = switch(match(what, TypeList), 4, 4, 8, 16, 2, 1, 8, 4)
+  if (what=="character") {rlen<- size*ceiling(length(r)/size);length(r)<- rlen}  
   n = length(r)
   if (n%%size) stop("raw2bin: number of elements in 'r' is not multiple of 'size'")
   x = readBin(r, what, n = n%/%size, size=size, signed=signed, endian=endian)

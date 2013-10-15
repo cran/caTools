@@ -15,8 +15,8 @@ and cumsum, etc.
 \details{
 \tabular{ll}{
 Package: \tab caTools\cr
-Version: \tab 1.13\cr
-Date: \tab May 22, 2012\cr
+Version: \tab 1.16\cr
+Date: \tab October 15, 2013\cr
 Depends: \tab R (>= 2.2.0), bitops\cr
 Suggests: \tab MASS, rpart\cr
 License: \tab GPL=3\cr
