@@ -10,9 +10,8 @@ sumexact = function(..., na.rm = FALSE)
   if (na.rm) x = x[!is.na(x)]
   else if (any(is.na(x))) return(NA)
   n = length(x)
-  .C("sum_exact", as.double(x), y<-as.double(0), as.integer(n),  
-      NAOK=TRUE, DUP=FALSE, PACKAGE="caTools") 
-  return(y)
+  .C("sum_exact", as.double(x), y = as.double(0), as.integer(n),
+      NAOK=TRUE, DUP=TRUE, PACKAGE="caTools")$y
 }
 
 #==============================================================================
@@ -20,9 +19,8 @@ sumexact = function(..., na.rm = FALSE)
 cumsumexact = function(x)
 {
   n = length(x)
-  .C("cumsum_exact", as.double(x), y<-double(n), as.integer(n),  
-      NAOK=TRUE, DUP=FALSE, PACKAGE="caTools") 
-  return(y)
+  .C("cumsum_exact", as.double(x), y = double(n), as.integer(n),
+      NAOK=TRUE, DUP=TRUE, PACKAGE="caTools")$y
 }
 
 
