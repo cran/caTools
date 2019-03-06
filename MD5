@@ -1,5 +1,5 @@
 65b515a4a199efcdabe15885509654c2 *CHANGES
-bccf26719bb0af7668be3ccf9c9d6dc3 *DESCRIPTION
+e8ad1f7c6752df7e81503cc467d1bab9 *DESCRIPTION
 7b8db36f8a905e7198e545f03542565d *NAMESPACE
 25ab51c53deac92f3418ee4dbc4b53f9 *R/ENVI.R
 d7405289169b72bc40abb8cb30c1c544 *R/GIF.R
@@ -28,7 +28,7 @@ f6fbf3e4095dd169a8e8b693a5d5b877 *man/runsd.Rd
 2839390531b48ef53cb20a5ccba15701 *man/sample.split.Rd
 97987d93c865d8f4d2e437560a0e41da *man/sumexact.Rd
 ec975d24a2d995bbd14bc1444ac40b91 *man/trapz.Rd
-5e425ab1545bc5693a721fc172d93770 *src/Gif2R.cpp
+e8fb98ec8d17e8bf469bd431a387793e *src/Gif2R.cpp
 dbf744035d4b5db78d69a2a669d6abeb *src/GifTools.cpp
 58be7971430689ab43fb66678093362e *src/GifTools.h
 b81d2ad5847f9ff48f2559901e0b3886 *src/runfunc.c

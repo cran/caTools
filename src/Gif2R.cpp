@@ -31,6 +31,7 @@ extern "C" {
     const char *fname;
     uchar* data=0;
     SEXP Ret;
+    SEXP scomm;
   
     // initialize data 
     nRow=nCol=nBand=transparent=0;
@@ -52,8 +53,10 @@ extern "C" {
     for(i=0; i<256   ; i++) ret[j++] = ColorMap[i];
     for(i=0; i<nPixel; i++) ret[j++] = data[i];
     Free(data);
-    if(comment && strlen(comment)) // if comment was found than pack it too
-      setAttrib(Ret, install("comm"), mkString(comment));
+    if(comment && strlen(comment)) { // if comment was found than pack it too
+      scomm = install("comm");
+      setAttrib(Ret, scomm, mkString(comment));
+    }
     if(comment) Free(comment);
     UNPROTECT(1);
     return Ret;
