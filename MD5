@@ -1,5 +1,5 @@
 65b515a4a199efcdabe15885509654c2 *CHANGES
-e8ad1f7c6752df7e81503cc467d1bab9 *DESCRIPTION
+b060b301c73e2e12b035e55781d656e9 *DESCRIPTION
 7b8db36f8a905e7198e545f03542565d *NAMESPACE
 25ab51c53deac92f3418ee4dbc4b53f9 *R/ENVI.R
 d7405289169b72bc40abb8cb30c1c544 *R/GIF.R
@@ -12,7 +12,7 @@ b6ae0856ac8c13e72afef79d355fe27a *R/sample.split.R
 6d80d29c1b5de79fa12fcfa5b60bc499 *R/sumexact.R
 daca10395e4d0b5f3552e0cd5a7c8ccd *R/trapz.R
 5a5add1eb6b515c2a0d4d706c3a316e3 *man/ENVI.Rd
-00ae1547dae05cafde61dc3cc77cc399 *man/GIF.Rd
+7cd0df25f929fee2f989bae5abbc7254 *man/GIF.Rd
 7c4eb89b423d4f4b95bc10173d334254 *man/LogitBoost.Rd
 fa909fafbcac3de4a64e6a335e7ab152 *man/base64.Rd
 3b88b66e21161b3930902ded9d1756ce *man/caTools-internal.Rd
