@@ -50,6 +50,7 @@ trapz                   Trapezoid Rule Numerical Integration
            scale="always", comment="Maunga Whau Volcano")
   y = read.gif("volcano.gif", verbose=TRUE, flip=TRUE)
   image(y$image, col=y$col, main=y$comment, asp=1)
+  file.remove("volcano.gif")
 
   # test runmin, runmax and runmed
   k=25; n=200;

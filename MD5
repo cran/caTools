@@ -1,5 +1,5 @@
 65b515a4a199efcdabe15885509654c2 *CHANGES
-b060b301c73e2e12b035e55781d656e9 *DESCRIPTION
+ba700de409d4dcfc09946fb82da302c8 *DESCRIPTION
 7b8db36f8a905e7198e545f03542565d *NAMESPACE
 25ab51c53deac92f3418ee4dbc4b53f9 *R/ENVI.R
 d7405289169b72bc40abb8cb30c1c544 *R/GIF.R
@@ -16,7 +16,7 @@ daca10395e4d0b5f3552e0cd5a7c8ccd *R/trapz.R
 7c4eb89b423d4f4b95bc10173d334254 *man/LogitBoost.Rd
 fa909fafbcac3de4a64e6a335e7ab152 *man/base64.Rd
 3b88b66e21161b3930902ded9d1756ce *man/caTools-internal.Rd
-911fd7a8e53ffac39f8009dafa869786 *man/caTools-package.Rd
+b254f174d92182fa7c2c0506579dad49 *man/caTools-package.Rd
 a26264a3475717dc7b4c78ff5ed2a656 *man/colAUC.Rd
 c38d433dce051860d1f82c0af2a2aeb6 *man/combs.Rd
 bcc9159d41ef60898ea71d53d82ae5c6 *man/predict.LogitBoost.Rd
