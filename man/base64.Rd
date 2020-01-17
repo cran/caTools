@@ -64,7 +64,6 @@ Default \code{size}s for different types of \code{what}: \code{logical} - 4,
   \item MIME RFC 1421 \url{http://www.faqs.org/rfcs/rfc1421.html}
   \item MIME RFC 2045 \url{http://www.faqs.org/rfcs/rfc2045.html}
   \item Portions of the code are based on Matlab code by Peter Acklam
-   \url{http://home.online.no/~pjacklam/matlab/software/util/datautil/}
  }
 }
 

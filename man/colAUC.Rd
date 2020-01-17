@@ -78,9 +78,7 @@
      curves: Statistical significance and interpretation},  Q. J. R. 
      Meteorol. Soc. textbf{30} 291-303. 
     \item Fawcett, Tom (2004) \emph{ROC Graphs: Notes and Practical 
-       Considerations for Researchers}, 
-       \url{http://home.comcast.net/~tom.fawcett/public_html/papers/ROC101.pdf}
-        and \url{http://home.comcast.net/~tom.fawcett/public_html/ROCCH/}
+       Considerations for Researchers}
     \item  Hand, David and Till, Robert (2001) \emph{A Simple 
           Generalization of the Area Under the ROC Curve for Multiple Class 
           Classification Problems};  Machine Learning 45(2): 171-186

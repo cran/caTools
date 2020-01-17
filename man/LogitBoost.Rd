@@ -45,11 +45,7 @@
 } 
 
 \references{
-  Dettling and Buhlmann (2002), \emph{Boosting for Tumor Classification of Gene 
-    Expression Data}, available on the web page 
-    \url{http://stat.ethz.ch/~dettling/boosting.html}. 
-  
-  \url{http://www.cs.princeton.edu/~schapire/boost.html}
+  Dettling and Buhlmann (2002), \emph{Boosting for Tumor  Classification of Gene Expression Data}.
 }
 
 \author{Jarek Tuszynski (SAIC) \email{jaroslaw.w.tuszynski@saic.com}} 
@@ -58,8 +54,7 @@
  \itemize{
    \item \code{\link{predict.LogitBoost}} has prediction half of LogitBoost code
    \item \code{logitboost} function from \pkg{logitboost} library (not in CRAN
-   or BioConductor but can be found at 
-   \url{http://stat.ethz.ch/~dettling/boosting.html}) is very similar but much
+   or BioConductor is very similar but much
    slower on very large datasets. It also perform optional cross-validation.
  }
 }

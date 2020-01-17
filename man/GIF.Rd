@@ -162,24 +162,6 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
 \references{  
   Ziv, J., Lempel, A. (1977) \emph{An Universal Algorithm for Sequential Data 
   Compression}, IEEE Transactions on Information Theory, May 1977. 
-
-  Copy of official file format description  
-  \url{http://www.danbbs.dk/\%7Edino/whirlgif/gif89.html}
-   
-  Nicely explained file format description  
-  \url{http://semmix.pl/color/exgraf/eeg11.htm}
-   
-  Christoph Hohmann code and documentation of encoding algorithm 
-  \url{http://members.aol.com/rf21exe/gif.htm}
-  
-  Michael A, Mayer code \url{http://www.danbbs.dk/\%7Edino/whirlgif/gifcode.html}
-
-  Discussion of GIF file legal status can be found in 
-  \url{http://www.cloanto.com/users/mcb/19950127giflzw.html}.
-  
-  Interesting page on one way of doing animations in R (with help of outside 
-  calls) can be found at
-  \url{http://pinard.progiciels-bpi.ca/plaisirs/animations/index.html}.
 }
 
 \examples{
