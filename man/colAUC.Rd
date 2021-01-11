@@ -94,8 +94,6 @@
        \item McNeil and Hanley (1984), \emph{Statistical Approaches to the  
          Analysis of ROC curves}, Medical Decision Making 4(2): 136-149.
      }
-     \item See \url{http://rocr.bioinf.mpi-sb.mpg.de/evaluation_literature.html}
-     for bibliography of \pkg{ROCR} package. 
   }
 } 
 

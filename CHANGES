@@ -93,3 +93,6 @@ Changes:
   - removed Rd cross-references that are no longer available on CRAN
   - updated caTools-package.rD with correct licensing information
   - updated DESCRIPTION file to reflect new maintainer
+  14) caTools-0.1.18.1 (January 2021)
+  - function sample.split, documentation updated to explain subset assumptions
+  - function runmad, NA/NaN handling corrected. Thanks to suggestion by W.C. May.

@@ -762,7 +762,7 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
         if (R_finite(Win2[l])) Num++; else Win2[l]=BIG;
       }
     }
-    insertion_sort(Win2,idx,Num); /* sort Win2 - if medians did not change than  data should be sorted*/
+    insertion_sort(Win2,idx,mWin); /* sort Win2 - if medians did not change than  data should be sorted*/
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     *(out++) = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
@@ -783,7 +783,7 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
         if (R_finite(Win2[l])) Num++; else Win2[l]=BIG;
       }
     }
-    insertion_sort(Win2,idx,Num); /* sort Win2 - if medians did not change than  data should be sorted*/
+    insertion_sort(Win2,idx,m); /* sort Win2 - if medians did not change than  data should be sorted*/
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     *(out++) = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */
@@ -809,7 +809,7 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
         if (R_finite(Win2[l])) Num++; else Win2[l]=BIG;
       }
     }
-    insertion_sort(Win2,idx,Num); /* sort Win2 - if medians did not change than data should be sorted*/
+    insertion_sort(Win2,idx,mWin); /* sort Win2 - if medians did not change than data should be sorted*/
     kk2  = Num>>1;                /* right half of window size */
     kk1  = Num-kk2-1;             /* left half of window size. if nWin is odd than kk1==kk2 */
     Out[n-i] = (Win2[idx[kk1]]+Win2[idx[kk2]])*0.5;    /* find mad of current Win1 and store it */

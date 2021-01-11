@@ -31,7 +31,9 @@
 }
 
 \details{ Function \code{msc.sample.split} is the old name of the 
-  \code{sample.split} function. To be retired soon. 
+  \code{sample.split} function. To be retired soon. Note that the function
+  differs from \code{base::sample} by first restricting the input data set
+  to its unique values before generating the subset(s).
 } 
 
 \value{Returns logical vector of the same length as Y with random

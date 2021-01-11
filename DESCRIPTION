@@ -1,8 +1,8 @@
 Package: caTools
 Type: Package
 Title: Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc
-Version: 1.18.0
-Date: 2020-01-15
+Version: 1.18.1
+Date: 2021-01-08
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Maintainer: Michael Dietze <mdietze@gfz-potsdam.de>
 Depends: R (>= 3.6.0)
@@ -14,7 +14,7 @@ Description: Contains several basic utility functions including: moving
         classifier, base64 encoder/decoder, round-off-error-free sum
         and cumsum, etc.
 License: GPL-3
-Packaged: 2020-01-16 19:21:22 UTC; mdietze
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2020-01-17 09:40:26 UTC
+Date/Publication: 2021-01-11 10:30:03 UTC
+Packaged: 2021-01-10 13:28:01 UTC; mdietze

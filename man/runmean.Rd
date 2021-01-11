@@ -92,9 +92,6 @@
   Shewchuk, Jonathan \emph{Adaptive Precision Floating-Point Arithmetic and Fast 
     Robust Geometric Predicates},  
    \url{http://www-2.cs.cmu.edu/afs/cs/project/quake/public/papers/robust-arithmetic.ps}
-  
-   \item More on round-off error correction can be found at:
-   \url{http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/393090 }  
   }
 } 
 
