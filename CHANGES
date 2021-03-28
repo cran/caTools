@@ -96,3 +96,5 @@ Changes:
   14) caTools-0.1.18.1 (January 2021)
   - function sample.split, documentation updated to explain subset assumptions
   - function runmad, NA/NaN handling corrected. Thanks to suggestion by W.C. May.
+  15) caTools-0.1.18.2 (March 2021)
+  - function documentations, missing/broken links fixed

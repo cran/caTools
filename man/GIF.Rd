@@ -66,11 +66,11 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
   \item{comment}{Comments in text format are allowed in GIF files. Few file 
     viewers can access them.}  
   \item{flip}{By default data is stored in the same orientation as data 
-    displayed by \code{\link{print}} function: row 1 is on top, image x-axis 
+    displayed by \code{print} function: row 1 is on top, image x-axis 
     corresponds to columns and y-axis corresponds to rows. However function 
-    \code{\link{image}} adopted different standard: column 1 is on the bottom, 
+    \code{image} adopted different standard: column 1 is on the bottom, 
     image x-axis corresponds to rows and y-axis corresponds to columns. Set 
-    \code{flip} to \code{TRUE} to get the orientation used by \code{\link{image}}. }  
+    \code{flip} to \code{TRUE} to get the orientation used by \code{image}. }  
   \item{transparent}{Optional color number to be shown as transparent. Has to be an
     integer in [0:255] range. NA's in the \code{image} will be set to transparent.}
   \item{interlace}{GIF files allow image rows to be \code{interlace}d, or 
@@ -110,7 +110,7 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
   \item{comment}{Comments imbedded in GIF File}
   \item{transparent}{color number corresponding to transparent color. If none 
     was stated than NULL, otherwise an integer in [0:255] range. In order for 
-    \code{\link[graphics]{image}} to display transparent colors correctly one
+    \code{graphics:image} to display transparent colors correctly one
     should use \code{y$col[y$transparent+1] = NA}. }
 } 
 
@@ -124,20 +124,18 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
 
 \seealso{
   Displaying of images can be done through functions: 
-  \code{\link[graphics]{image}} (part of R),
-  \code{\link[fields]{image.plot}} and \code{\link[fields]{add.image}} from 
-  \pkg{fields} or \code{\link[spatstat]{plot.im}} from \pkg{spatstat} package, 
-  and possibly many other functions.
+  \code{graphics:image} (part of R),
+  \code{fields::image.plot} and \code{fields::add.image} or 
+  \code{spatstat:plot.im}, and possibly many other functions.
   
   Displayed image can be saved in GIF, JPEG or PNG format using several 
-  different functions, like \code{\link[R2HTML]{HTMLplot}} from package \pkg{R2HTML}.
+  different functions, like \code{R2HTML:HTMLplot}.
   
   Functions for directly reading and writing image files: 
   \itemize{
-  \item \code{\link[pixmap]{read.pnm}} and \code{\link[pixmap]{write.pnm}} from 
-    \pkg{pixmap} package can process PBM, PGM and PPM images (file types 
-    supported by ImageMagic software)
-  \item \code{\link{read.ENVI}} and \code{\link{write.ENVI}} from this package
+  \item \code{\link[pixmap]{read.pnm}} and \code{pixmap::write.pnm} can 
+  process PBM, PGM and PPM images (file types supported by ImageMagic software)
+  \item \code{read.ENVI} and \code{write.ENVI} from this package
    can process files in ENVI format. ENVI files can store 2D images and 3D data 
    (multi-frame images), and are supported by most GIS (Geographic Information 
    System) software including free "freelook".
@@ -145,16 +143,14 @@ write.gif(image, filename, col="gray", scale=c("smart", "never", "always"),
   
   There are many functions for creating and managing color palettes:
   \itemize{
-  \item \code{\link[fields]{tim.colors}} in package \pkg{fields} contains 
-   palette similar to Matlab's jet palette (see examples for simpler implementation) 
-  \item \code{\link[gplots]{rich.colors}} in package \pkg{gplots} contains 
-   two palettes of continuous colors. 
-  \item Functions \code{\link[RColorBrewer]{brewer.pal}} from \pkg{RColorBrewer} 
-  package and \code{\link[epitools]{colorbrewer.palette}} from \pkg{epitools} 
-  package contain tools for generating palettes
-  \item \code{\link[grDevices]{rgb}} and \code{\link[grDevices]{hsv}} 
-    creates palette from RGB or HSV 3-vectors. 
-  \item \code{\link[grDevices]{col2rgb}} translates 
+  \item \code{fields::tim.colors} contains a palette similar to Matlab's 
+  jet palette (see examples for simpler implementation) 
+  \item \code{gplots::rich.colors} contains two palettes of continuous colors. 
+  \item Functions \code{RColorBrewer::brewer.pal} and 
+  \code{epitools::colorbrewer.palette} contain tools for generating palettes.
+  \item \code{grDevices::rgb} and \code{grDevices::hsv} 
+    create palette from RGB or HSV 3-vectors. 
+  \item \code{grDevices::col2rgb} translates 
    palette colors to RGB 3-vectors. 
   } 
 }

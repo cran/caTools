@@ -1,5 +1,5 @@
-efee4ccbc6749c860e92d7cd2f88c17d *CHANGES
-9f1a08475cb7dfb7acc84412ed6e6584 *DESCRIPTION
+a8fd9035c9be5dad817aacb4b6205d81 *CHANGES
+6c001ea7e0b1cac799911091328fd0a1 *DESCRIPTION
 054de4e630bd1c1a33121277790ab13f *NAMESPACE
 3ab07a5c94f371af48cf52a1ae459ff5 *NEWS
 25ab51c53deac92f3418ee4dbc4b53f9 *R/ENVI.R
@@ -12,8 +12,8 @@ d50a683b98ecf388ba04286b2726e19c *R/combs.R
 b6ae0856ac8c13e72afef79d355fe27a *R/sample.split.R
 6d80d29c1b5de79fa12fcfa5b60bc499 *R/sumexact.R
 daca10395e4d0b5f3552e0cd5a7c8ccd *R/trapz.R
-5a5add1eb6b515c2a0d4d706c3a316e3 *man/ENVI.Rd
-36a6e8b837aed6027b084e508e3fa578 *man/GIF.Rd
+603a5272a0d6af3bf42edb8c0dfcd627 *man/ENVI.Rd
+6909cfd768bfb1b9d7f141e38021b1f1 *man/GIF.Rd
 1bf445cc18072b226381f827722051c2 *man/LogitBoost.Rd
 ddbcefe4f17b622af5ffbbc25d84a7c8 *man/base64.Rd
 3b88b66e21161b3930902ded9d1756ce *man/caTools-internal.Rd

@@ -78,16 +78,16 @@
 \author{Jarek Tuszynski (SAIC) \email{jaroslaw.w.tuszynski@saic.com}} 
 
 \seealso{
-  Displaying of images can be done through functions: \code{\link[graphics]{image}},
-  \code{\link[fields]{image.plot}} and \code{\link[fields]{add.image}} from 
-  \pkg{fields} or \code{\link[spatstat]{plot.im}} from \pkg{spatstat}.
+  Displaying of images can be done through functions: \code{graphics::image},
+  \code{fields::image.plot} and \code{fields:add.image} or 
+  \code{spatstat:plot.im}.
   
   ENVI files are practically C-style memory-dumps as performed by 
-  \code{\link{readBin}} and \code{\link{writeBin}} functions plus separate 
+  \code{readBin} and \code{writeBin} functions plus separate 
   meta-data header file.
   
-  GIF file formats can also store 3D data (see \code{\link{read.gif}} and 
-  \code{\link{write.gif}} functions).
+  GIF file formats can also store 3D data (see \code{read.gif} and 
+  \code{write.gif} functions).
   
   Packages related to GIS data: \pkg{shapefiles}, \pkg{maptools}, \pkg{sp}, 
   \pkg{spdep}, \pkg{adehabitat}, \pkg{GRASS}, \pkg{PBSmapping}. 
