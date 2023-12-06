@@ -574,13 +574,13 @@ int imreadGif(const char* filename, int nImage, bool verbose,
   //====================================================
   // GIF Signature, Screen Descriptor & Global Color Map
   //====================================================
-  if (!fread(version, 6, 1, fp)) return -2;    // Read Header
+  if (!fread(version, 6, 1, fp)) { fclose(fp); return -2; }    // Read Header
   version[6] = '\0';
-  if ((strcmp(version, "GIF87a") != 0) && (strcmp(version, "GIF89a") != 0)) return -2;
-  if (!fread(buffer, 7, 1, fp)) return -3;     // Read Screen Descriptor
+  if ((strcmp(version, "GIF87a") != 0) && (strcmp(version, "GIF89a") != 0)) { fclose(fp); return -2; }
+  if (!fread(buffer, 7, 1, fp)) { fclose(fp); return -3; }     // Read Screen Descriptor
   if(verbose) print("GIF image header\n");
   i = ReadColorMap(fp, buffer[4], ColorMap);   // Read Global Colormap
-  if (i==0) return -3;
+  if (i==0) { fclose(fp); return -3; }
   if (i==2) nColMap++;
   if(verbose) {
     if(i==2) print("Global colormap with %i colors \n", 2<<(buffer[4]&0x07));
@@ -705,6 +705,7 @@ int imreadGif(const char* filename, int nImage, bool verbose,
     }
   } // end while
   if(verbose) print("\n");
+  fclose(fp);
   *Comment = comment;
   *data = cube;
   nRow  = Height;
