@@ -1,5 +1,8 @@
 Changes for R-package caTools
 
+Version 0.1.18.3 (2023-12-06)
+ - fixed bug where imgreadGif does not close file handle
+
 Version 0.1.18.0 (2020-01-15)
  - maintainer change
  - fix of CRAN test issues (C routine registration, 1, 2)

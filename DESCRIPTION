@@ -1,8 +1,8 @@
 Package: caTools
 Type: Package
 Title: Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc
-Version: 1.18.2
-Date: 2021-03-26
+Version: 1.18.3
+Date: 2023-12-06
 Author: Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>
 Maintainer: Michael Dietze <mdietze@gfz-potsdam.de>
 Depends: R (>= 3.6.0)
