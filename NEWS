@@ -4,10 +4,14 @@ Version 0.1.18.0 (2020-01-15)
  - maintainer change
  - fix of CRAN test issues (C routine registration, 1, 2)
  - update of abandoned references
-
  - 1, help found at https://stackoverflow.com/questions/42313373/r-cmd-check-note-found-no-calls-to-r-registerroutines-r-usedynamicsymbols
  - 2, help found at https://stackoverflow.com/questions/50787591/registering-routines-for-r-package-submission-to-cran
 
 Version 0.1.18.1 (2021-01-08)
  - sample.split, documentation updated to explain subset assumptions
  - runmad, NA/NaN handling corrected. Thanks to suggestion by W.C. May
+
+Version 0.1.18.3 (2024-03-04)
+ - inconsistency resolved, table in description definition removed
+ - bug removed, fread connection close call added throughout, now
+ - C code updated for advent of _R_USE_STRICT_R_HEADERS_=true

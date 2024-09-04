@@ -11,7 +11,7 @@
 
 extern "C" {
   #define print Rprintf
-  #define Error error
+  #define Error Rf_error
   typedef unsigned char uchar;
 
   int imreadGif(const char* filename, int nImage, bool verbose,

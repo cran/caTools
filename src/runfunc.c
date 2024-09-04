@@ -41,8 +41,8 @@
 /* #define DEBBUG */
 #ifdef DEBBUG
   int R_finite(double x) { return ( (x)==(x) ); }
-  #define Calloc(b, t)  (t*) calloc(b,sizeof(t))
-  #define Free free
+  #define R_Calloc(b, t)  (t*) calloc(b,sizeof(t))
+  #define R_Free free
   #define PRINT(x) { if ((x)==(x)) printf("%04.1f ",x); else printf("NaN "); }
 #else
   #include <R.h>
@@ -545,9 +545,9 @@ void runquantile_lite(double *In, double *Out, const int *nIn, const int *nWin, 
       *(out++) = ext;                 /* and fill the space with window extreme and move window */
     }
   } else {                            /* non-trivial case */
-    idx = Calloc(m,int   );           /* index will hold partially sorted index numbers of Save array */
-    Win = Calloc(m,double);           /* stores all points of the current running window */
-    prob = Calloc(nPrb,double);       /* stores all points of the current running window */
+    idx = R_Calloc(m,int   );           /* index will hold partially sorted index numbers of Save array */
+    Win = R_Calloc(m,double);           /* stores all points of the current running window */
+    prob = R_Calloc(nPrb,double);       /* stores all points of the current running window */
     for(i=0; i<m; i++) {
       Win[i] = *(in++);               /* initialize running window */
       idx[i] = i;                     /* and its index */
@@ -568,9 +568,9 @@ void runquantile_lite(double *In, double *Out, const int *nIn, const int *nWin, 
       out++;
       j = (j+1)%m;                    /* index goes from 0 to m-1, and back to 0 again  */
     }
-    Free(Win);
-    Free(idx);
-    Free(prob);
+    R_Free(Win);
+    R_Free(idx);
+    R_Free(prob);
   }
 }
 
@@ -590,9 +590,9 @@ void runquantile(double *In, double *Out, const int *nIn, const int *nWin, const
   } else if (nPrb==1 && *Prob==1) {/* trivial case shortcut - if prob is 0 or 1 than find windows max */
     runmax(In, Out, nIn, nWin);
   } else {                         /* non-trivial case */
-    idx  = Calloc(m,int   );       /* index will hold partially sorted index numbers of Save array */
-    Win  = Calloc(m,double);       /* stores all points of the current running window */
-    prob = Calloc(nPrb,double);    /* stores all points of the current running window */
+    idx  = R_Calloc(m,int   );       /* index will hold partially sorted index numbers of Save array */
+    Win  = R_Calloc(m,double);       /* stores all points of the current running window */
+    prob = R_Calloc(nPrb,double);    /* stores all points of the current running window */
     for(i=0; i<m; i++) idx[i] = i; /* and its index */
     for(i=0; i<k2; i++) {
       Win[i] = *(in++);            /* initialize running window */
@@ -662,9 +662,9 @@ void runquantile(double *In, double *Out, const int *nIn, const int *nWin, const
       j = (j+1)%m;                 /* index goes from 0 to m-1, and back to 0 again  */
       //printf("3-------- %3.0f %3.0f %3.0f %3.0f %3.0f - %i\n", Win[idx[0]],Win[idx[1]],Win[idx[2]],Win[idx[3]],Win[idx[4]], count);
     }
-    Free(Win);
-    Free(idx);
-    Free(prob);
+    R_Free(Win);
+    R_Free(idx);
+    R_Free(prob);
   }
 }
 
@@ -687,9 +687,9 @@ void runmad_lite(double *In, double *Ctr, double *Out, const int *nIn, const int
   int i, k2, k1, j, l, *idx, n=*nIn, m=*nWin;
   double *Win1, *Win2, *in, *out, *ctr, med0, med;
 
-  idx  = Calloc(m,int   );       /* index will hold partially sorted index numbers of Save array */
-  Win1 = Calloc(m,double);       /* stores all "In" points of the current running window */
-  Win2 = Calloc(m,double);       /* stores all "abs(In-Crt) values of the current running window */
+  idx  = R_Calloc(m,int   );       /* index will hold partially sorted index numbers of Save array */
+  Win1 = R_Calloc(m,double);       /* stores all "In" points of the current running window */
+  Win2 = R_Calloc(m,double);       /* stores all "abs(In-Crt) values of the current running window */
   k2   = m>>1;                   /* right half of window size */
   k1   = m-k2-1;                 /* left  half of window size */
   in   = In;                     /* initialize pointer to input In vector */
@@ -713,9 +713,9 @@ void runmad_lite(double *In, double *Ctr, double *Out, const int *nIn, const int
     med0 = med;                  /* save previous median */
     j = (j+1)%m;                 /* index of Win positions goes from 0 to m-1, and back to 0 again  */
   }
-  Free(Win2);
-  Free(Win1);
-  Free(idx);
+  R_Free(Win2);
+  R_Free(Win1);
+  R_Free(idx);
 }
 
 /*==================================================================================*/
@@ -735,9 +735,9 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
   int i, k1, k2, kk1, kk2, j, l, mWin, *idx, n=*nIn, m=*nWin, Num=0;
   double *Win1, *Win2, *in, *out, *ctr, med0, med, BIG=DBL_MAX-1;
 
-  idx  = Calloc(m,int   );        /* index will hold partially sorted index numbers of Save array */
-  Win1 = Calloc(m,double);        /* stores all points of the current running window: Values*/
-  Win2 = Calloc(m,double);        /* stores all points of the current running window: Values - median*/
+  idx  = R_Calloc(m,int   );        /* index will hold partially sorted index numbers of Save array */
+  Win1 = R_Calloc(m,double);        /* stores all points of the current running window: Values*/
+  Win2 = R_Calloc(m,double);        /* stores all points of the current running window: Values - median*/
   k2   = m>>1;                    /* right half of window size */
   k1   = m-k2-1;                  /* left half of window size */
   in   = In;                      /* initialize pointer to input In vector */
@@ -816,9 +816,9 @@ void runmad(double *In, double *Ctr, double *Out, const int *nIn, const int *nWi
 //  med0 = med;                   /* save previous median */
 //  printf("3-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); 
   }
-  Free(Win2);
-  Free(Win1);
-  Free(idx);
+  R_Free(Win2);
+  R_Free(Win1);
+  R_Free(idx);
 } 
 
 /*==================================================================================*/
@@ -838,8 +838,8 @@ void runsd_lite(double *In, double *Ctr, double *Out, const int *nIn, const int 
   int i, k2, k1, j, l, n=*nIn, m=*nWin;
   double *Win1, *Win2, *in, *out, *ctr, med0, med, Sum=0;
 
-  Win1 = Calloc(m,double);       /* stores all points of the current running window: Values */
-  Win2 = Calloc(m,double);       /* stores all points of the current running window: Values - avr */
+  Win1 = R_Calloc(m,double);       /* stores all points of the current running window: Values */
+  Win2 = R_Calloc(m,double);       /* stores all points of the current running window: Values - avr */
   k2   = m>>1;                   /* right half of window size */
   k1   = m-k2-1;                 /* left half of window size */
   in   = In;                     /* initialize pointer to input In vector */
@@ -867,8 +867,8 @@ void runsd_lite(double *In, double *Ctr, double *Out, const int *nIn, const int 
     med0 = med;                  /* save previous median */
     j = (j+1)%m;                 /* index goes from 0 to m-1, and back to 0 again  */
   }
-  Free(Win2);
-  Free(Win1);
+  R_Free(Win2);
+  R_Free(Win1);
 }
 
 /*==================================================================================*/
@@ -890,8 +890,8 @@ void runsd(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin
   double NaN = (0.0/0.0);
 
   Sum=Err=Num=0;
-  Win1 = Calloc(m,double);        /* stores all points of the current running window: Values */
-  Win2 = Calloc(m,double);        /* stores all points of the current running window: Values - avr */
+  Win1 = R_Calloc(m,double);        /* stores all points of the current running window: Values */
+  Win2 = R_Calloc(m,double);        /* stores all points of the current running window: Values - avr */
   k2   = m>>1;                    /* right half of window size */
   k1   = m-k2-1;                  /* left half of window size */
   in   = In;                      /* initialize pointer to input In vector */
@@ -958,8 +958,8 @@ void runsd(double *In, double *Ctr, double *Out, const int *nIn, const int *nWin
     med0 = med;                   /* save previous median */
     /*printf("3-------- "); for(l=0; l<m; l++) PRINT(Win1[idx[l]]); printf(" - %f\n",med); */
   }
-  Free(Win2);
-  Free(Win1);
+  R_Free(Win2);
+  R_Free(Win1);
 }
 
 #undef MIN

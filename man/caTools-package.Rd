@@ -12,38 +12,9 @@ GIF and ENVI binary files, fast calculation of AUC, LogitBoost
 classifier, base64 encoder/decoder, round-off error free sum
 and cumsum, etc.
 }
-\details{
-\tabular{ll}{
-Package: \tab caTools\cr
-Version: \tab 1.17\cr
-Date: \tab April 21, 2014\cr
-Depends: \tab R (>= 2.2.0), bitops\cr
-Suggests: \tab MASS, rpart\cr
-License: \tab GPL=3\cr
-}
 
-Index:
-\preformatted{
-LogitBoost              LogitBoost Classification Algorithm
-predict.LogitBoost      Prediction Based on LogitBoost Algorithm
-base64encode            Convert R vectors to/from the Base64 format
-colAUC                  Column-wise Area Under ROC Curve (AUC)
-combs                   All Combinations of k Elements from Vector v
-read.ENVI               Read and Write Binary Data in ENVI Format
-read.gif                Read and Write Images in GIF format
-runmean                 Mean of a Moving Window
-runmin                  Minimum and Maximum of Moving Windows
-runquantile             Quantile of Moving Window
-runmad                  Median Absolute Deviation of Moving Windows
-runsd                   Standard Deviation of Moving Windows
-sample.split            Split Data into Test and Train Set
-sumexact                Basic Sum Operations without Round-off Errors
-trapz                   Trapezoid Rule Numerical Integration
-}
-
-}
 \author{Jarek Tuszynski <jaroslaw.w.tuszynski@saic.com>}
-\keyword{ package }
+\keyword{package}
 \examples{
   # GIF image read & write
   write.gif( volcano, "volcano.gif", col=terrain.colors, flip=TRUE, 
@@ -67,5 +38,4 @@ trapz                   Trapezoid Rule Numerical Integration
   x = c(1, 1e20, 1e40, -1e40, -1e20, -1)
   a = sum(x);         print(a)
   b = sumexact(x);    print(b)
-
 }

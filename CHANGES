@@ -98,3 +98,6 @@ Changes:
   - function runmad, NA/NaN handling corrected. Thanks to suggestion by W.C. May.
   15) caTools-0.1.18.2 (March 2021)
   - function documentations, missing/broken links fixed
+  16) caTools-0.1.18.3 (2024-03-04)
+  - inconsistency resolved, table in description definition removed
+  - bug removed, fread connection close call added throughout, now

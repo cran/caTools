@@ -1,7 +1,7 @@
-a8fd9035c9be5dad817aacb4b6205d81 *CHANGES
-6c001ea7e0b1cac799911091328fd0a1 *DESCRIPTION
-054de4e630bd1c1a33121277790ab13f *NAMESPACE
-3ab07a5c94f371af48cf52a1ae459ff5 *NEWS
+20e3bc5b2cd06d00a8717a15157efed4 *CHANGES
+f6dc76960c5e5f81f3fd792038d43bf7 *DESCRIPTION
+edf35051378e866ff7783412786cccf2 *NAMESPACE
+216f61134b94c2743ee72a04e60dcfd2 *NEWS
 25ab51c53deac92f3418ee4dbc4b53f9 *R/ENVI.R
 d7405289169b72bc40abb8cb30c1c544 *R/GIF.R
 b421780331c21cad3c597f0083aa35b5 *R/LogitBoost.R
@@ -17,8 +17,8 @@ daca10395e4d0b5f3552e0cd5a7c8ccd *R/trapz.R
 1bf445cc18072b226381f827722051c2 *man/LogitBoost.Rd
 ddbcefe4f17b622af5ffbbc25d84a7c8 *man/base64.Rd
 3b88b66e21161b3930902ded9d1756ce *man/caTools-internal.Rd
-b254f174d92182fa7c2c0506579dad49 *man/caTools-package.Rd
-b674b3a02870b3b62f3d488a8d39e5a0 *man/colAUC.Rd
+44aff833f602724d9100020cb36e8ea8 *man/caTools-package.Rd
+64b2d12a6c4ade023a56b3d4a88fec92 *man/colAUC.Rd
 c38d433dce051860d1f82c0af2a2aeb6 *man/combs.Rd
 bcc9159d41ef60898ea71d53d82ae5c6 *man/predict.LogitBoost.Rd
 a869f7e2824fd7c91a1a14a296a0e89f *man/runmad.Rd
@@ -29,8 +29,8 @@ f6fbf3e4095dd169a8e8b693a5d5b877 *man/runsd.Rd
 34011c38220e623c17dc951ca93cea76 *man/sample.split.Rd
 fe7e4aac2b22e4e6b0eaeeb3ffbf1cb8 *man/sumexact.Rd
 ec975d24a2d995bbd14bc1444ac40b91 *man/trapz.Rd
-e8fb98ec8d17e8bf469bd431a387793e *src/Gif2R.cpp
-dbf744035d4b5db78d69a2a669d6abeb *src/GifTools.cpp
-58be7971430689ab43fb66678093362e *src/GifTools.h
+a042142d0a454ad4b439b7f20ccddb10 *src/Gif2R.cpp
+41d3dc4e8a5f743492203282bf131eae *src/GifTools.cpp
+b5babe7f62900bd3607ad146b28012c5 *src/GifTools.h
 08510bbcefdfe8bd8c7ca2d8fa9deb8b *src/caTools_init.c
-a47801063815e77319121671af868d50 *src/runfunc.c
+5d8cb35601efea4c2d85384d86d61906 *src/runfunc.c

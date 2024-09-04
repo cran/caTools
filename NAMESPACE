@@ -8,6 +8,6 @@ importFrom("stats", "mad", "quantile", "runif", "runmed", "sd")
 importFrom("utils", "download.file", "read.table")
 
 # Export all names
-exportPattern(".")
+exportPattern("^[^\\.]")
 
 S3method("predict", "LogitBoost")

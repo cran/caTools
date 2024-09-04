@@ -16,11 +16,11 @@ extern "C" {
     int i, nPixel = param[0]*param[1]*param[2];
     bool Interlace = (param[6]!=0);
   
-    uchar* data = Calloc(nPixel, uchar);
+    uchar* data = R_Calloc(nPixel, uchar);
     for(i=0; i<nPixel; i++) data[i] = Data[i]&0xff;
     param[7] = imwriteGif(*filename, data, param[0], param[1], param[2], 
       param[3], ColorMap, Interlace, param[4], param[5], *comment);
-    Free(data);
+    R_Free(data);
   }
   
   SEXP imreadgif(SEXP filename, SEXP NImage, SEXP Verbose)
@@ -36,13 +36,13 @@ extern "C" {
     // initialize data 
     nRow=nCol=nBand=transparent=0;
     comment = NULL;
-    nImage  = asInteger(NImage);    
-    verbose = asInteger(Verbose);    
+    nImage  = Rf_asInteger(NImage);    
+    verbose = Rf_asInteger(Verbose);    
     fname   = CHAR(STRING_ELT(filename, 0));
     success = imreadGif(fname, nImage, (bool) verbose, &data, nRow, nCol, 
               nBand, ColorMap, transparent, &comment); 
     nPixel  = nRow*nCol*nBand;
-    PROTECT(Ret = allocVector(INTSXP, 9+256+nPixel));
+    PROTECT(Ret = Rf_allocVector(INTSXP, 9+256+nPixel));
     ret     = (int*) INTEGER(Ret);  /* get pointer to R's Ret */
     ret[0]  = nRow;       // pack output into array of integers
     ret[1]  = nCol;
@@ -52,12 +52,12 @@ extern "C" {
     j=9;
     for(i=0; i<256   ; i++) ret[j++] = ColorMap[i];
     for(i=0; i<nPixel; i++) ret[j++] = data[i];
-    Free(data);
+    R_Free(data);
     if(comment && strlen(comment)) { // if comment was found than pack it too
-      scomm = install("comm");
-      setAttrib(Ret, scomm, mkString(comment));
+      scomm = Rf_install("comm");
+      Rf_setAttrib(Ret, scomm, Rf_mkString(comment));
     }
-    if(comment) Free(comment);
+    if(comment) R_Free(comment);
     UNPROTECT(1);
     return Ret;
   }

@@ -73,26 +73,26 @@
 
 \references{
   \itemize{
-    \item Mason, S.J. and Graham, N.E. (1982) \emph{Areas beneath the relative 
+    \item Mason, S.J. and Graham, N.E. (1982) Areas beneath the relative 
      operating characteristics (ROC) and relative operating levels (ROL) 
-     curves: Statistical significance and interpretation},  Q. J. R. 
-     Meteorol. Soc. textbf{30} 291-303. 
-    \item Fawcett, Tom (2004) \emph{ROC Graphs: Notes and Practical 
-       Considerations for Researchers}
-    \item  Hand, David and Till, Robert (2001) \emph{A Simple 
+     curves: Statistical significance and interpretation,  Q. J. R. 
+     Meteorol. Soc. 30 291-303. 
+    \item Fawcett, Tom (2004) ROC Graphs: Notes and Practical 
+       Considerations for Researchers
+    \item  Hand, David and Till, Robert (2001) A Simple 
           Generalization of the Area Under the ROC Curve for Multiple Class 
-          Classification Problems};  Machine Learning 45(2): 171-186
+          Classification Problems;  Machine Learning 45(2): 171-186
     \item See 
        \url{http://www.medicine.mcgill.ca/epidemiology/hanley/software/} 
        to find articles below: 
      \itemize{
-       \item Hanley and McNeil (1982), \emph{The Meaning and Use of the Area 
-         under a Receiver Operating Characteristic (ROC) Curve}, 
+       \item Hanley and McNeil (1982), The Meaning and Use of the Area 
+         under a Receiver Operating Characteristic (ROC) Curve, 
          Radiology 143: 29-36.
-       \item Hanley and McNeil (1983), \emph{A Method of Comparing the Areas  
-         under ROC curves derived from same cases}, Radiology 148: 839-843.
-       \item McNeil and Hanley (1984), \emph{Statistical Approaches to the  
-         Analysis of ROC curves}, Medical Decision Making 4(2): 136-149.
+       \item Hanley and McNeil (1983), A Method of Comparing the Areas  
+         under ROC curves derived from same cases, Radiology 148: 839-843.
+       \item McNeil and Hanley (1984), Statistical Approaches to the  
+         Analysis of ROC curves, Medical Decision Making 4(2): 136-149.
      }
   }
 } 
