@@ -59,10 +59,10 @@ Default \code{size}s for different types of \code{what}: \code{logical} - 4,
 \references{
  \itemize{
    \item Base64 description in \emph{Connected: An Internet Encyclopedia}
-  \url{https://www.freesoft.org/CIE/RFC/1521/7.htm}
-  \item MIME RFC 1341 \url{http://www.faqs.org/rfcs/rfc1341.html}
-  \item MIME RFC 1421 \url{http://www.faqs.org/rfcs/rfc1421.html}
-  \item MIME RFC 2045 \url{http://www.faqs.org/rfcs/rfc2045.html}
+  \code{https://www.freesoft.org/CIE/RFC/1521/7.htm}
+  \item MIME RFC 1341 \code{http://www.faqs.org/rfcs/rfc1341.html}
+  \item MIME RFC 1421 \code{http://www.faqs.org/rfcs/rfc1421.html}
+  \item MIME RFC 2045 \code{http://www.faqs.org/rfcs/rfc2045.html}
   \item Portions of the code are based on Matlab code by Peter Acklam
  }
 }

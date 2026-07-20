@@ -83,7 +83,7 @@
           Generalization of the Area Under the ROC Curve for Multiple Class 
           Classification Problems;  Machine Learning 45(2): 171-186
     \item See 
-       \url{http://www.medicine.mcgill.ca/epidemiology/hanley/software/} 
+       \code{http://www.medicine.mcgill.ca/epidemiology/hanley/software/} 
        to find articles below: 
      \itemize{
        \item Hanley and McNeil (1982), The Meaning and Use of the Area 

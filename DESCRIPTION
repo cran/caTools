@@ -1,8 +1,8 @@
 Package: caTools
 Type: Package
 Title: Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc
-Version: 1.18.3
-Date: 2024-09-04
+Version: 1.18.4
+Date: 2026-07-20
 Authors@R: c(person(given = "Jarek",
                       family = "Tuszynski",
                       role = "aut",
@@ -10,8 +10,8 @@ Authors@R: c(person(given = "Jarek",
                person(given = "Michael",
                       family = "Dietze",
                       role = "cre",
-                      email = "michael.dietze@uni-goettingen.de"))
-Maintainer: Michael Dietze <michael.dietze@uni-goettingen.de>
+                      email = "michael.dietze@geo.rwth-aachen.de"))
+Maintainer: Michael Dietze <michael.dietze@geo.rwth-aachen.de>
 Depends: R (>= 3.6.0)
 Imports: bitops
 Suggests: MASS, rpart
@@ -23,7 +23,7 @@ Description: Contains several basic utility functions including: moving
 License: GPL-3
 NeedsCompilation: yes
 Repository: CRAN
-Packaged: 2024-09-04 15:01:56 UTC; dietze2
+Packaged: 2026-07-20 10:11:13 UTC; mdietze
 Author: Jarek Tuszynski [aut],
   Michael Dietze [cre]
-Date/Publication: 2024-09-04 17:00:02 UTC
+Date/Publication: 2026-07-20 12:50:02 UTC

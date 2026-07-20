@@ -42,7 +42,7 @@
   \item{type}{an integer between 1 and 9 selecting one of the nine quantile 
     algorithms, same as \code{type} in \code{\link{quantile}} function. 
     Another even more readable description of nine ways to calculate quantiles 
-    can be found at \url{http://mathworld.wolfram.com/Quantile.html}. }
+    can be found at \code{http://mathworld.wolfram.com/Quantile.html}. }
   \item{align}{specifies whether result should be centered (default), 
   left-aligned or right-aligned.  If \code{endrule}="quantile" then setting
   \code{align} to "left" or "right" will fall back on slower implementation 
@@ -81,7 +81,7 @@ non-finite numbers like NaN's and Inf's (like \code{\link{quantile}(x, na.rm = T
     \item About quantiles: Hyndman, R. J. and Fan, Y. (1996) \emph{Sample 
        quantiles in statistical packages, American Statistician}, 50, 361. 
     \item About quantiles: Eric W. Weisstein. \emph{Quantile}. From MathWorld-- 
-     A Wolfram Web Resource. \url{http://mathworld.wolfram.com/Quantile.html} 
+     A Wolfram Web Resource. \code{http://mathworld.wolfram.com/Quantile.html} 
     
   \item About insertion sort used in \code{runmad} and \code{runquantile}: 
   R. Sedgewick (1988): \emph{Algorithms}. Addison-Wesley (page 99)

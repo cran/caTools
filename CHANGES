@@ -101,3 +101,5 @@ Changes:
   16) caTools-0.1.18.3 (2024-03-04)
   - inconsistency resolved, table in description definition removed
   - bug removed, fread connection close call added throughout, now
+  17) caTools-0.1.18.4 (2024-03-04)
+  - NAMESPACE definition adjusted
